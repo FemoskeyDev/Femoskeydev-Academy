@@ -1,0 +1,2 @@
+import { LearningPathGrid } from '../../../features/learning-paths/LearningPathGrid'
+export function PathwaySelectionSection() { return <section className="paths section-pad"><div className="eyebrow">EXPLORE THE PATHWAYS</div><h2>Different disciplines.<br/><em>Shared creative energy.</em></h2><p className="page-support">Choose an area that sparks your curiosity. Each pathway is an invitation to learn and practise.</p><LearningPathGrid/></section> }

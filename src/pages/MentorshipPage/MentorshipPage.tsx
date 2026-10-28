@@ -1,0 +1,5 @@
+import { usePageMeta } from '../../hooks/usePageMeta'
+import { FinalCTASection } from '../../components/sections/FinalCTASection'
+import { MentorshipIntro } from './sections/MentorshipIntro'
+import { MentorshipApproach } from './sections/MentorshipApproach'
+export function MentorshipPage() { usePageMeta('Mentorship','Learn about the Academy’s practice-led mentorship approach and ask about current availability.'); return <><MentorshipIntro/><MentorshipApproach/><section className="learning-overview section-pad"><div className="eyebrow">WHO IT CAN SUPPORT</div><h2>Curious creatives at<br/><em>different stages.</em></h2><p>Whether you are exploring a new discipline or developing your current practice, mentorship can help you find focus, keep practising, and consider what to try next.</p></section><FinalCTASection title="Let's talk about your next step." support="Get in touch to ask about mentorship and current programme options." primary="Contact the Academy" primaryTo="/contact" secondary="Explore learning paths" secondaryTo="/learning-paths"/></> }

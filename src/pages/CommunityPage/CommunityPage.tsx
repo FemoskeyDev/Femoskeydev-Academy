@@ -1,0 +1,5 @@
+import { usePageMeta } from '../../hooks/usePageMeta'
+import { FinalCTASection } from '../../components/sections/FinalCTASection'
+import { CommunityIntro } from './sections/CommunityIntro'
+import { CommunityBenefits } from './sections/CommunityBenefits'
+export function CommunityPage() { usePageMeta('Community','Discover a community for creatives to share work, exchange ideas, and grow together.'); return <><CommunityIntro/><CommunityBenefits/><section className="community section-pad community-inner"><div className="community-shape" aria-hidden="true"><span>MAKE</span><span>TOGETHER</span><i className="community-orbit"/></div><div className="community-copy"><div className="eyebrow eyebrow-light">COMMUNITY DETAILS</div><h2>Stay close to<br/><em>what's next.</em></h2><p>Official ways to join the Academy community will be shared here once available.</p></div></section><FinalCTASection title="Keep growing with us." support="Explore the pathways and ask about the Academy's learning opportunities." primary="Browse learning paths"/></> }

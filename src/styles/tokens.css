@@ -1,0 +1,8 @@
+:root{
+  font-family:'Tomato Grotesk',Arial,sans-serif;color:#151515;background:#f7f6f1;font-synthesis:none;text-rendering:optimizeLegibility;
+  --color-ink:#151515;--color-canvas:#f7f6f1;--color-white:#fff;--color-blue:#6a9dff;--color-lime:#b6ff39;--color-muted:#777;--color-border:rgba(21,21,21,.13);--color-glass:rgba(255,255,255,.72);
+  --page-margin:clamp(22px,6.25vw,96px);--section-space:clamp(84px,12vw,170px);--content-max:1440px;--header-height:88px;
+  --radius:4px;--button-height:51px;--focus:0 0 0 3px #f7f6f1,0 0 0 6px #3265c7;
+  --duration-fast:120ms;--duration-medium:180ms;--duration-slow:650ms;--ease-standard:cubic-bezier(.2,.7,.2,1);
+  --robot-reveal-radius:145px;--robot-reveal-feather:48px;
+}

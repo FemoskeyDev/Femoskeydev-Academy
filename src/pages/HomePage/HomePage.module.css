@@ -1,0 +1,11 @@
+.home{overflow:clip}
+
+@media (max-width: 760px) {
+  .home :global(.hero-visual) { margin-top: 0; padding-top: 0; }
+}
+
+@media (max-width: 390px) {
+  .home :global(.hero) { padding-top: 28px; }
+  .home :global(.hero h1) { margin: 16px 0; font-size: clamp(40px, 12vw, 48px); }
+  .home :global(.hero-visual .surface) { height: min(100vw, 430px); min-height: 300px; }
+}

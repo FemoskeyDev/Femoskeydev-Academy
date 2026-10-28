@@ -1,0 +1,10 @@
+{
+  "name": "Femoskeydev Academy",
+  "short_name": "FDA",
+  "description": "The Pathway to Becoming an Awesome Creative.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f6f1",
+  "theme_color": "#f7f6f1",
+  "icons": [{ "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+*.tsbuildinfo
+/Tomato_Grotesk/
+/Profile 8.png
+/Logo Mark.svg
+/assets/source-portraits/
+/assets/source-models/

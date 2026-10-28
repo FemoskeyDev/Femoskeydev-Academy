@@ -1,0 +1,1 @@
+export function ProgrammeCard({ programme, index }: { programme: { name: string; description: string }; index: number }) { return <article className="programme-row"><span className="programme-no">0{index + 1}</span><div><h3>{programme.name}</h3><p>{programme.description}</p></div><span className="programme-arrow" aria-hidden="true">↗</span></article> }

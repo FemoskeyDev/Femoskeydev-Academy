@@ -1,0 +1,5 @@
+import { usePageMeta } from '../../hooks/usePageMeta'
+import { FinalCTASection } from '../../components/sections/FinalCTASection'
+import { LearningPathsHero } from './sections/LearningPathsHero'
+import { PathwaySelectionSection } from './sections/PathwaySelectionSection'
+export function LearningPathsPage() { usePageMeta('Learning Paths','Explore UI/UX, graphic design, coding, and no-code design pathways at Femoskeydev Academy.'); return <><LearningPathsHero/><section className="learning-overview section-pad"><div className="eyebrow">YOUR JOURNEY, YOUR DIRECTION</div><h2>Learn something useful.<br/><em>Make something yours.</em></h2><p>Start with what interests you. Build practical skills, apply them through projects, and discover where your creativity can take you.</p></section><PathwaySelectionSection/><FinalCTASection title="Not sure where to begin?" support="Ask us about the pathways and explore the direction that feels right for you." primary="Explore mentorship" primaryTo="/mentorship"/></> }

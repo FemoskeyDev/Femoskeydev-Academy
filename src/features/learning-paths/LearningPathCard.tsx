@@ -1,0 +1,3 @@
+import { Link } from 'react-router-dom'
+import type { LearningPath } from '../../data/learningPaths'
+export function LearningPathCard({ path }: { path: LearningPath }) { return <Link className={`path-card path-${path.tone}`} to={`/learning-paths/${path.slug}`}><div className="path-top"><span>{path.number} / PATHWAY</span><span className="path-arrow" aria-hidden="true">↗</span></div><div className="path-mark" aria-hidden="true">{path.mark}</div><div className="path-bottom"><div className="path-focus">{path.focus}</div><h3>{path.name}</h3><p>{path.description}</p><span className="path-link">Explore pathway <b aria-hidden="true">↗</b></span></div></Link> }

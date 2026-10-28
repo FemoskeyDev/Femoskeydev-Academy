@@ -1,0 +1,7 @@
+import { Link, useParams } from 'react-router-dom'
+import { usePageMeta } from '../../hooks/usePageMeta'
+import { learningPaths } from '../../data/learningPaths'
+import { FinalCTASection } from '../../components/sections/FinalCTASection'
+import { PathwayHero } from './sections/PathwayHero'
+import { PathwayOverview } from './sections/PathwayOverview'
+export function LearningPathDetailPage() { const { slug } = useParams(); const path = learningPaths.find(item => item.slug === slug); usePageMeta(path?.name ?? 'Pathway not found',path?.description); if (!path) return <section className="not-found section-pad"><div className="eyebrow">PATHWAY NOT FOUND</div><h1>That path hasn't been mapped yet.</h1><p>Choose one of the Academy's available pathways.</p><Link className="button button-dark" to="/learning-paths">Browse learning paths</Link></section>; return <><PathwayHero path={path}/><PathwayOverview path={path}/><section className="steps-section section-pad"><div className="eyebrow">LEARN BY DOING</div><h2>Learn. Practise.<br/><em>Build. Grow.</em></h2><p>Build your foundations, try ideas through exercises, develop practical projects, and learn from guidance and feedback. Programme details depend on current availability.</p></section><FinalCTASection title={`Explore ${path.name}.`} support="Ask about current learning opportunities and find a helpful next step." primary="Enquire about learning" primaryTo="/contact"/></> }

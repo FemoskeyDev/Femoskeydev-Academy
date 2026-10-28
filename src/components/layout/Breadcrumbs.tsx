@@ -1,0 +1,2 @@
+import { Link, useLocation } from 'react-router-dom'
+export function Breadcrumbs({ current }: { current: string }) { const location = useLocation(); return <nav className="breadcrumbs" aria-label="Breadcrumb"><ol><li><Link to="/">Home</Link></li>{location.pathname.split('/').filter(Boolean).slice(0, -1).map((segment,index)=><li key={`${segment}-${index}`}><Link to={`/${location.pathname.split('/').filter(Boolean).slice(0,index+1).join('/')}`}>{segment.replaceAll('-', ' ')}</Link></li>)}<li aria-current="page">{current}</li></ol></nav> }

@@ -1,0 +1,2 @@
+import type { LearningPath } from '../../../data/learningPaths'
+export function PathwayOverview({ path }: { path: LearningPath }) { return <section className="pathway-overview section-pad"><div className="eyebrow">WHAT YOU CAN EXPLORE</div><h2>Make ideas real in<br/><em>{path.focus.toLowerCase()}.</em></h2><p>{path.description} The Academy's pathways are designed to help you explore a discipline through practical learning and your own creative work.</p></section> }

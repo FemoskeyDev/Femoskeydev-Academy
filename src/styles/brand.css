@@ -1,0 +1,4 @@
+.academy-logo{display:block;flex:none;width:32px;aspect-ratio:1;object-fit:contain;mix-blend-mode:multiply}
+.loader-logo{width:36px;filter:invert(1);mix-blend-mode:normal;animation:logo-arrive 1.15s cubic-bezier(.2,.75,.25,1) both}
+@keyframes logo-arrive{0%{opacity:0;transform:translateY(5px) scale(.84) rotate(-7deg)}55%{opacity:1;transform:translateY(0) scale(1.06) rotate(2deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.loader-logo{animation:none;opacity:1;transform:none}}
