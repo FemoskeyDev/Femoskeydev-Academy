@@ -1,0 +1,20 @@
+<svg width="138" height="138" viewBox="0 0 138 138" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Femoskeydev Academy logo">
+  <defs>
+    <clipPath id="academy-logo-reveal"><rect class="academy-logo-wipe" x="19" y="19" width="100" height="100"/></clipPath>
+    <clipPath id="academy-logo-shape"><path d="M102.677 19H35.3226C26.3226 19 19 26.3226 19 35.3226V119H41.9677L96.5832 119.032L96.6129 119.032H119V35.3226C119 26.2903 111.677 19 102.677 19Z"/></clipPath>
+  </defs>
+  <style>
+    .academy-logo-wipe{transform-box:view-box;transform-origin:69px 119px;transform:scaleY(0);animation:wipe 340ms cubic-bezier(.65,0,.35,1) both}
+    .academy-logo-star-flight{opacity:0;transform:translateY(66px);animation:rise 680ms cubic-bezier(.16,1,.3,1) 130ms both}
+    .academy-logo-star-spin{transform-box:view-box;transform-origin:69px 69px;transform:rotate(-90deg);animation:spin 680ms cubic-bezier(.4,0,.2,1) 130ms both}
+    .academy-logo-path-flight{opacity:0;transform:translateY(72px);animation:path-rise 570ms cubic-bezier(.16,1,.3,1) 690ms both}
+    @keyframes wipe{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @keyframes rise{0%{opacity:0;transform:translateY(66px)}16%{opacity:1}100%{opacity:1;transform:translateY(0)}}
+    @keyframes spin{from{transform:rotate(-90deg)}to{transform:rotate(0deg)}}
+    @keyframes path-rise{0%{opacity:0;transform:translateY(72px)}16%{opacity:1}100%{opacity:1;transform:translateY(0)}}
+    @media(prefers-reduced-motion:reduce){.academy-logo-wipe,.academy-logo-star-flight,.academy-logo-star-spin,.academy-logo-path-flight{animation:none!important;transform:none!important;opacity:1!important}}
+  </style>
+  <g clip-path="url(#academy-logo-reveal)"><path d="M102.677 19H35.3226C26.3226 19 19 26.3226 19 35.3226V119H41.9677L96.5832 119.032L96.6129 119.032H119V35.3226C119 26.2903 111.677 19 102.677 19Z" fill="#C8FDCE"/></g>
+  <g clip-path="url(#academy-logo-shape)"><g class="academy-logo-star-flight"><g class="academy-logo-star-spin"><path d="M69.0001 35.9668C69.0001 53.8761 54.7539 68.4644 36.978 69.0152C54.7539 69.566 69.0001 84.1543 69.0001 102.064C69.0001 84.1543 83.2463 69.566 101.022 69.0152C83.2463 68.4644 69.0001 53.8761 69.0001 35.9668Z" fill="#080A08"/></g></g></g>
+  <g clip-path="url(#academy-logo-shape)"><g class="academy-logo-path-flight"><path d="M100.783 69.0039C101.208 69.0201 101.635 69.0312 102.064 69.0312C91.8065 69.0313 82.6778 73.7088 76.6133 81.0635C73.5166 84.8053 71.9679 89.5472 71.9678 94.3857C71.9678 107.568 82.3131 118.33 95.3291 118.998C77.9867 118.99 46.1227 118.981 42.3242 118.996C55.45 118.805 66.0322 108.106 66.0322 94.9346C66.0322 89.7411 64.4192 84.5478 61.0322 80.6123C54.9677 73.5155 45.9678 69.0313 35.9355 69.0312C36.3643 69.0312 36.791 69.0201 37.2158 69.0039C37.1366 69.0069 37.0569 69.0122 36.9775 69.0146C54.7534 69.5654 69 84.1532 69 102.062C69 84.1532 83.2466 69.5654 101.022 69.0146C100.943 69.0122 100.863 69.0069 100.783 69.0039Z" fill="#080A08"/></g></g>
+</svg>

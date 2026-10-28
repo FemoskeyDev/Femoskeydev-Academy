@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { routeConfig } from './routeConfig'
 
 function renderAt(path: string) { const router = createMemoryRouter(routeConfig, { initialEntries: [path] }); return render(<RouterProvider router={router}/>) }
 describe('Academy routes', () => {
-  it('renders the home page and shared navigation', () => { renderAt('/'); expect(screen.getByRole('heading', { name: /pathway to becoming an awesome creative/i })).toBeInTheDocument(); expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument() })
+  it('renders the centered home hero, carousel controls, and working learning path links', () => { renderAt('/'); expect(screen.getByRole('heading', { level: 1, name: /The Pathway to Becoming an Awesome Creative\./i })).toBeInTheDocument(); expect(screen.getByRole('heading', { name: /Creativity isn’t just a talent/i })).toBeInTheDocument(); expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument(); expect(screen.getAllByRole('link', { name: /Explore Learning Paths/i }).every(link => link.getAttribute('href') === '/learning-paths')).toBe(true); expect(screen.getByRole('region', { name: 'Creative practice image carousel' }).querySelectorAll('button[data-offset]')).toHaveLength(12); fireEvent.click(screen.getByRole('button', { name: 'Next image' })); expect(screen.getByText(/Slide 2 of 12: Digital design/i)).toBeInTheDocument() })
+  it('uses the same shared navigation on the mentorship page', () => { renderAt('/mentorship'); expect(screen.getByText(/Get guidance/i, { selector: 'h1' })).toBeInTheDocument(); expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument(); expect(screen.getByRole('link', { name: /Contact the Academy/i })).toHaveAttribute('href', '/contact') })
   it('renders pathway links and a supported detail page', () => { const { unmount } = renderAt('/learning-paths'); expect(screen.getAllByRole('link', { name: /FDA Interfaces/i }).every(link => link.getAttribute('href') === '/learning-paths/interfaces')).toBe(true); unmount(); renderAt('/learning-paths/interfaces'); expect(screen.getByRole('heading', { name: 'FDA Interfaces' })).toBeInTheDocument() })
   it('shows helpful not found pages for unknown routes and pathways', () => { const { unmount } = renderAt('/learning-paths/unknown'); expect(screen.getByText(/That path hasn't been mapped yet/i)).toBeInTheDocument(); unmount(); renderAt('/unavailable'); expect(screen.getByRole('heading', { name: /This page isn't on the map/i })).toBeInTheDocument() })
 })

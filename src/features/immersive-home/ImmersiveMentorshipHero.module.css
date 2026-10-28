@@ -1,0 +1,34 @@
+.mentorshipHero { position: relative; min-height: max(650px, calc(100svh - 74px)); display: flex; align-items: center; overflow: hidden; isolation: isolate; background: var(--color-canvas); color: var(--color-ink); }
+.visual { position: absolute; inset: 0 0 0 36%; overflow: hidden; background: #d9d8d1; }
+.visual::before { position: absolute; z-index: 2; inset: 0; content: ''; background: linear-gradient(90deg, var(--color-canvas) 0%, rgba(247,246,241,.84) 14%, rgba(247,246,241,.1) 53%, rgba(21,21,21,.06) 100%), linear-gradient(0deg, rgba(21,21,21,.38), transparent 24%); pointer-events: none; }
+.tint { position: absolute; z-index: 1; inset: 0; background: linear-gradient(145deg, rgba(202,217,209,.16), transparent 50%); pointer-events: none; }
+.copy { position: relative; z-index: 3; width: min(650px, 58%); margin-left: clamp(28px, 8.2vw, 124px); padding: 64px 0 74px; }
+.mentorshipEyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 28px; color: #575951; font-size: 10px; letter-spacing: .15em; }
+.mentorshipEyebrow span { color: #74935c; font-size: 18px; }.mentorshipEyebrow i { color: #aaa99f; font-style: normal; }
+.copy h1 { max-width: 670px; margin: 0; font-size: clamp(64px, 8.2vw, 116px); font-weight: 500; line-height: 1; letter-spacing: var(--heading-tracking); }
+.copy h1 em { display: inline; padding: 0 .07em; background: linear-gradient(to bottom, transparent 0 .11em, var(--color-lime) .11em calc(100% - .01em), transparent calc(100% - .01em)); background-repeat: no-repeat; color: var(--color-ink); font-style: normal; font-weight: 400; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.support { max-width: 400px; margin: 28px 0 0; color: #51524c; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.6; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 28px; }
+.primary,.secondary { min-height: 50px; display: inline-flex; align-items: center; gap: 27px; font-size: 12px; transition: transform 180ms ease, background 180ms ease, color 180ms ease; }
+.primary { padding: 0 18px; background: var(--color-ink); color: var(--color-canvas); }.primary:hover { transform: translateY(-2px); background: #343832; }
+.secondary { color: var(--color-ink); border-bottom: 1px solid rgba(21,21,21,.28); }.secondary:hover { transform: translateY(-2px); border-color: #839e68; }
+.primary:focus-visible,.secondary:focus-visible { outline: none; box-shadow: var(--focus); }
+.note { margin: 32px 0 0; color: #77786e; font-size: 11px; letter-spacing: .02em; }
+.visualCaption { position: absolute; z-index: 3; right: clamp(22px,4vw,60px); bottom: 28px; left: clamp(22px,4vw,60px); display: flex; justify-content: space-between; gap: 14px; color: #f7f6f1; font-size: 8px; letter-spacing: .15em; text-shadow: 0 1px 8px rgba(0,0,0,.3); }
+.index { position: absolute; z-index: 3; right: clamp(24px,4.5vw,68px); top: 30px; color: #77786e; font-size: 9px; letter-spacing: .13em; }.index span { padding: 0 8px; color: #a8a99f; }
+@media (min-width: 1500px) { .visual { left: 39%; } }
+@media (max-width: 760px) {
+  .mentorshipHero { min-height: 0; display: flex; flex-direction: column; align-items: stretch; padding-bottom: 0; }
+  .visual { position: relative; inset: auto; order: 2; height: clamp(340px, 105vw, 490px); margin-left: 12%; }
+  .visual::before { background: linear-gradient(180deg, var(--color-canvas), transparent 26%, rgba(21,21,21,.08) 100%); }
+  .copy { width: auto; margin: 0; padding: 58px 22px 26px; }
+  .mentorshipEyebrow { margin-bottom: 21px; font-size: 8px; }
+  .copy h1 { font-size: clamp(55px, 13vw, 82px); }
+  .support { max-width: 420px; margin-top: 20px; font-size: 14px; }
+  .actions { gap: 17px; margin-top: 21px; }
+  .primary,.secondary { min-height: 46px; font-size: 11px; }
+  .note { display: none; }
+  .index { top: auto; bottom: 365px; right: 18px; color: #f7f6f1; text-shadow: 0 1px 6px rgba(0,0,0,.4); }
+}
+@media (max-width: 390px) { .copy { padding-right: 18px; padding-left: 18px; }.copy h1 { font-size: clamp(50px, 13vw, 58px); }.actions { align-items: flex-start; flex-direction: column; gap: 8px; }.visual { height: 350px; } }
+@media (prefers-reduced-motion: reduce) { .primary,.secondary { transition: none; } }

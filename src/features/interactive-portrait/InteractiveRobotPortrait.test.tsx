@@ -22,6 +22,8 @@ describe('InteractiveRobotPortrait', () => {
     fireEvent.pointerMove(surface, { pointerType: 'mouse', clientX: 90, clientY: 110 })
     expect(capture.interaction.current.mode).toBe('cursor-reveal')
     expect(capture.interaction.current.pointer).toEqual({ x: 0.35, y: 0.6 })
+    expect(capture.interaction.current.dynamic).toBe(true)
+    expect(capture.interaction.current.rippleEnergy).toBeGreaterThan(0)
 
     fireEvent.pointerLeave(surface, { pointerType: 'mouse' })
     expect(capture.interaction.current.mode).toBe('idle')
@@ -50,6 +52,8 @@ describe('InteractiveRobotPortrait', () => {
     fireEvent.pointerMove(surface, { pointerType: 'touch', clientX: 150, clientY: 200 })
     expect(capture.interaction.current.mode).toBe('cursor-reveal')
     expect(capture.interaction.current.pointer).toEqual({ x: 0.5, y: 0.5 })
+    expect(capture.interaction.current.dynamic).toBe(false)
+    expect(capture.interaction.current.rippleEnergy).toBe(0)
     fireEvent.pointerUp(surface, { pointerType: 'touch' })
     expect(capture.interaction.current.mode).toBe('idle')
   })

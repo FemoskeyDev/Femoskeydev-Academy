@@ -32,6 +32,17 @@ const fragmentShader = /* glsl */`
   uniform float uNoiseSpeed;
   uniform float uReveal;
   uniform float uOpacity;
+  uniform float uMotionEnergy;
+  uniform float uRippleAmplitude;
+  uniform float uTangentialAmplitude;
+  uniform float uRippleFrequency;
+  uniform float uRippleSpeed;
+  uniform float uChromaticOffset;
+  uniform float uGlowStrength;
+  uniform vec3 uMintPrimary;
+  uniform vec3 uMintHighlight;
+  uniform vec3 uMintSecondary;
+  uniform vec3 uTrail[8];
   varying vec2 vUv;
 
   float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
@@ -54,25 +65,55 @@ const fragmentShader = /* glsl */`
 
   void main() {
     vec2 imageUv = vUv * uRepeat + uOffset;
-    vec4 humanSample = texture2D(uHuman, imageUv);
-    vec2 cyberneticUv = (imageUv - 0.5) * uCyberScale + 0.5 + uCyberOffset;
-    vec4 cyberneticSample = texture2D(uCybernetic, cyberneticUv);
     vec2 delta = vUv - uPointer;
     delta.x *= uAspect;
+    float distanceToPointer = length(delta);
+    vec2 radialDirection = delta / max(distanceToPointer, 0.0001);
+    vec2 tangentDirection = vec2(-radialDirection.y, radialDirection.x);
+    float envelope = exp(-distanceToPointer * 19.0) * uMotionEnergy;
+    float phase = distanceToPointer * uRippleFrequency - uTime * uRippleSpeed;
+    float radialWave = sin(phase) * envelope;
+    float tangentialWave = cos(phase * 0.78 - 1.1) * envelope;
+    vec2 radialUv = vec2(radialDirection.x / uAspect, radialDirection.y);
+    vec2 tangentUv = vec2(tangentDirection.x / uAspect, tangentDirection.y);
+    vec2 displacement = radialUv * radialWave * uRippleAmplitude + tangentUv * tangentialWave * uTangentialAmplitude;
+    vec2 warpedImageUv = imageUv + displacement * uRepeat;
+    float chromatic = uChromaticOffset * envelope * (0.45 + abs(radialWave));
+    vec4 humanRed = texture2D(uHuman, warpedImageUv + vec2(chromatic, 0.0));
+    vec4 humanGreen = texture2D(uHuman, warpedImageUv);
+    vec4 humanBlue = texture2D(uHuman, warpedImageUv - vec2(chromatic, 0.0));
+    vec4 humanSample = vec4(humanRed.r, humanGreen.g, humanBlue.b, humanGreen.a);
+    vec2 cyberneticUv = (imageUv - 0.5) * uCyberScale + 0.5 + uCyberOffset;
+    vec4 cyberneticSample = texture2D(uCybernetic, cyberneticUv);
     float organicNoise = (fbm(vUv * uNoiseScale + vec2(uTime * uNoiseSpeed, -uTime * uNoiseSpeed * 0.71)) - 0.5) * uDistortion;
-    float distanceToPointer = length(delta) + organicNoise;
-    float localMask = 1.0 - smoothstep(uRadius - uFeather, uRadius + uFeather, distanceToPointer);
+    float revealDistance = length(delta) + organicNoise;
+    float localMask = 1.0 - smoothstep(uRadius - uFeather, uRadius + uFeather, revealDistance);
     float reveal = localMask * uReveal * uOpacity;
 
-    gl_FragColor = vec4(mix(humanSample.rgb, cyberneticSample.rgb, reveal), mix(humanSample.a, cyberneticSample.a, reveal));
+    vec3 portraitColor = mix(humanSample.rgb, cyberneticSample.rgb, reveal);
+    float broadGlow = exp(-distanceToPointer * 8.0) * uMotionEnergy;
+    float coreGlow = exp(-distanceToPointer * 32.0) * uMotionEnergy;
+    float rippleGlow = exp(-abs(sin(phase)) * 5.0) * envelope;
+    float trailGlow = 0.0;
+    for (int i = 0; i < 8; i++) {
+      vec2 trailDelta = vUv - uTrail[i].xy;
+      trailDelta.x *= uAspect;
+      float pulse = 0.94 + 0.06 * sin(uTime * 4.0 + float(i) * 0.7);
+      trailGlow += uTrail[i].z * exp(-length(trailDelta) * 46.0) * pulse;
+    }
+    trailGlow = clamp(trailGlow, 0.0, 1.0);
+    portraitColor += uMintPrimary * broadGlow * uGlowStrength * 0.42;
+    portraitColor += uMintHighlight * coreGlow * uGlowStrength * 0.5;
+    portraitColor += uMintSecondary * (rippleGlow * 0.035 + trailGlow * 0.045) * uMotionEnergy;
+    gl_FragColor = vec4(portraitColor, mix(humanSample.a, cyberneticSample.a, reveal));
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
   }
 `
 
-function PortraitComposite({ interaction }: { interaction: MutableRefObject<PortraitInteraction> }) {
+function PortraitComposite({ interaction, showCybernetic }: { interaction: MutableRefObject<PortraitInteraction>; showCybernetic: boolean }) {
   const { size, gl, invalidate } = useThree()
-  const [humanTexture, cyberneticTexture] = useLoader(THREE.TextureLoader, [siteConfig.portrait, siteConfig.cyberneticPortrait])
+  const [humanTexture, cyberneticTexture] = useLoader(THREE.TextureLoader, [siteConfig.portrait, showCybernetic ? siteConfig.cyberneticPortrait : siteConfig.portrait])
   const aspect = size.width / Math.max(size.height, 1)
   const cover = useMemo(() => {
     if (aspect < 1) return { repeat: new THREE.Vector2(aspect, 1), offset: new THREE.Vector2((1 - aspect) / 2, 0) }
@@ -98,6 +139,17 @@ function PortraitComposite({ interaction }: { interaction: MutableRefObject<Port
       uNoiseSpeed: { value: portraitConfig.noiseSpeed },
       uReveal: { value: 0 },
       uOpacity: { value: portraitConfig.revealOpacity },
+      uMotionEnergy: { value: 0 },
+      uRippleAmplitude: { value: portraitConfig.rippleAmplitude },
+      uTangentialAmplitude: { value: portraitConfig.tangentialAmplitude },
+      uRippleFrequency: { value: portraitConfig.rippleFrequency },
+      uRippleSpeed: { value: portraitConfig.rippleSpeed },
+      uChromaticOffset: { value: portraitConfig.chromaticOffset },
+      uGlowStrength: { value: portraitConfig.glowStrength },
+      uMintPrimary: { value: new THREE.Color(portraitConfig.mintPrimary) },
+      uMintHighlight: { value: new THREE.Color(portraitConfig.mintHighlight) },
+      uMintSecondary: { value: new THREE.Color(portraitConfig.mintSecondary) },
+      uTrail: { value: Array.from({ length: portraitConfig.trailLength }, () => new THREE.Vector3(0.5, 0.5, 0)) },
     },
     vertexShader,
     fragmentShader,
@@ -133,12 +185,29 @@ function PortraitComposite({ interaction }: { interaction: MutableRefObject<Port
     uniforms.uRepeat.value.copy(cover.repeat)
     uniforms.uOffset.value.copy(cover.offset)
     uniforms.uTime.value = state.reduced ? 0 : clock.elapsedTime
-    const revealTarget = state.mode === 'cursor-reveal' ? 1 : 0
+    if (state.reduced || !state.dynamic) {
+      state.rippleEnergy = 0
+      state.trail.fill(0)
+    } else {
+      state.rippleEnergy *= Math.exp(-portraitConfig.energyDecay * delta)
+      for (let index = 0; index < portraitConfig.trailLength; index += 1) {
+        const offset = index * 3
+        state.trail[offset + 2] *= Math.exp(-portraitConfig.trailDecay * delta)
+      }
+    }
+    uniforms.uMotionEnergy.value = state.dynamic && !state.reduced ? state.rippleEnergy : 0
+    const trailUniforms = uniforms.uTrail.value as THREE.Vector3[]
+    for (let index = 0; index < portraitConfig.trailLength; index += 1) {
+      const offset = index * 3
+      trailUniforms[index].set(state.trail[offset], state.trail[offset + 1], state.trail[offset + 2])
+    }
+    const revealTarget = showCybernetic && state.mode === 'cursor-reveal' ? 1 : 0
     uniforms.uReveal.value = state.reduced
       ? revealTarget
       : THREE.MathUtils.damp(uniforms.uReveal.value, revealTarget, 1 / portraitConfig.transitionSeconds, delta)
     const transitionActive = Math.abs(uniforms.uReveal.value - revealTarget) > 0.001
-    if (!state.reduced && (transitionActive || state.mode !== 'idle')) invalidate()
+    const trailActive = state.dynamic && !state.reduced && state.rippleEnergy > 0.006
+    if (!state.reduced && (transitionActive || trailActive)) invalidate()
   })
 
   return <mesh geometry={geometry} material={material} frustumCulled={false} />
@@ -163,9 +232,9 @@ function RendererLifecycle({ interaction, onUnavailable }: { interaction: Mutabl
   return null
 }
 
-export function PortraitScene({ interaction, onUnavailable }: { interaction: MutableRefObject<PortraitInteraction>; onUnavailable: () => void }) {
+export function PortraitScene({ interaction, onUnavailable, showCybernetic = true }: { interaction: MutableRefObject<PortraitInteraction>; onUnavailable: () => void; showCybernetic?: boolean }) {
   return <Canvas className="portrait-canvas" orthographic camera={{ position: [0, 0, 2], zoom: 1 }} dpr={[1, 1.75]} frameloop="demand" gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }} fallback={<span aria-hidden="true"/>}>
     <RendererLifecycle interaction={interaction} onUnavailable={onUnavailable}/>
-    <Suspense fallback={null}><PortraitComposite interaction={interaction}/></Suspense>
+    <Suspense fallback={null}><PortraitComposite interaction={interaction} showCybernetic={showCybernetic}/></Suspense>
   </Canvas>
 }

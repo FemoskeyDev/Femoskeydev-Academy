@@ -1,0 +1,31 @@
+.logo { display: block; flex: none; overflow: visible; }
+.background { transform-box: fill-box; transform-origin: center; animation: academy-background-enter 600ms cubic-bezier(.2,.8,.2,1) both; }
+.star, .joining { transform-box: fill-box; transform-origin: center; }
+.star { animation: academy-star-rise 850ms cubic-bezier(.18,.82,.24,1) 480ms both; }
+.joining { animation: academy-join-rise 900ms cubic-bezier(.18,.82,.24,1) 1.42s both; }
+
+@keyframes academy-background-enter {
+  0% { opacity: 0; transform: translateY(10px) scale(.94); }
+  75% { opacity: 1; transform: translateY(-1px) scale(1.012); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes academy-star-rise {
+  0% { opacity: 0; transform: translateY(43px) rotate(-100deg) scale(.72); }
+  72% { opacity: 1; transform: translateY(-2px) rotate(8deg) scale(1.025); }
+  100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+@keyframes academy-join-rise {
+  0% { opacity: 0; transform: translateY(44px); }
+  74% { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.reducedMotion .background,
+.reducedMotion .star,
+.reducedMotion .joining { animation: none; opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .background, .star, .joining { animation: none; opacity: 1; transform: none; }
+}

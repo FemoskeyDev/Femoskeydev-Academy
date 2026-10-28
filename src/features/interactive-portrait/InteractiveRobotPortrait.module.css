@@ -32,7 +32,7 @@
 .human { z-index: 0; }
 
 .cyberneticFallback {
-  z-index: 1;
+  z-index: 2;
   opacity: 0;
   pointer-events: none;
   transition: opacity 180ms ease;
@@ -41,6 +41,18 @@
 }
 
 .fallback.cursorReveal .cyberneticFallback { opacity: 1; }
+
+.fallbackGlow {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms ease;
+  background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), rgba(200,253,206,.3) 0%, rgba(143,217,165,.13) 15%, transparent 38%);
+}
+
+.fallback.cursorReveal .fallbackGlow { opacity: 1; }
 
 .surface :global(.portrait-canvas) {
   position: absolute !important;
@@ -98,5 +110,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .cyberneticFallback,
+  .fallbackGlow,
   .wireframe { transition: none; }
 }

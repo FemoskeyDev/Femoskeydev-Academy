@@ -14,7 +14,7 @@ describe('localPoint', () => {
   })
 
   it('resolves the interaction mode from idle and cursor reveal', () => {
-    const state: PortraitController = { mode: 'idle', pointer: { x: 0.5, y: 0.5 }, inside: false, reduced: false }
+    const state: PortraitController = { mode: 'idle', pointer: { x: 0.5, y: 0.5 }, inside: false, reduced: false, dynamic: false, rippleEnergy: 0, trail: new Float32Array(24), trailIndex: 0 }
     expect(resolvePortraitMode(state)).toBe('idle')
     state.inside = true
     expect(resolvePortraitMode(state)).toBe('cursor-reveal')

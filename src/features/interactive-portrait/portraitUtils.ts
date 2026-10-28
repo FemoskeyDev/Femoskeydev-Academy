@@ -4,6 +4,10 @@ export type PortraitController = {
   pointer: { x: number; y: number }
   inside: boolean
   reduced: boolean
+  dynamic: boolean
+  rippleEnergy: number
+  trail: Float32Array
+  trailIndex: number
   invalidate?: () => void
 }
 

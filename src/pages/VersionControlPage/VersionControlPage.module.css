@@ -39,7 +39,7 @@
   font-size: clamp(48px, 7vw, 78px);
   font-weight: 500;
   line-height: .94;
-  letter-spacing: -.075em;
+  letter-spacing: var(--heading-tracking);
 }
 
 .heading h1 em { font-weight: 400; }
@@ -106,7 +106,7 @@
 
 .commitTop { display: flex; align-items: center; gap: 13px; color: #777; font-size: 10px; }
 .index { color: #91a06f; font-size: 9px; font-weight: 600; letter-spacing: .12em; }
-.commit h2 { margin: 12px 0 10px; font-size: clamp(18px, 2.5vw, 25px); font-weight: 500; letter-spacing: -.04em; }
+.commit h2 { margin: 12px 0 10px; font-size: clamp(18px, 2.5vw, 25px); font-weight: 500; letter-spacing: var(--heading-tracking); }
 .meta { display: flex; flex-wrap: wrap; gap: 8px 17px; color: #6d6c66; font-size: 11px; }
 .meta code { color: #3d5c92; }
 .fileSummary { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; font-size: 10px; font-weight: 600; }

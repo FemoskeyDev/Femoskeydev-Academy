@@ -1,0 +1,8 @@
+.surface { position: absolute; inset: 0; overflow: hidden; }
+.portraitFallback, .canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.portraitFallback { object-fit: cover; object-position: center 36%; opacity: 1; }
+.canvas { opacity: 0; transition: opacity 350ms ease; }
+.surface:has(.canvas[data-ready='true']) .portraitFallback { opacity: 0; }
+.surface:has(.canvas[data-ready='true']) .canvas { opacity: 1; }
+.canvas[data-failed='true'] { opacity: 0; visibility: hidden; }
+.surface:has(.canvas[data-failed='true']) .portraitFallback { opacity: 1; }
