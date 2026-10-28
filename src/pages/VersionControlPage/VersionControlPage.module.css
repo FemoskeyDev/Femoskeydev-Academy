@@ -1,0 +1,134 @@
+.page {
+  width: min(calc(100% - 2 * var(--page-margin)), 1000px);
+  min-height: calc(100vh - var(--header-height));
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 108px) 0 var(--section-space);
+}
+
+.heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: #5c6950;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.eyebrow span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-lime);
+  box-shadow: 0 0 0 3px rgba(182, 255, 57, .2);
+}
+
+.heading h1 {
+  margin: 22px 0 12px;
+  font-size: clamp(48px, 7vw, 78px);
+  font-weight: 500;
+  line-height: .94;
+  letter-spacing: -.075em;
+}
+
+.heading h1 em { font-weight: 400; }
+
+.description {
+  max-width: 530px;
+  margin: 0;
+  color: #6b6a64;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.refresh {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 15px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  cursor: pointer;
+}
+
+.refresh:hover:not(:disabled) { border-color: var(--color-ink); }
+.refresh:focus-visible { outline: none; box-shadow: var(--focus); }
+.refresh:disabled { opacity: .6; cursor: wait; }
+.refresh span { margin-right: 8px; font-size: 15px; vertical-align: -1px; }
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0 8px;
+  color: #73726c;
+  font-size: 11px;
+}
+
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 28px 0 0 25px;
+  list-style: none;
+}
+
+.timeline::before {
+  position: absolute;
+  top: 32px;
+  bottom: 32px;
+  left: 5px;
+  width: 1px;
+  background: var(--color-border);
+  content: '';
+}
+
+.commit { position: relative; padding: 0 0 30px; }
+.commit article { padding: 23px 25px; border: 1px solid var(--color-border); background: rgba(255, 255, 255, .48); }
+.marker { position: absolute; z-index: 1; top: 31px; left: -24px; width: 9px; height: 9px; border: 2px solid var(--color-canvas); border-radius: 50%; background: var(--color-ink); box-shadow: 0 0 0 1px rgba(21, 21, 21, .3); }
+.commit:first-child .marker { background: #82b918; box-shadow: 0 0 0 4px rgba(182, 255, 57, .25); }
+
+.commitTop { display: flex; align-items: center; gap: 13px; color: #777; font-size: 10px; }
+.index { color: #91a06f; font-size: 9px; font-weight: 600; letter-spacing: .12em; }
+.commit h2 { margin: 12px 0 10px; font-size: clamp(18px, 2.5vw, 25px); font-weight: 500; letter-spacing: -.04em; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 17px; color: #6d6c66; font-size: 11px; }
+.meta code { color: #3d5c92; }
+.fileSummary { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; font-size: 10px; font-weight: 600; }
+.added { color: #427a38; }
+.updated { color: #657693; }
+.removed { color: #a45148; }
+
+.fileDetails { margin-top: 18px; border-top: 1px solid var(--color-border); }
+.fileDetails summary { width: fit-content; padding-top: 13px; color: #55544e; font-size: 11px; cursor: pointer; }
+.fileDetails summary:focus-visible { outline: 2px solid #3265c7; outline-offset: 3px; }
+.fileDetails ul { display: grid; gap: 7px; margin: 13px 0 0; padding: 0; list-style: none; }
+.fileDetails li { display: flex; align-items: baseline; gap: 10px; font-size: 10px; }
+.fileDetails li span { flex: 0 0 14px; color: #657693; font: 600 9px/1.5 'Tomato Grotesk', sans-serif; }
+.fileDetails li span[data-status='A'] { color: #427a38; }
+.fileDetails li span[data-status='D'] { color: #a45148; }
+.fileDetails li code { overflow-wrap: anywhere; color: #62615c; }
+.message { margin: 26px 0; padding: 18px; border: 1px solid var(--color-border); color: #62615c; font-size: 13px; line-height: 1.6; }
+
+@media (max-width: 650px) {
+  .heading { align-items: flex-start; flex-direction: column; gap: 23px; }
+  .refresh { min-height: 41px; }
+  .summary { flex-direction: column; gap: 6px; }
+  .timeline { padding-right: 0; }
+  .commit article { padding: 19px 16px; }
+}

@@ -16,5 +16,12 @@ export const routeConfig = [{ path: '/', element: <SiteLayout/>, children: [
   { path: 'community', element: <CommunityPage/> },
   { path: 'about', element: <AboutPage/> },
   { path: 'contact', element: <ContactPage/> },
+  ...(import.meta.env.DEV ? [{
+    path: 'version-control',
+    lazy: async () => {
+      const page = await import('../pages/VersionControlPage/VersionControlPage')
+      return { Component: page.VersionControlPage }
+    },
+  }] : []),
   { path: '*', element: <NotFoundPage/> },
 ]}]
