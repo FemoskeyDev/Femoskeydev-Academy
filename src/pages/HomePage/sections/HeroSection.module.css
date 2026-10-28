@@ -313,6 +313,7 @@
     gap: 24px;
     padding-top: 23px;
     padding-bottom: 20px;
+
   }
 
   .intro h1 {
@@ -325,16 +326,12 @@
 
   .carousel {
     height: 230px;
+    margin-top: 24px;
   }
 
   .slide {
     width: 202px;
     height: 218px;
-  }
-
-  .actions :global(.button) {
-    margin-bottom: 200px !important;
-
   }
 
 }
