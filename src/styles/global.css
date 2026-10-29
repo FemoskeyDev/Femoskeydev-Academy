@@ -110,7 +110,7 @@ min-height: 51px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 12px;
   border-radius: 8px;
 
   transition:
@@ -193,7 +193,7 @@ min-height: 51px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 2px;
   font-size: 13px;
   border-radius: 8px;
   transition:
@@ -1165,7 +1165,7 @@ min-height: 51px;
   .button {
     min-height: 49px;
     padding: 0 14px;
-    gap: 17px;
+    gap: 2px;
     font-size: 12px;
   }
   .text-link {
