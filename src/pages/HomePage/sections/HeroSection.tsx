@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import { siteConfig } from "../../../data/siteConfig";
-import CircularCarousel, { type CircularCarouselItem } from "./CircularCarousel";
+import CircularCarousel, {
+  type CircularCarouselItem,
+} from "./CircularCarousel";
 import styles from "./HeroSection.module.css";
 
 const slides: CircularCarouselItem[] = [
@@ -108,16 +110,19 @@ export function HeroSection() {
       </div>
 
       <div className={styles.actions}>
-        <Button to="/learning-paths">Explore Learning Paths</Button>
+        <Button to="/learning-paths" variant="lime">Explore Learning Paths</Button>
       </div>
 
-      <div className={styles.carouselFrame} aria-label="Creative practice gallery">
+      <div
+        className={styles.carouselFrame}
+        aria-label="Creative practice gallery"
+      >
         <CircularCarousel
           items={slides}
           preset="panorama"
           intro="rise"
           cardWidth={cardWidth}
-          aspectRatio={4/2.5}
+          aspectRatio={4 / 2.5}
           gap={8}
           autoplay="drift"
           speed={6.5}

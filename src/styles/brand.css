@@ -1,1 +1,8 @@
-.academy-logo{display:block;flex:none;width:32px;aspect-ratio:1;object-fit:contain;mix-blend-mode:multiply}
+.academy-logo {
+  display: block;
+  flex: none;
+  width: 32px;
+  aspect-ratio: 1;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}

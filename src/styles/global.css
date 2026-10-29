@@ -105,8 +105,22 @@ summary:focus-visible,
 .nav-cta span,
 .button span {
   font-size: 17px;
-  transition: transform var(--transition);
-}
+min-height: 51px;
+  padding: 0 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  border-radius: 8px;
+
+  transition:
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 300ms ease,
+    color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 380ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  -webkit-tap-highlight-color: transparent;}
 .nav-cta:hover span,
 .button:hover span {
   transform: translate(2px, -2px);
@@ -187,6 +201,13 @@ summary:focus-visible,
     background var(--transition),
     color var(--transition);
 }
+
+/* Natural press feedback */
+.button:not(:disabled):not([aria-disabled="true"]):active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: none;
+}
+
 .button:hover {
   transform: translateY(-2px);
 }
@@ -196,7 +217,10 @@ summary:focus-visible,
 }
 .button-dark:hover {
   background: #333;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+
 }
+
 .text-link {
   font-size: 13px;
   display: inline-flex;
@@ -741,6 +765,8 @@ summary:focus-visible,
 }
 .button-lime:hover {
   background: #c8ff6f;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
 }
 .community-shape {
   position: absolute;
