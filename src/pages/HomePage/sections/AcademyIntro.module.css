@@ -1,0 +1,6 @@
+.stage {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  background-color: var(--color-canvas);
+}

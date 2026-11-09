@@ -11,7 +11,7 @@
   min-height: 100svh;
   overflow: hidden;
   padding: 80px clamp(24px, 7vw, 112px);
-  background: var(--color-ink);
+  background: transparent;
   color: var(--color-canvas);
 }
 
@@ -64,5 +64,13 @@
 
   .statement {
     font-size: clamp(34px, 8.7vw, 40px);
+  }
+}
+
+/* With reduced motion enabled, keep the dark Manifesto treatment without
+   running a scroll-linked color transition. */
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    background: var(--color-ink);
   }
 }
