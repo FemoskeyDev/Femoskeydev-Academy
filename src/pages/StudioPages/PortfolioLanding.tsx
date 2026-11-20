@@ -109,11 +109,11 @@ export function PortfolioLanding() {
       <div className={styles.teamCopy}>
         <div className={styles.teamIntro}><div data-team-motion="heading" className={styles.teamHeading}><span aria-hidden="true">“</span><h2 id="team-title">Okay, who's<br /> behind all this?</h2></div><p data-team-motion="support">We are an awesome creative team with a love for thoughtful design, clean code, and bringing ambitious ideas to life.</p></div>
         <div className={styles.avatars} aria-label="Creative team illustration">
-          {['c1112.png', '9dc7b.png', '7f959.png', '1c494.png'].map((file, i) => <span data-team-motion={`avatar-${i}`} key={file}><img src={asset(file)} alt="" loading="lazy" /></span>)}<span data-team-motion="avatar-4">+15</span>
+          {['c1112.webp', '9dc7b.webp', '7f959.webp', '1c494.webp'].map((file, i) => <span data-team-motion={`avatar-${i}`} key={file}><img src={asset(file)} alt="" loading="lazy" /></span>)}<span data-team-motion="avatar-4">+15</span>
         </div>
         <Button data-team-motion="cta" to="/work">View all cases</Button>
       </div>
-      <div data-team-motion="portrait" className={styles.teamPortrait}><img src={asset('36c4d.png')} alt="Femoskeydev founder" loading="lazy" /></div>
+      <div data-team-motion="portrait" className={styles.teamPortrait}><img src={asset('36c4d.webp')} alt="Femoskeydev founder" loading="lazy" /></div>
     </section>
 
     <section id="how-we-work" className={styles.process} aria-labelledby="process-title"><div className={styles.wrap}>
@@ -121,7 +121,7 @@ export function PortfolioLanding() {
       <ProcessSteps />
     </div></section>
 
-    <section className={styles.motto} aria-label="Our design philosophy"><div><img src={asset('0a938.png')} alt="" loading="lazy" /><p>We create awesome, usable and<br className={styles.desktopBreak} /> aesthetically pleasing interfaces for<br className={styles.desktopBreak} /> SaaS companies and startups</p></div></section>
+    <section className={styles.motto} aria-label="Our design philosophy"><div><img src={asset('0a938.webp')} alt="" loading="lazy" /><p>We create awesome, usable and<br className={styles.desktopBreak} /> aesthetically pleasing interfaces for<br className={styles.desktopBreak} /> SaaS companies and startups</p></div></section>
     <ContactCta />
   </div>
 }

@@ -49,6 +49,8 @@ export function useSectionSurfaceTransitions() {
         surfaces.forEach((surface, index) => {
           const previous = surfaces[index - 1]
           if (!previous || isDark(previous.background) === isDark(surface.background)) return
+          // The closing CTA keeps its own dark surface all the way into the footer.
+          if (previous.section.hasAttribute('data-surface-fixed') || surface.section.hasAttribute('data-surface-fixed')) return
           for (const section of [previous.section, surface.section]) {
             section.setAttribute('data-surface-transition', '')
             paintedSections.add(section)

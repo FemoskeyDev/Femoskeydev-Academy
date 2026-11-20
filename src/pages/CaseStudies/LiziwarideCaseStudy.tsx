@@ -4,9 +4,11 @@ import { RevealOnScroll } from '../../components/ui/RevealOnScroll'
 import { usePageMeta } from '../../hooks/usePageMeta'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { Heading } from './parts'
+import { ContactCta } from '../StudioPages/ContactCta'
+import { responsive } from '../../lib/images'
 import styles from './CaseStudy.module.css'
 
-const image = (file: string) => `/images/work/liziwaride/${file}.jpg`
+const image = (file: string) => `/images/work/liziwaride/${file}.webp`
 
 type Tile = { file: string; alt: string; wide?: boolean }
 type Feature = { id: string; title: string; subtitle: string; copy: string; columns?: 3 | 4; tiles: Tile[] }
@@ -101,9 +103,10 @@ function NumberedRows({ rows }: { rows: string[][] }) {
 export function LiziwarideCaseStudy() {
   usePageMeta('Liziwaride case study', 'Ride hailing, smart buses and scheduled rides in one app, with a driver app and an admin dashboard.', 'Femoskeydev')
   const reduced = useReducedMotion()
-  return <article className={styles.page}>
+  return <>
+  <article className={styles.page}>
     <div className={styles.hero}>
-      <img data-flare src={image('hero')} alt="Hand holding a phone showing the Liziwaride home screen, beside the line: Ride smarter across Africa" width="2752" height="1520" fetchPriority="high" />
+      <img data-flare {...responsive(image('hero'), 2752, '(max-width: 1440px) 100vw, 1376px')} alt="Hand holding a phone showing the Liziwaride home screen, beside the line: Ride smarter across Africa" width="2752" height="1520" fetchPriority="high" />
     </div>
 
     <header className={`${styles.wrap} ${styles.intro}`}>
@@ -121,7 +124,7 @@ export function LiziwarideCaseStudy() {
     </header>
 
     <div className={styles.fullBleed}>
-      <img data-flare src={image('showcase')} alt="The Liziwaride admin dashboard on a desktop monitor" width="2880" height="1404" loading="lazy" />
+      <img data-flare {...responsive(image('showcase'), 2880, '100vw')} alt="The Liziwaride admin dashboard on a desktop monitor" width="2880" height="1404" loading="lazy" />
     </div>
 
     <section className={`${styles.wrap} ${styles.split}`} aria-labelledby="process">
@@ -132,8 +135,8 @@ export function LiziwarideCaseStudy() {
     <section className={`${styles.wrap} ${styles.section}`} aria-labelledby="personas">
       <div className={styles.sectionHead}><Heading id="personas" title="Who we designed for" subtitle="Amara and Ibrahim" /><p>Amara commutes across Abuja for work and wants fast, predictable and safe rides. Ibrahim drives full time and needs steady trips, clear earnings and as few taps as possible while he is on the road.</p></div>
       <div className={styles.pair}>
-        <img data-flare src={image('persona-passenger')} alt="Passenger persona: Amara, a commuter in Abuja" width="1236" height="1120" loading="lazy" />
-        <img data-flare src={image('persona-driver')} alt="Driver persona: Ibrahim, a full-time driver" width="1236" height="1120" loading="lazy" />
+        <img data-flare {...responsive(image('persona-passenger'), 1236, '(max-width: 600px) 100vw, 50vw')} alt="Passenger persona: Amara, a commuter in Abuja" width="1236" height="1120" loading="lazy" />
+        <img data-flare {...responsive(image('persona-driver'), 1236, '(max-width: 600px) 100vw, 50vw')} alt="Driver persona: Ibrahim, a full-time driver" width="1236" height="1120" loading="lazy" />
       </div>
     </section>
 
@@ -146,7 +149,7 @@ export function LiziwarideCaseStudy() {
       <div className={styles.sectionHead}><Heading id={feature.id} title={feature.title} subtitle={feature.subtitle} /><p>{feature.copy}</p></div>
       <RevealOnScroll className={`${styles.bento} ${feature.columns === 4 ? styles.four : ''}`}>
         {feature.tiles.map(tile => <figure key={tile.file} className={tile.wide ? styles.wideTile : styles.tile}>
-          <img data-flare src={image(tile.file)} alt={tile.alt} loading="lazy" />
+          <img data-flare {...responsive(image(tile.file), tile.wide ? 1656 : feature.columns === 4 ? 606 : 816, tile.wide ? '(max-width: 600px) 100vw, 66vw' : '(max-width: 600px) 50vw, 33vw')} alt={tile.alt} loading="lazy" />
         </figure>)}
       </RevealOnScroll>
     </section>)}
@@ -155,14 +158,14 @@ export function LiziwarideCaseStudy() {
       <div className={`${styles.wrap} ${styles.sectionHead}`}><Heading id="admin" title="Admin dashboard" subtitle="running the network" /><p>Operators get a web dashboard for the whole network: live trips on a map, passengers and drivers, operations, finance, pricing, geography, partners, vehicles and settings.</p></div>
       <div className={styles.wrap}>
         {/* Reduced motion keeps the film paused on its poster with controls. */}
-        <video data-flare className={styles.film} src="/images/work/liziwaride/admin-film.mp4" poster="/images/work/liziwaride/admin-film-poster.jpg" width="1600" height="900" muted loop playsInline preload="none" autoPlay={!reduced} controls={reduced} aria-label="Film of an operator freezing a passenger account and opening Wallet & NFC Cards in the admin dashboard" />
+        <video data-flare className={styles.film} src="/images/work/liziwaride/admin-film.mp4" poster="/images/work/liziwaride/admin-film-poster.webp" width="1600" height="900" muted loop playsInline preload="none" autoPlay={!reduced} controls={reduced} aria-label="Film of an operator freezing a passenger account and opening Wallet & NFC Cards in the admin dashboard" />
       </div>
     </section>
 
     <section className={styles.section} aria-labelledby="final">
       <div className={`${styles.wrap} ${styles.sectionHead}`}><Heading id="final" title="Liziwaride" subtitle="on your home screen" /><p>The app icon and launch experience on iOS and Android.</p></div>
       <div className={styles.fullBleed}>
-        <img data-flare src={image('app-icon')} alt="The Liziwaride app icon on iOS and Android home screens" width="2880" height="1360" loading="lazy" />
+        <img data-flare {...responsive(image('app-icon'), 2880, '100vw')} alt="The Liziwaride app icon on iOS and Android home screens" width="2880" height="1360" loading="lazy" />
       </div>
     </section>
 
@@ -171,4 +174,6 @@ export function LiziwarideCaseStudy() {
       <Link to="/work/paymita">Paymita <ArrowTopRightIcon width={40} height={40} aria-hidden="true" /></Link>
     </nav>
   </article>
+  <ContactCta />
+  </>
 }

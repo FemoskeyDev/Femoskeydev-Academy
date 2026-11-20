@@ -2,9 +2,10 @@ import { usePageMeta } from '../../hooks/usePageMeta'
 import { ContactCta } from '../StudioPages/ContactCta'
 import { Heading, MediaBento, type BentoTile } from './parts'
 import { ShowcaseFilm } from './ShowcaseFilm'
+import { responsive } from '../../lib/images'
 import styles from './CaseStudy.module.css'
 
-const image = (file: string) => `/images/work/paymita/${file}.jpg`
+const image = (file: string) => `/images/work/paymita/${file}.webp`
 const tile = (file: string, alt: string, w = 408, h?: number): BentoTile => ({ src: image(file), alt, w, h })
 
 const meta = [
@@ -93,7 +94,7 @@ export function PaymitaCaseStudy() {
           <p className={styles.renderHeroTitle}><span>Pay your bills</span> in seconds.</p>
           <p>Airtime, data, power, TV and airtime to cash, all from one wallet.</p>
         </div>
-        <img data-flare src={image('hero-render')} alt="The Paymita home screen on an iPhone, beside a Paymita virtual Mastercard and the back of a second phone" width="2000" height="1000" fetchPriority="high" />
+        <img data-flare {...responsive(image('hero-render'), 2000, '(max-width: 1440px) 100vw, 1376px')} alt="The Paymita home screen on an iPhone, beside a Paymita virtual Mastercard and the back of a second phone" width="2000" height="1000" fetchPriority="high" />
       </div>
 
       <header className={`${styles.wrap} ${styles.intro}`}>

@@ -3,9 +3,10 @@ import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 import { usePageMeta } from '../../hooks/usePageMeta'
 import { ContactCta } from '../StudioPages/ContactCta'
 import { Heading, MediaBento, type BentoTile } from './parts'
+import { responsive } from '../../lib/images'
 import styles from './CaseStudy.module.css'
 
-const image = (file: string) => `/images/work/savecircle/${file}.jpg`
+const image = (file: string) => `/images/work/savecircle/${file}.webp`
 const tile = (file: string, alt: string, w = 408, h?: number): BentoTile => ({ src: image(file), alt, w, h })
 
 const meta = [
@@ -87,7 +88,7 @@ export function SaveCircleCaseStudy() {
   return <>
     <article className={styles.page}>
       <div className={styles.hero} style={{ background: '#8f2ceb' }}>
-        <img data-flare src={image('hero')} alt="SaveCircle home and circle screens on two phones, beside the line: Save together, grow together" width="2752" height="1520" fetchPriority="high" />
+        <img data-flare {...responsive(image('hero'), 2752, '(max-width: 1440px) 100vw, 1376px')} alt="SaveCircle home and circle screens on two phones, beside the line: Save together, grow together" width="2752" height="1520" fetchPriority="high" />
       </div>
 
       <header className={`${styles.wrap} ${styles.intro}`}>
@@ -105,7 +106,7 @@ export function SaveCircleCaseStudy() {
       </header>
 
       <div className={styles.fullBleed}>
-        <img data-flare src={image('showcase')} alt="The SaveCircle app on a phone beside the admin dashboard" width="2880" height="1704" loading="lazy" />
+        <img data-flare {...responsive(image('showcase'), 2880, '100vw')} alt="The SaveCircle app on a phone beside the admin dashboard" width="2880" height="1704" loading="lazy" />
       </div>
 
       {sections.map(section => <section key={section.id} className={`${styles.wrap} ${styles.section}`} aria-labelledby={section.id}>
@@ -116,7 +117,7 @@ export function SaveCircleCaseStudy() {
       <section className={styles.section} aria-labelledby="admin">
         <div className={`${styles.wrap} ${styles.sectionHead}`}><Heading id="admin" title="Admin dashboard" subtitle="the whole network" /><p>Operators manage circles, members and contributions.</p></div>
         <div className={styles.fullBleed}>
-          <img data-flare src={image('admin-desk')} alt="The SaveCircle admin dashboard on a monitor, on a white desk shelf with a speaker, a small computer, a keyboard and a mouse" width="2560" height="1440" loading="lazy" />
+          <img data-flare {...responsive(image('admin-desk'), 2560, '100vw')} alt="The SaveCircle admin dashboard on a monitor, on a white desk shelf with a speaker, a small computer, a keyboard and a mouse" width="2560" height="1440" loading="lazy" />
         </div>
       </section>
 

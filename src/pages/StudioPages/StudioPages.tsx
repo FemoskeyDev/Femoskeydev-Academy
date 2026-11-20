@@ -8,6 +8,7 @@ import { usePageMeta } from '../../hooks/usePageMeta'
 import { ContactOptions } from '../ContactPage/sections/ContactOptions'
 import { projects } from '../../data/projects'
 import { ProjectCover } from './ProjectCover'
+import { ContactCta } from './ContactCta'
 import styles from './StudioPages.module.css'
 
 const description = 'Femoskeydev is a founder-led digital design and development studio for products and websites.'
@@ -75,7 +76,7 @@ export function WorkPage() {
       <p>Explore the products we’ve designed, from Liziwaride’s mobility apps to Paymita’s payments wallet, with more on the way.</p>
     </PageIntro>
     <section className={`${styles.wrap} ${styles.workList}`} aria-label="Projects"><ProjectGrid /></section>
-    <ContactBanner />
+    <ContactCta />
   </div>
 }
 

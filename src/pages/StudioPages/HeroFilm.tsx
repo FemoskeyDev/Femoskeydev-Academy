@@ -3,7 +3,7 @@ import { useReducedMotion } from '../../hooks/useReducedMotion'
 import styles from './PortfolioLanding.module.css'
 
 const film = '/images/work/liziwaride/admin-film.mp4'
-const poster = '/images/work/liziwaride/admin-film-poster.jpg'
+const poster = '/images/work/liziwaride/admin-film-poster.webp'
 
 /** The Liziwaride admin film: settles in on load, then plays only while it is on screen. */
 export function HeroFilm() {

@@ -37,7 +37,7 @@ describe('Studio routes', () => {
     expect(screen.getByRole('link', { name: /Paymita/ })).toHaveAttribute('href', '/work/paymita')
     expect(screen.getByLabelText('EdgeCore, case study coming soon')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /SaveCircle/ })).toHaveAttribute('href', '/work/savecircle')
-    expect(screen.getByRole('link', { name: /Start a project/ })).toHaveAttribute('href', booking)
+    expect(screen.getByRole('link', { name: 'Get in touch' })).toHaveAttribute('href', booking)
   })
   it('opens the Paymita case study from its homepage cover', async () => {
     renderAt('/')

@@ -49,6 +49,6 @@ export const projects: Project[] = [
     name: 'EdgeCore',
     type: 'Case study · Coming soon',
     summary: 'A new case study is on its way.',
-    cover: { background: '#246172', src: '/images/work/edgecore/cover.jpg', kind: 'image' },
+    cover: { background: '#246172', src: '/images/work/edgecore/cover.webp', kind: 'image' },
   },
 ]
