@@ -1,0 +1,43 @@
+/*
+ * Route change: the page shrinks into a card, the cards slide sideways,
+ * then the arriving card grows back to fill the viewport.
+ * Persistent navigation stays anchored above the moving cards.
+ */
+:root {
+  --page-transition-duration: 950ms;
+  --page-transition-backdrop: #e9e6e1;
+  --page-transition-ease: cubic-bezier(.65, 0, .35, 1);
+}
+header:has(#site-navigation) { view-transition-name: site-navigation; }
+::view-transition { pointer-events: none; background: var(--page-transition-backdrop); }
+::view-transition-group(root) { animation-duration: var(--page-transition-duration); }
+::view-transition-old(root),::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation-duration: var(--page-transition-duration);
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+::view-transition-old(root) { animation-name: page-card-out; }
+::view-transition-new(root) { animation-name: page-card-in; }
+::view-transition-group(site-navigation) { z-index: 1; animation: none; }
+::view-transition-old(site-navigation) { display: none; }
+::view-transition-new(site-navigation) { animation: none; }
+
+/* Shrink 0–16%, slide 16–53%, hold 53–68%, grow 68–100%. */
+@keyframes page-card-out {
+  0% { transform: translateX(0) scale(1); animation-timing-function: var(--page-transition-ease); }
+  16% { transform: translateX(0) scale(.85); animation-timing-function: var(--page-transition-ease); }
+  53%, 100% { transform: translateX(-100%) scale(.85); }
+}
+@keyframes page-card-in {
+  0%, 16% { transform: translateX(100%) scale(.85); animation-timing-function: var(--page-transition-ease); }
+  53% { transform: translateX(0) scale(.85); }
+  68% { transform: translateX(0) scale(.85); animation-timing-function: var(--page-transition-ease); }
+  100% { transform: translateX(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*) { animation: none; }
+}
+html[data-page-transition="fallback"] body { background: var(--page-transition-backdrop); overflow-x: hidden; }
+html[data-page-transition="fallback"] #main-content { transform-origin: 50% 50vh; }
+html[data-page-transition] [data-navigation-backdrop] { visibility: hidden; opacity: 0; transition: none; }

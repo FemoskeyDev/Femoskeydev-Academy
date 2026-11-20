@@ -23,33 +23,42 @@ function summarizeFiles(files: ChangedFile[]) {
   }, { added: 0, updated: 0, removed: 0 })
 }
 
+async function fetchHistory() {
+  const response = await fetch('/__femoskey-version-control/history', { cache: 'no-store' })
+  if (!response.ok) throw new Error('Could not load the local commit history.')
+  const data = await response.json() as { commits: Commit[] }
+  return data.commits
+}
+
 export function VersionControlPage() {
   const [commits, setCommits] = useState<Commit[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [lastUpdated, setLastUpdated] = useState('')
 
-  const refreshHistory = useCallback(async () => {
+  // Update state only once the request settles.
+  const showHistory = useCallback((request: Promise<Commit[]>) => request
+    .then(history => {
+      setError('')
+      setCommits(history)
+      setLastUpdated(new Date().toISOString())
+    })
+    .catch((cause: unknown) => {
+      setError(cause instanceof Error ? cause.message : 'Could not load the local commit history.')
+    })
+    .finally(() => setLoading(false)), [])
+
+  const refreshHistory = useCallback(() => {
     setLoading(true)
     setError('')
-    try {
-      const response = await fetch('/__femoskey-version-control/history', { cache: 'no-store' })
-      if (!response.ok) throw new Error('Could not load the local commit history.')
-      const data = await response.json() as { commits: Commit[] }
-      setCommits(data.commits)
-      setLastUpdated(new Date().toISOString())
-    } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Could not load the local commit history.')
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+    void showHistory(fetchHistory())
+  }, [showHistory])
 
   useEffect(() => {
-    void refreshHistory()
-    const timer = window.setInterval(() => void refreshHistory(), 30_000)
+    void showHistory(fetchHistory())
+    const timer = window.setInterval(() => void showHistory(fetchHistory()), 30_000)
     return () => window.clearInterval(timer)
-  }, [refreshHistory])
+  }, [showHistory])
 
   return <main className={styles.page}>
     <header className={styles.heading}>
@@ -58,7 +67,7 @@ export function VersionControlPage() {
         <h1>Version <em>control</em></h1>
         <p className={styles.description}>A live record of commits and the files changed in this project.</p>
       </div>
-      <button className={styles.refresh} type="button" onClick={() => void refreshHistory()} disabled={loading}>
+      <button className={styles.refresh} type="button" onClick={refreshHistory} disabled={loading}>
         <span aria-hidden="true">↻</span> {loading ? 'UPDATING' : 'REFRESH HISTORY'}
       </button>
     </header>

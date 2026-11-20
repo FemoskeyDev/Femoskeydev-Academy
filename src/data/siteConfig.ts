@@ -10,9 +10,11 @@ export const siteConfig = {
     primaryAction: 'Explore Learning Paths',
     secondaryAction: 'Join the Community',
   },
+  /** Where every Contact link goes: the studio's Cal.com booking page. */
+  bookingUrl: 'https://cal.com/femoskeydev',
+  studioContactUrl: '',
   contactUrl: '',
   communityUrl: '',
   logo: '/logo.svg',
   portrait: '/images/femoskeydev-portrait-hero.png',
-  cyberneticPortrait: '/images/cybernetic-portrait.png',
 } as const

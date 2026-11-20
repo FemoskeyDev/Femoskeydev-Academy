@@ -11,7 +11,7 @@
   min-height: 100svh;
   overflow: hidden;
   padding: 80px clamp(24px, 7vw, 112px);
-  background: transparent;
+  background: var(--color-ink);
   color: var(--color-canvas);
 }
 

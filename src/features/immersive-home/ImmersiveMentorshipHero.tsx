@@ -1,5 +1,5 @@
 import { useCallback, useLayoutEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Button } from '../../components/ui/Button'
 import { gsap } from 'gsap'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { CreativeScanner } from './CreativeScanner'
@@ -39,8 +39,8 @@ export function ImmersiveMentorshipHero() {
         <h1 id="mentorship-hero-title" data-intro="copy">Get guidance<br/>as you build<br/><em>your skills.</em></h1>
         <p className={styles.support} data-intro="copy">Learn through practice, thoughtful feedback, and support shaped around your creative growth.</p>
         <div className={styles.actions} data-intro="copy">
-          <Link className={styles.primary} to="/contact">Ask about mentorship <span aria-hidden="true">↗</span></Link>
-          <a className={styles.secondary} href="#mentorship-approach">How mentorship works <span aria-hidden="true">↓</span></a>
+          <Button to="/contact">Ask about mentorship</Button>
+          <Button href="#mentorship-approach">How mentorship works</Button>
         </div>
         <p className={styles.note} data-intro="copy">A thoughtful process, shaped around the work you want to make.</p>
       </div>

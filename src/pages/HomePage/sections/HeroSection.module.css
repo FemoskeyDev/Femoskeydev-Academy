@@ -77,14 +77,6 @@
   justify-content: center;
 }
 
-.actions :global(.button) {
-  min-height: 48px;
-  padding-inline: 22px;
-  background: var(--color-lime);
-  color: var(--color-ink);
-  animation: hero-enter 440ms cubic-bezier(.2, .7, .2, 1) 180ms both;
-}
-
 /* The panorama component fills this full-bleed stage. */
 .carouselFrame {
   position: relative;
@@ -162,12 +154,6 @@
     height: 100%;
     min-height: 0;
   }
-
-
-  .actions :global(.button) {
-    min-height: 46px;
-    padding-inline: 18px;
-  }
 }
 
 @media (max-width: 390px) {
@@ -204,20 +190,12 @@
     height: 205px;
     margin-top: 8px;
   }
-
-  .actions :global(.button) {
-    min-height: 44px;
-    padding-inline: 16px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .tag,
   .intro h1,
-  .intro p,
-  .actions :global(.button) {
-    animation: none;
-  }
+  .intro p { animation: none; }
 }
 
 

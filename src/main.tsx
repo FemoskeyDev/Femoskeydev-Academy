@@ -7,5 +7,7 @@ import './styles/global.css'
 import './styles/brand.css'
 import './styles/architecture.css'
 import './styles/utilities.css'
+import './styles/consistency.css'
+import './styles/page-transitions.css'
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>)

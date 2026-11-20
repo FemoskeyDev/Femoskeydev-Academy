@@ -98,7 +98,7 @@ export function HeroSection() {
   return (
     <section className={styles.hero} aria-labelledby="home-hero-title">
       <div className={styles.intro}>
-        <span className={styles.tag}>A COMMUNITY FOR AMBITIOUS CREATIVES</span>
+        <span className={styles.tag}>FEMOSKEYDEV ACADEMY</span>
         <h1
           id="home-hero-title"
           aria-label={`${hero.headline.before} ${hero.headline.emphasis}`}

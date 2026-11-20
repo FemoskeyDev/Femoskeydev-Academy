@@ -1,0 +1,7 @@
+.soon { position:relative; cursor:default; }
+.soon:focus-visible { outline:3px solid var(--focus-color); outline-offset:3px; border-radius:6px; }
+.tip { position:absolute; left:50%; z-index:5; padding:6px 10px; border-radius:999px; background:#0b0d0b; color:#fff; font-size:12px; font-weight:500; line-height:1.2; letter-spacing:0; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%,4px); transition:opacity 180ms ease, transform 240ms var(--ease-standard); }
+.tip[data-placement='below'] { top:calc(100% + 4px); }
+.tip[data-placement='above'] { bottom:calc(100% + 4px); transform:translate(-50%,-4px); }
+.soon:is(:hover,:focus) .tip { opacity:1; transform:translate(-50%,0); }
+@media (prefers-reduced-motion: reduce) { .tip { transition:none; } }

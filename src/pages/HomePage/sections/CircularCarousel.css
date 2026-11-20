@@ -200,10 +200,6 @@
   white-space: nowrap;
 }
 
-.circular-carousel__control {
-  display: none !important;
-}
-
 @keyframes circular-carousel-title {
   from {
     opacity: 0;
@@ -279,13 +275,13 @@
 }
 
 .circular-carousel__control:hover {
-  background: var(--color-lime, #c8fdce);
+  background: var(--color-lime, var(--color-primary));
   border-color: var(--color-ink, #111);
   scale: 1.04;
 }
 
 .circular-carousel__control:focus-visible {
-  outline: 2px solid var(--color-lime, #c8fdce);
+  outline: 2px solid var(--color-lime, var(--color-primary));
   outline-offset: 3px;
 }
 

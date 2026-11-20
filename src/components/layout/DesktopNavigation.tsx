@@ -1,4 +1,17 @@
-import { NavLink } from 'react-router-dom'
-import { navigation } from '../../data/navigation'
-import { Button } from '../ui/Button'
-export function DesktopNavigation() { return <nav className="nav desktop-nav" aria-label="Main navigation">{navigation.map(item => <NavLink key={item.to} to={item.to} className={({ isActive }) => isActive ? 'nav-active' : ''}>{item.label}</NavLink>)}<Button to="/learning-paths" className="nav-cta">Start Learning</Button></nav> }
+import { NavLink, useLocation } from 'react-router-dom'
+import { isAcademyPath, navigation } from '../../data/navigation'
+
+export function NavigationLinks({ onNavigate }: { onNavigate?: () => void }) {
+  const { pathname } = useLocation()
+  return navigation.map(item => <NavLink
+    key={item.to}
+    to={item.to}
+    end={item.to === '/'}
+    onClick={onNavigate}
+    className={({ isActive }) => isActive || item.to === '/academy' && isAcademyPath(pathname) ? 'nav-active' : ''}
+  >{item.label}</NavLink>)
+}
+
+export function DesktopNavigation() {
+  return <nav className="nav desktop-nav" aria-label="Main navigation"><NavigationLinks /></nav>
+}

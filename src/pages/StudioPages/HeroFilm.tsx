@@ -1,0 +1,56 @@
+import { useEffect, useRef, useState } from 'react'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
+import styles from './PortfolioLanding.module.css'
+
+const film = '/images/work/liziwaride/admin-film.mp4'
+const poster = '/images/work/liziwaride/admin-film-poster.jpg'
+
+/** The Liziwaride admin film: settles in on load, then plays only while it is on screen. */
+export function HeroFilm() {
+  const frameRef = useRef<HTMLSpanElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+  const reduced = useReducedMotion()
+
+  useEffect(() => {
+    const frame = frameRef.current
+    if (reduced || !frame?.animate) return
+    // Same settle as the studio tiles: scaled down, slightly tilted and lowered, then into place.
+    const animation = frame.animate([
+      { opacity: 0, transform: 'translate3d(7px, 36px, 0) rotate(3.5deg) scale(.86)' },
+      { opacity: 1, transform: 'none' },
+    ], { duration: 1100, delay: 150, easing: 'cubic-bezier(.22, 1, .36, 1)', fill: 'backwards' })
+    // Hold the start pose until the intro loader has left, so the settle is actually seen.
+    const root = document.documentElement
+    const loaderGone = () => !root.classList.contains('app-starting')
+    let watcher: MutationObserver | undefined
+    if (loaderGone()) animation.play()
+    else {
+      animation.pause()
+      watcher = new MutationObserver(() => {
+        if (!loaderGone()) return
+        watcher?.disconnect()
+        animation.play()
+      })
+      watcher.observe(root, { attributes: true, attributeFilter: ['class'] })
+    }
+    return () => { watcher?.disconnect(); animation.cancel() }
+  }, [reduced])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (reduced || !video || !('IntersectionObserver' in window)) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) void video.play().catch(() => undefined)
+      else video.pause()
+    }, { threshold: 0.25 })
+    observer.observe(video)
+    return () => { observer.disconnect(); video.pause() }
+  }, [reduced])
+
+  return <span ref={frameRef} className={styles.heroFilm}>
+    <img data-flare src={poster} alt="Liziwaride admin dashboard on a monitor" fetchPriority="high" />
+    {!reduced && <video data-flare ref={videoRef} src={film} muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
+      data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
+  </span>
+}

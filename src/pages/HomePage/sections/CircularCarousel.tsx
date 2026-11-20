@@ -1,4 +1,6 @@
 // React Bits CircularCarousel, adapted for this Vite + React application.
+// Vendored JavaScript component; type checking is left off for this file.
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
 import type { CSSProperties } from 'react';
@@ -306,7 +308,6 @@ const CircularCarousel = ({
   const [ready, setReady] = useState(false);
   const [dragging, setDragging] = useState(false);
   const readyRef = useRef(false);
-  readyRef.current = ready;
 
   const stateRef = useRef({
     angle: 0,
@@ -356,10 +357,8 @@ const CircularCarousel = ({
     reduced
   };
   const settingsRef = useRef(settings);
-  settingsRef.current = settings;
 
   const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
 
   const dragSign = layout.inward ? -1 : 1;
   const directionSign = (direction === 'right' ? 1 : -1) * dragSign;
@@ -370,9 +369,16 @@ const CircularCarousel = ({
   }, [directionSign]);
 
   const incomingRef = useRef(incoming);
-  incomingRef.current = incoming;
   const listRef = useRef(list);
-  listRef.current = list;
+
+  // Keep the latest render values available to the animation loop and listeners.
+  useLayoutEffect(() => {
+    readyRef.current = ready;
+    settingsRef.current = settings;
+    onChangeRef.current = onChange;
+    incomingRef.current = incoming;
+    listRef.current = list;
+  });
   const sourcesKey = incoming.map(item => item.src).join('|');
 
   useEffect(() => {
@@ -796,7 +802,9 @@ const CircularCarousel = ({
       setDragging(true);
       try {
         rootRef.current.setPointerCapture(event.pointerId);
-      } catch {}
+      } catch {
+        // Pointer capture is optional; dragging still works without it.
+      }
     }
     const perPixel = 180 / (Math.PI * s.radius * state.fit);
     state.angle = press.angle + (delta - press.origin) * perPixel * (s.layout.inward ? -1 : 1);

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="715" height="560" viewBox="0 0 715 560"><title>Proposal: a timeline, budget and deliverables plan</title>
+<rect width="715" height="560" fill="#fffacf"/>
+<!-- Plan board with a timeline -->
+<rect x="80" y="100" width="420" height="300" rx="22" fill="#fff" stroke="#18251d" stroke-width="3"/>
+<path d="M80 152h420" stroke="#18251d" stroke-width="3"/>
+<circle cx="108" cy="126" r="7" fill="#c8fdce"/><circle cx="130" cy="126" r="7" fill="#ffd5bf"/><circle cx="152" cy="126" r="7" fill="#ffcff7"/>
+<path d="M190 176v196m80-196v196m80-196v196m80-196v196" stroke="#e9ede7" stroke-width="3"/>
+<rect x="110" y="190" width="150" height="34" rx="17" fill="#c8fdce" stroke="#18251d" stroke-width="3"/>
+<rect x="200" y="244" width="180" height="34" rx="17" fill="#ffd5bf" stroke="#18251d" stroke-width="3"/>
+<rect x="300" y="298" width="170" height="34" rx="17" fill="#ffcff7" stroke="#18251d" stroke-width="3"/>
+<path d="M118 352h120" stroke="#88968a" stroke-width="7" stroke-linecap="round"/>
+<!-- Budget card -->
+<g transform="rotate(7 560 220)"><rect x="470" y="120" width="180" height="200" rx="18" fill="#18251d"/>
+<circle cx="560" cy="200" r="52" fill="none" stroke="#3b4a40" stroke-width="22"/>
+<path d="M560 148a52 52 0 0 1 49 69" fill="none" stroke="#c8fdce" stroke-width="22"/>
+<path d="M609 217a52 52 0 0 1-60 34" fill="none" stroke="#ffd5bf" stroke-width="22"/>
+<path d="M512 288h96" stroke="#88968a" stroke-width="7" stroke-linecap="round"/></g>
+<!-- Deliverables checklist -->
+<g transform="rotate(-5 380 440)"><rect x="270" y="370" width="250" height="132" rx="18" fill="#c8fdce" stroke="#18251d" stroke-width="3"/>
+<g fill="#fff" stroke="#18251d" stroke-width="3"><rect x="296" y="396" width="22" height="22" rx="6"/><rect x="296" y="444" width="22" height="22" rx="6"/></g>
+<path d="m300 407 5 5 9-11m-14 59 5 5 9-11" fill="none" stroke="#18251d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 407h148m-148 48h110" stroke="#18251d" stroke-width="7" stroke-linecap="round"/></g>
+<!-- Brand star -->
+<path d="M140 420q0 40-40 40 40 0 40 40 0-40 40-40-40 0-40-40Z" fill="#18251d"/>
+</svg>

@@ -1,27 +1,31 @@
 import { SiteLayout } from '../components/layout/SiteLayout'
-import { HomePage } from '../pages/HomePage/HomePage'
-import { LearningPathsPage } from '../pages/LearningPathsPage/LearningPathsPage'
-import { LearningPathDetailPage } from '../pages/LearningPathDetailPage/LearningPathDetailPage'
-import { MentorshipPage } from '../pages/MentorshipPage/MentorshipPage'
-import { CommunityPage } from '../pages/CommunityPage/CommunityPage'
-import { AboutPage } from '../pages/AboutPage/AboutPage'
-import { ContactPage } from '../pages/ContactPage/ContactPage'
+import { WorkPage } from '../pages/StudioPages/StudioPages'
+import { ComingSoonPage } from '../pages/ComingSoonPage/ComingSoonPage'
+import { PortfolioLanding } from '../pages/StudioPages/PortfolioLanding'
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage'
 
+/** Loads a page module only when its route is first visited, keeping the studio homepage bundle small. */
+const page = <T,>(load: () => Promise<T>, pick: (module: T) => React.ComponentType) =>
+  async () => ({ Component: pick(await load()) })
+
+// Only the portfolio, the work page and the case studies are live; every other page shows Coming soon.
+const comingSoon = [
+  ['services', 'Services'], ['studio', 'About'], ['contact', 'Contact'], ['academy', 'The Academy'],
+  ['learning-paths/*', 'Learning paths'], ['learning-paths', 'Learning paths'], ['mentorship', 'Mentorship'],
+  ['community', 'Community'], ['about', 'About'],
+] as const
+
 export const routeConfig = [{ path: '/', element: <SiteLayout/>, children: [
-  { index: true, element: <HomePage/> },
-  { path: 'learning-paths', element: <LearningPathsPage/> },
-  { path: 'learning-paths/:slug', element: <LearningPathDetailPage/> },
-  { path: 'mentorship', element: <MentorshipPage/> },
-  { path: 'community', element: <CommunityPage/> },
-  { path: 'about', element: <AboutPage/> },
-  { path: 'contact', element: <ContactPage/> },
+  { index: true, element: <PortfolioLanding/> },
+  { path: 'work', element: <WorkPage/> },
+  // Case studies are split into their own chunks.
+  { path: 'work/liziwaride', lazy: page(() => import('../pages/CaseStudies/LiziwarideCaseStudy'), m => m.LiziwarideCaseStudy) },
+  { path: 'work/paymita', lazy: page(() => import('../pages/CaseStudies/PaymitaCaseStudy'), m => m.PaymitaCaseStudy) },
+  { path: 'work/savecircle', lazy: page(() => import('../pages/CaseStudies/SaveCircleCaseStudy'), m => m.SaveCircleCaseStudy) },
+  ...comingSoon.map(([path, title]) => ({ path, element: <ComingSoonPage title={title}/> })),
   ...(import.meta.env.DEV ? [{
     path: 'version-control',
-    lazy: async () => {
-      const page = await import('../pages/VersionControlPage/VersionControlPage')
-      return { Component: page.VersionControlPage }
-    },
+    lazy: page(() => import('../pages/VersionControlPage/VersionControlPage'), m => m.VersionControlPage),
   }] : []),
   { path: '*', element: <NotFoundPage/> },
 ]}]

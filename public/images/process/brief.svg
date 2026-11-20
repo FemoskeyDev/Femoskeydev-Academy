@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="715" height="560" viewBox="0 0 715 560"><title>Brief: a conversation and a project questionnaire</title>
+<rect width="715" height="560" fill="#ffd5bf"/>
+<!-- Questionnaire clipboard -->
+<g transform="rotate(-6 470 290)">
+<rect x="360" y="110" width="230" height="330" rx="18" fill="#fff" stroke="#18251d" stroke-width="3"/>
+<rect x="430" y="92" width="90" height="38" rx="10" fill="#18251d"/>
+<path d="M392 170h120" stroke="#18251d" stroke-width="8" stroke-linecap="round"/>
+<g fill="#fff" stroke="#18251d" stroke-width="3"><rect x="392" y="206" width="24" height="24" rx="6" fill="#c8fdce"/><rect x="392" y="262" width="24" height="24" rx="6" fill="#c8fdce"/><rect x="392" y="318" width="24" height="24" rx="6"/><rect x="392" y="374" width="24" height="24" rx="6"/></g>
+<path d="m397 218 6 6 10-12m-16 62 6 6 10-12" fill="none" stroke="#18251d" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M432 218h118m-118 56h96m-118 56h108m-108 56h80" stroke="#88968a" stroke-width="7" stroke-linecap="round" transform="translate(10 0)"/>
+</g>
+<!-- Pencil -->
+<g transform="rotate(38 600 420)"><rect x="560" y="404" width="120" height="26" rx="6" fill="#fffacf" stroke="#18251d" stroke-width="3"/><path d="m560 404-26 13 26 13Z" fill="#fff" stroke="#18251d" stroke-width="3" stroke-linejoin="round"/><path d="m542 413-8 4 8 4Z" fill="#18251d"/><path d="M660 404v26" stroke="#18251d" stroke-width="3"/></g>
+<!-- Conversation -->
+<rect x="92" y="138" width="230" height="100" rx="26" fill="#fff" stroke="#18251d" stroke-width="3"/>
+<path d="m132 236-14 32 40-30" fill="#fff" stroke="#18251d" stroke-width="3" stroke-linejoin="round"/><path d="M128 236h34" stroke="#fff" stroke-width="5"/>
+<path d="M126 176h150m-150 28h96" stroke="#88968a" stroke-width="8" stroke-linecap="round"/>
+<rect x="150" y="290" width="200" height="88" rx="24" fill="#c8fdce" stroke="#18251d" stroke-width="3"/>
+<path d="m312 376 22 30-46-28" fill="#c8fdce" stroke="#18251d" stroke-width="3" stroke-linejoin="round"/><path d="M290 376h34" stroke="#c8fdce" stroke-width="5"/>
+<circle cx="200" cy="334" r="9" fill="#18251d"/><circle cx="234" cy="334" r="9" fill="#18251d"/><circle cx="268" cy="334" r="9" fill="#18251d"/>
+<!-- Brand star -->
+<path d="M110 360q0 42-42 42 42 0 42 42 0-42 42-42-42 0-42-42Z" fill="#18251d"/>
+</svg>

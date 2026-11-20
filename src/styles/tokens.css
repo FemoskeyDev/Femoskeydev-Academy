@@ -1,29 +1,36 @@
 :root {
   font-family: "Tomato Grotesk", Arial, sans-serif;
   color: #151515;
-  background: #f7f6f1;
+  background: #FAFAFA;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   --color-ink: #151515;
-  --color-canvas: #f7f6f1;
+  --color-canvas: #FAFAFA;
   --color-white: #fff;
   --color-blue: #6a9dff;
-  --color-lime: #b6ff39;
+  --color-primary: #C8FDCE;
+  --color-lime: var(--color-primary);
   --color-muted: #777;
   --color-border: rgba(21, 21, 21, 0.13);
   --color-glass: rgba(255, 255, 255, 0.72);
   --heading-tracking: -0.04em;
-  --page-margin: clamp(22px, 6.25vw, 96px);
-  --section-space: clamp(84px, 12vw, 170px);
-  --content-max: 1440px;
-  --header-height: 88px;
+  --page-margin: clamp(24px, 6.67vw, 96px);
+  --section-space: clamp(64px, 11.2vw, 160px);
+  --content-max: 1248px;
+  --header-height: 76px;
   --radius: 4px;
   --button-height: 51px;
-  --focus: 0 0 0 3px #f7f6f1, 0 0 0 6px #3265c7;
+  --focus-color: #3265c7;
+  --focus: 0 0 0 3px var(--color-canvas), 0 0 0 6px var(--focus-color);
+  --heading-weight: 500;
+  --transition: var(--duration-medium) var(--ease-standard);
   --duration-fast: 120ms;
   --duration-medium: 180ms;
   --duration-slow: 650ms;
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --robot-reveal-radius: 145px;
   --robot-reveal-feather: 48px;
+}
+@media (max-width: 900px) {
+  :root { --page-margin: 24px; }
 }

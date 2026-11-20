@@ -1,0 +1,99 @@
+.page { --case-muted:#777; --case-tile:var(--color-white); background:var(--color-canvas); color:var(--color-ink); font-family:'Tomato Grotesk',Arial,sans-serif; padding-bottom:var(--section-space); overflow:clip; }
+.page h1,.page h2,.page h3,.page p,.page figure,.page dl,.page dd { margin:0; }
+.page img { display:block; width:100%; height:auto; }
+.wrap { width:calc(100% - 2 * var(--page-margin)); max-width:var(--content-max); margin-inline:auto; }
+
+.hero { width:calc(100% - 64px); max-width:1376px; margin:32px auto 0; border-radius:32px; overflow:hidden; background:#5b3fd6; }
+/* Copy above a 3D render. The card's gradient matches the render's top edge, which is faded into it in the image itself. */
+.renderHero { display:grid; justify-items:center; padding-top:clamp(56px,7vw,104px); background:linear-gradient(90deg,#326cce,#3972d6 25%,#3a77dd 50%,#5188f6 75%,#679cff); color:#fff; text-align:center; }
+.renderHeroCopy { display:grid; justify-items:center; gap:clamp(14px,1.6vw,22px); width:calc(100% - 48px); max-width:760px; }
+.renderHeroCopy p:first-child { font-size:clamp(15px,1.3vw,18px); font-weight:500; opacity:.85; }
+.page .renderHeroTitle { font-size:clamp(44px,6.4vw,92px); font-weight:500; line-height:.98; letter-spacing:-.04em; }
+.renderHeroTitle span { display:block; color:rgba(255,255,255,.62); }
+.renderHeroCopy p:last-child { max-width:34ch; text-wrap:balance; font-size:clamp(17px,1.6vw,22px); line-height:1.4; opacity:.88; }
+/* The edge flare redraws the render above the page with one corner radius, so it never overlaps the copy and
+   takes the card's rounding; its top corners blend into the matching gradient. */
+.renderHero>img { border-radius:inherit; }
+
+.intro { padding-block:clamp(56px,8vw,112px); display:grid; gap:24px; }
+.kicker { color:var(--case-muted); font-size:12px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; }
+.intro h1 { font-size:clamp(56px,6.7vw,96px); font-weight:500; line-height:1; letter-spacing:-.03em; }
+.lede { max-width:30ch; color:var(--case-muted); font-size:clamp(26px,2.8vw,40px); font-weight:500; line-height:1.15; letter-spacing:-.02em; }
+.details { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:clamp(32px,6vw,96px); margin-top:clamp(24px,4vw,56px); padding-top:32px; border-top:1px solid var(--color-border); }
+.details>p { font-size:20px; line-height:1.6; }
+.meta { display:grid; grid-template-columns:1fr 1fr; gap:28px 32px; }
+.meta dt { color:var(--case-muted); font-size:12px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px; }
+.meta dd { font-size:18px; line-height:1.45; }
+.metaWide { grid-column:1 / -1; }
+
+.fullBleed { width:100%; }
+.showcaseFilm { position:relative; background:#2f5be0; }
+.showcaseFilm video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; object-fit:cover; }
+/* Above the edge-flare canvas (z-index 20), below the header (30). */
+.soundToggle { position:absolute; z-index:25; right:clamp(16px,3vw,32px); bottom:clamp(16px,3vw,32px); display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 16px; border:0; border-radius:999px; background:rgba(11,13,11,.72); color:#fff; font:500 14px 'Tomato Grotesk',Arial,sans-serif; backdrop-filter:blur(10px); cursor:pointer; transition:background var(--transition); }
+.soundToggle:hover { background:rgba(11,13,11,.88); }
+.soundToggle:focus-visible { outline:3px solid var(--focus-color); outline-offset:3px; }
+.film { display:block; width:100%; height:auto; aspect-ratio:16 / 9; border-radius:24px; background:#dfe6d8; object-fit:cover; }
+@media(max-width:600px) { .film { border-radius:16px; } }
+
+.section { padding-top:var(--section-space); }
+.heading { font-size:clamp(34px,3.4vw,48px); font-weight:500; line-height:1.1; letter-spacing:-.025em; }
+.heading span { display:block; color:var(--case-muted); }
+.sectionHead { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(24px,6vw,96px); align-items:end; margin-bottom:clamp(32px,4vw,56px); }
+.sectionHead>p,.splitIntro>p { color:var(--case-muted); font-size:20px; line-height:1.5; max-width:46ch; }
+
+.split { padding-top:var(--section-space); display:grid; grid-template-columns:minmax(0,440px) minmax(0,712px); justify-content:space-between; gap:48px; }
+.splitIntro { display:grid; gap:20px; align-content:start; position:sticky; top:calc(var(--header-height) + 32px); }
+.rows { list-style:none; padding:0; margin:0; }
+.rows>li { display:grid; grid-template-columns:64px minmax(0,1fr); gap:24px; padding-block:32px; border-top:1px solid var(--color-border); }
+.rows>li:last-child { border-bottom:1px solid var(--color-border); }
+.number { color:var(--case-muted); font-size:20px; font-weight:500; }
+.rows h3 { font-size:clamp(22px,2vw,28px); font-weight:500; line-height:1.2; margin-bottom:10px; }
+.rows p { color:var(--case-muted); font-size:18px; line-height:1.55; }
+
+.pair { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.pair img { border-radius:16px; background:var(--case-tile); }
+
+.bento { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.four { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.tile,.wideTile { border-radius:16px; overflow:hidden; background:var(--case-tile); }
+.wideTile { grid-column:span 2; }
+/* Tiles keep the exported proportions; the wide tile fills its row height. */
+.wideTile img { height:100%; object-fit:cover; }
+
+.bentoRows { display:grid; gap:12px; }
+.bentoRow { display:grid; grid-template-columns:var(--cols); gap:12px; }
+.cell { border-radius:16px; overflow:hidden; background:var(--case-tile); }
+.cell img { height:100%; object-fit:cover; }
+
+.next { padding-top:var(--section-space); display:grid; gap:20px; }
+.next::before { content:''; border-top:1px solid var(--color-border); margin-bottom:clamp(32px,4vw,56px); }
+.next a { display:inline-flex; align-items:center; gap:16px; width:max-content; max-width:100%; font-size:clamp(40px,6.7vw,96px); font-weight:500; line-height:1; letter-spacing:-.03em; }
+.next a svg { flex-shrink:0; width:.6em; height:.6em; transition:transform var(--transition); }
+.next a:is(:hover,:focus-visible) svg { transform:translate(4px,-4px); }
+
+@media(max-width:900px) {
+  .hero { width:calc(100% - 2 * var(--page-margin)); margin-top:16px; border-radius:20px; }
+  .details,.sectionHead,.split { grid-template-columns:1fr; }
+  .sectionHead { align-items:start; gap:16px; }
+  .splitIntro { position:static; }
+  .four { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:600px) {
+  .hero { border-radius:16px; }
+  /* Trim the render's empty sides so the phones stay large; the gradient is the matching middle two-thirds. */
+  .renderHero { background:linear-gradient(90deg,#376fd3,#3972d6 12.5%,#3a77dd 50%,#5188f6 87.5%,#588ff9); }
+  .renderHero>img { aspect-ratio:4 / 3; object-fit:cover; }
+  .meta { grid-template-columns:1fr; }
+  .details>p,.sectionHead>p,.splitIntro>p { font-size:17px; }
+  .rows>li { grid-template-columns:40px minmax(0,1fr); gap:12px; padding-block:24px; }
+  .rows p { font-size:16px; }
+  .pair { grid-template-columns:1fr; }
+  .bento { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .tile,.wideTile { border-radius:12px; }
+  .wideTile { aspect-ratio:828 / 510; }
+  .bentoRows,.bentoRow { gap:8px; }
+  .bentoRow { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cell { border-radius:12px; }
+  .cellWide { grid-column:span 2; }
+}

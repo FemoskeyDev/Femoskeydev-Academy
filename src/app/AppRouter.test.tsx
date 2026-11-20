@@ -1,12 +1,83 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { routeConfig } from './routeConfig'
 
 function renderAt(path: string) { const router = createMemoryRouter(routeConfig, { initialEntries: [path] }); return render(<RouterProvider router={router}/>) }
-describe('Academy routes', () => {
-  it('renders the centered home hero, carousel controls, and working learning path links', () => { renderAt('/'); expect(screen.getByRole('heading', { level: 1, name: /The Pathway to Becoming an Awesome Creative\./i })).toBeInTheDocument(); expect(screen.getByRole('heading', { name: /Creativity isn’t just a talent/i })).toBeInTheDocument(); expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument(); expect(screen.getAllByRole('link', { name: /Explore Learning Paths/i }).every(link => link.getAttribute('href') === '/learning-paths')).toBe(true); expect(screen.getByRole('region', { name: 'Creative practice image carousel' }).querySelectorAll('button[data-offset]')).toHaveLength(12); fireEvent.click(screen.getByRole('button', { name: 'Next image' })); expect(screen.getByText(/Slide 2 of 12: Digital design/i)).toBeInTheDocument() })
-  it('uses the same shared navigation on the mentorship page', () => { renderAt('/mentorship'); expect(screen.getByText(/Get guidance/i, { selector: 'h1' })).toBeInTheDocument(); expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument(); expect(screen.getByRole('link', { name: /Contact the Academy/i })).toHaveAttribute('href', '/contact') })
-  it('renders pathway links and a supported detail page', () => { const { unmount } = renderAt('/learning-paths'); expect(screen.getAllByRole('link', { name: /FDA Interfaces/i }).every(link => link.getAttribute('href') === '/learning-paths/interfaces')).toBe(true); unmount(); renderAt('/learning-paths/interfaces'); expect(screen.getByRole('heading', { name: 'FDA Interfaces' })).toBeInTheDocument() })
-  it('shows helpful not found pages for unknown routes and pathways', () => { const { unmount } = renderAt('/learning-paths/unknown'); expect(screen.getByText(/That path hasn't been mapped yet/i)).toBeInTheDocument(); unmount(); renderAt('/unavailable'); expect(screen.getByRole('heading', { name: /This page isn't on the map/i })).toBeInTheDocument() })
+const booking = 'https://cal.com/femoskeydev'
+
+describe('Studio routes', () => {
+  it('shows Academy and Mentorship as coming soon in the dropdown, and dismisses it with Escape', () => {
+    renderAt('/')
+    const toggle = screen.getByRole('button', { name: /More/ })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(toggle)
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    const dropdown = within(toggle.closest('header')!.querySelector('#more-navigation')!)
+    expect(dropdown.queryByRole('link')).not.toBeInTheDocument()
+    expect(dropdown.getByText('Academy').closest('[aria-disabled]')).toHaveTextContent('Coming soon')
+    expect(dropdown.getByText('Mentorship').closest('[aria-disabled]')).toHaveTextContent('Coming soon')
+    fireEvent.keyDown(toggle, { key: 'Escape' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    expect(toggle).toHaveFocus()
+  })
+  it('only links to live pages from the main navigation, and books a call from Contact us', () => {
+    renderAt('/')
+    const nav = screen.getByRole('navigation', { name: 'Main navigation' })
+    expect([...nav.querySelectorAll('a')].map(a => a.getAttribute('href'))).toEqual(['/work', booking])
+    expect(within(nav).getByText('Services').closest('[aria-disabled]')).toHaveTextContent('Coming soon')
+    expect(within(nav).getByText('About').closest('[aria-disabled]')).toHaveTextContent('Coming soon')
+  })
+  it('lists the case studies on the work page, with EdgeCore marked as coming soon', async () => {
+    renderAt('/')
+    expect(screen.getByRole('heading', { level: 1, name: /We build and scale digital.*products.*then some/i })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('navigation', { name: 'Main navigation' }).querySelector('a[href="/work"]')!)
+    await screen.findByRole('heading', { level: 1, name: 'Selected work.' })
+    expect(screen.getByRole('link', { name: /Liziwaride/ })).toHaveAttribute('href', '/work/liziwaride')
+    expect(screen.getByRole('link', { name: /Paymita/ })).toHaveAttribute('href', '/work/paymita')
+    expect(screen.getByLabelText('EdgeCore, case study coming soon')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /SaveCircle/ })).toHaveAttribute('href', '/work/savecircle')
+    expect(screen.getByRole('link', { name: /Start a project/ })).toHaveAttribute('href', booking)
+  })
+  it('opens the Paymita case study from its homepage cover', async () => {
+    renderAt('/')
+    fireEvent.click(screen.getByRole('link', { name: 'Paymita case study' }))
+    expect(await screen.findByRole('heading', { level: 1, name: 'Paymita' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: /Airtime to cash/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Get in touch' })).toHaveAttribute('href', booking)
+  })
+  it('opens the SaveCircle case study from its homepage cover', async () => {
+    renderAt('/')
+    fireEvent.click(screen.getByRole('link', { name: 'SaveCircle case study' }))
+    expect(await screen.findByRole('heading', { level: 1, name: 'SaveCircle' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: /Admin dashboard/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Liziwaride/ })).toHaveAttribute('href', '/work/liziwaride')
+  })
+  it('opens the Liziwaride case study from its homepage cover', async () => {
+    renderAt('/')
+    fireEvent.click(screen.getByRole('link', { name: 'Liziwaride case study' }))
+    expect(await screen.findByRole('heading', { level: 1, name: 'Liziwaride' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: /Smart Bus/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Paymita/ })).toHaveAttribute('href', '/work/paymita')
+  })
+  it('links the footer only to live pages and Cal.com, and shows the white logo', () => {
+    renderAt('/')
+    const footer = screen.getByRole('navigation', { name: 'Footer navigation' })
+    expect([...footer.querySelectorAll('a')].map(a => a.getAttribute('href'))).toEqual(['/work', booking])
+    expect(footer.querySelectorAll('[aria-disabled]')).toHaveLength(3)
+    expect(within(footer.closest('footer')!).getByRole('link', { name: 'Femoskeydev home' }).querySelector('img')).toHaveAttribute('src', '/images/portfolio/logo-white.svg')
+  })
+  it.each([
+    ['/services', 'Services'], ['/studio', 'About'], ['/contact', 'Contact'], ['/academy', 'The Academy'],
+    ['/mentorship', 'Mentorship'], ['/learning-paths/interfaces', 'Learning paths'],
+  ])('shows %s as coming soon', (path, title) => {
+    renderAt(path)
+    expect(screen.getByRole('heading', { level: 1, name: `${title} is on its way.` })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Book a call/ })).toHaveAttribute('href', booking)
+  })
+  it('shows a helpful not found page for unknown routes', () => {
+    renderAt('/unavailable')
+    expect(screen.getByRole('heading', { name: /This page isn't on the map/i })).toBeInTheDocument()
+    expect(document.title).toBe('Page not found | Femoskeydev')
+  })
 })

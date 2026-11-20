@@ -1,0 +1,67 @@
+/* Shared typography applies through the main route outlet. */
+#main-content :is(h1, h2, h3) {
+  font-family: "Tomato Grotesk", Arial, sans-serif;
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-tracking);
+}
+
+.text-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 10px 0;
+  border-bottom: 1px solid currentColor;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.text-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms var(--ease-standard);
+}
+.text-link:is(:hover, :focus-visible)::after { transform: scaleX(1); }
+.text-link>svg,.text-link>span[aria-hidden] { transition: transform 300ms var(--ease-standard); }
+.text-link:is(:hover, :focus-visible)>svg,.text-link:is(:hover, :focus-visible)>span[aria-hidden] { transform: translate(2px, -2px); }
+.text-link:active { transform: translateY(1px); }
+
+/* An outline survives high-contrast mode and is shown for keyboard navigation. */
+#root :is(a, button, summary, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+#root :is(input, textarea, select):focus-visible { outline-offset: 2px; }
+.skip-link { z-index: 101; }
+@media (prefers-reduced-motion: reduce) {
+  .text-link::after,.text-link>svg,.text-link>span[aria-hidden] { transition: none; }
+  .text-link:active,.text-link:is(:hover, :focus-visible)>svg,.text-link:is(:hover, :focus-visible)>span[aria-hidden] { transform: none; }
+}
+@media (forced-colors: active) {
+  #root :is(a, button, summary, input, textarea, select, [tabindex]):focus-visible { outline-color: Highlight; }
+}
+
+/* Carry the shared canvas into the gutters of constrained editorial sections. */
+[data-surface-transition] { position: relative; isolation: isolate; }
+[data-surface-transition]::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  background-color: inherit;
+  pointer-events: none;
+}
+.site-shell { overflow-x: clip; }

@@ -1,6 +1,12 @@
 export const navigation = [
-  { label: "Learning Paths", to: "/learning-paths" },
-  { label: "Mentorship", to: "/mentorship" },
-  { label: "Community", to: "/community" },
-  { label: "About", to: "/about" },
-];
+  { label: 'Home', to: '/' },
+  { label: 'Work', to: '/work' },
+  { label: 'Academy', to: '/academy' },
+  { label: 'Contact', to: '/contact' },
+]
+
+export const academyPaths = ['/academy', '/learning-paths', '/mentorship', '/community', '/about']
+
+export function isAcademyPath(pathname: string) {
+  return academyPaths.some(path => pathname === path || pathname.startsWith(`${path}/`))
+}

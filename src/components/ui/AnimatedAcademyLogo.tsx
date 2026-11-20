@@ -20,7 +20,7 @@ export function AnimatedAcademyLogo({
   onIntroComplete,
   reducedMotion = false,
 }: AnimatedAcademyLogoProps) {
-  const clipId = `academy-logo-clip-${useId().replace(/:/g, "")}`;
+  const maskId = `academy-logo-mask-${useId().replace(/:/g, "")}`;
   const style = { width: size, height: size } as CSSProperties;
 
   const handleAnimationEnd = (event: React.AnimationEvent<SVGSVGElement>) => {
@@ -49,24 +49,21 @@ export function AnimatedAcademyLogo({
       onAnimationEnd={handleAnimationEnd}
     >
       <defs>
-        <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
-          <path d={backgroundPath} />
-        </clipPath>
+        {/* The star is cut out of the tile, so whatever sits behind the logo shows through it. */}
+        <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width="138" height="138">
+          <rect width="138" height="138" fill="#fff" />
+          {/* Runs once: rise, burst past the edges, snap into place */}
+          <g className={styles.starEntry}>
+            {/* Spins only after the entrance has settled */}
+            <g className={styles.starSpin}>
+              <path d={starPath} fill="#000" />
+            </g>
+          </g>
+        </mask>
       </defs>
 
-      {/* Static mint silhouette */}
-      <path className={styles.background} d={backgroundPath} fill="#b6ff39" />
-
-      {/* Everything here remains clipped to the mint silhouette */}
-      <g clipPath={`url(#${clipId})`} fill="#000000">
-        {/* Runs once: enter, stretch, fall, squash and settle */}
-        <g className={styles.starEntry}>
-          {/* Starts spinning only after the entrance finishes */}
-          <g className={styles.starSpin}>
-            <path d={starPath} />
-          </g>
-        </g>
-      </g>
+      {/* The mint silhouette itself never moves. */}
+      <path className={styles.background} d={backgroundPath} mask={`url(#${maskId})`} />
     </svg>
   );
 }
