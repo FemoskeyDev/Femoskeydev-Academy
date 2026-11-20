@@ -106,20 +106,13 @@ export function SaveCircleCaseStudy() {
       </header>
 
       <div className={styles.fullBleed}>
-        <img data-flare {...responsive(image('showcase'), 2880, '100vw')} alt="The SaveCircle app on a phone beside the admin dashboard" width="2880" height="1704" loading="lazy" />
+        <img data-flare {...responsive(image('showcase'), 2289, '100vw')} alt="The SaveCircle admin dashboard on a monitor, on a white desk shelf with a speaker, a small computer, a keyboard and a mouse" width="2289" height="1354" loading="lazy" />
       </div>
 
       {sections.map(section => <section key={section.id} className={`${styles.wrap} ${styles.section}`} aria-labelledby={section.id}>
         <div className={styles.sectionHead}><Heading id={section.id} title={section.title} subtitle={section.subtitle} /><p>{section.copy}</p></div>
         <MediaBento rows={section.rows} />
       </section>)}
-
-      <section className={styles.section} aria-labelledby="admin">
-        <div className={`${styles.wrap} ${styles.sectionHead}`}><Heading id="admin" title="Admin dashboard" subtitle="the whole network" /><p>Operators manage circles, members and contributions.</p></div>
-        <div className={styles.fullBleed}>
-          <img data-flare {...responsive(image('admin-desk'), 2560, '100vw')} alt="The SaveCircle admin dashboard on a monitor, on a white desk shelf with a speaker, a small computer, a keyboard and a mouse" width="2560" height="1440" loading="lazy" />
-        </div>
-      </section>
 
       <nav className={`${styles.wrap} ${styles.next}`} aria-label="Next project">
         <p className={styles.kicker}>Next project</p>

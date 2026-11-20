@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 import styles from './CursorCard.module.css'
 
 /** A real link with a decorative pointer follower; touch and keyboard retain a visible affordance.
- *  `tooltip` adds a name pill that travels with the pointer under the disc. */
-export function CursorCard({ children, className = '', to, label, tooltip }: { children?: ReactNode; className?: string; to: string; label: string; tooltip?: string }) {
+ *  `tooltip` adds a name pill that travels with the pointer under the disc; `fallback={false}` drops the
+ *  centred disc for cards that already show their own arrow. */
+export function CursorCard({ children, className = '', to, label, tooltip, fallback = true }: { children?: ReactNode; className?: string; to: string; label: string; tooltip?: string; fallback?: boolean }) {
   const linkRef = useRef<HTMLAnchorElement>(null)
   const cursorRef = useRef<HTMLSpanElement>(null)
 
@@ -79,7 +80,7 @@ export function CursorCard({ children, className = '', to, label, tooltip }: { c
   return <>
     <Link ref={linkRef} to={to} aria-label={label} className={`${styles.card} ${className}`}>
       {children}
-      <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><span className={styles.arrow}>↗</span></span>
+      {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><span className={styles.arrow}>↗</span></span>}
     </Link>
     {typeof document !== 'undefined' && createPortal(<span ref={cursorRef} className={styles.cursor} aria-hidden="true"><span className={styles.disc}><span className={styles.arrow}>↗</span></span>{tooltip && <span className={styles.tooltip}>{tooltip}</span>}</span>, document.body)}
   </>

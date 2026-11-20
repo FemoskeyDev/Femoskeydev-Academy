@@ -1,5 +1,4 @@
 import { useState, type ReactNode } from 'react'
-import { Link } from 'react-router-dom'
 import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 import { Button } from '../../components/ui/Button'
 import { RevealOnScroll } from '../../components/ui/RevealOnScroll'
@@ -9,13 +8,14 @@ import { ContactOptions } from '../ContactPage/sections/ContactOptions'
 import { projects } from '../../data/projects'
 import { ProjectCover } from './ProjectCover'
 import { ContactCta } from './ContactCta'
+import { CursorCard } from './CursorCard'
 import styles from './StudioPages.module.css'
 
 const description = 'Femoskeydev is a founder-led digital design and development studio for products and websites.'
 
-function PageIntro({ label, title, children }: { label: string; title: string; children: ReactNode }) {
+function PageIntro({ label, title, children }: { label?: string; title: string; children: ReactNode }) {
   return <header className={`${styles.wrap} ${styles.intro}`}>
-    <p className={styles.kicker}>{label}</p>
+    {label && <p className={styles.kicker}>{label}</p>}
     <h1>{title}</h1>
     <div className={styles.lede}>{children}</div>
   </header>
@@ -32,7 +32,7 @@ function ProjectGrid({ heading: Heading = 'h2' }: { heading?: 'h2' | 'h3' }) {
         </div>
       </>
       return <RevealOnScroll className={styles.project} key={project.slug}>
-        {project.to ? <Link className={styles.projectLink} to={project.to}>{content}</Link> : <div className={styles.projectLink} aria-label={`${project.name}, case study coming soon`}>{content}</div>}
+        {project.to ? <CursorCard className={styles.projectLink} to={project.to} label={`${project.name} case study`} tooltip={project.name} fallback={false}>{content}</CursorCard> : <div className={styles.projectLink} aria-label={`${project.name}, case study coming soon`}>{content}</div>}
       </RevealOnScroll>
     })}
   </div>
@@ -72,7 +72,7 @@ export function ServicesPage() {
 export function WorkPage() {
   usePageMeta('Work', 'Case studies from Femoskeydev: Liziwaride, Paymita and more on the way.', 'Femoskeydev')
   return <div className={styles.site}>
-    <PageIntro label="Femoskeydev studio" title="Selected work.">
+    <PageIntro title="Selected work.">
       <p>Explore the products we’ve designed, from Liziwaride’s mobility apps to Paymita’s payments wallet, with more on the way.</p>
     </PageIntro>
     <section className={`${styles.wrap} ${styles.workList}`} aria-label="Projects"><ProjectGrid /></section>

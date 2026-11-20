@@ -50,7 +50,7 @@ describe('Studio routes', () => {
     renderAt('/')
     fireEvent.click(screen.getByRole('link', { name: 'SaveCircle case study' }))
     expect(await screen.findByRole('heading', { level: 1, name: 'SaveCircle' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 2, name: /Admin dashboard/ })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /admin dashboard on a monitor/ })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Liziwaride/ })).toHaveAttribute('href', '/work/liziwaride')
   })
   it('opens the Liziwaride case study from its homepage cover', async () => {
