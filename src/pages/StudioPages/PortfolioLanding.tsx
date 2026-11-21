@@ -80,7 +80,7 @@ export function PortfolioLanding() {
   return <div className={styles.page}>
     <section className={`${styles.wrap} ${styles.hero}`} aria-labelledby="portfolio-title">
       <div className={styles.heroCopy}>
-        <a className={styles.welcome} href="#selected-work">Hi, Welcome Again! <span aria-hidden="true">↗</span></a>
+        <a className={styles.welcome} href="#selected-work">Hi, Welcome Again! <img src={asset('welcome-avatar.webp')} alt="" width="28" height="28" /></a>
         <h1 id="portfolio-title">We build and scale digital<br className={styles.desktopBreak} /> products &amp; <mark>then some.</mark></h1>
         <p>You bring the <strong>vision</strong>. We bring <strong>design and code.</strong></p>
       </div>
