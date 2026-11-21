@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
 import { Button } from '../../components/ui/Button'
 import { usePageMeta } from '../../hooks/usePageMeta'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
@@ -7,7 +6,6 @@ import styles from './PortfolioLanding.module.css'
 import { CursorCard } from './CursorCard'
 import { HeroFilm } from './HeroFilm'
 import { ProcessStack } from './ProcessStack'
-import { ProcessPanels } from './ProcessPanels'
 import { ContactCta } from './ContactCta'
 import { ProjectCover } from './ProjectCover'
 import { projects } from '../../data/projects'
@@ -79,8 +77,6 @@ function useTeamMotion() {
 export function PortfolioLanding() {
   usePageMeta('Digital design & development studio', 'You bring the vision. We bring design and code. Femoskeydev builds and scales digital products.', 'Femoskeydev')
   const teamRef = useTeamMotion()
-  const [params] = useSearchParams()
-  const processLayout = params.get('process')
   return <div className={styles.page}>
     <section className={`${styles.wrap} ${styles.hero}`} aria-labelledby="portfolio-title">
       <div className={styles.heroCopy}>
@@ -122,8 +118,7 @@ export function PortfolioLanding() {
 
     <section id="how-we-work" className={styles.process} aria-labelledby="process-title"><div className={styles.wrap}>
       <div className={styles.processIntro}><p className={styles.eyebrow}>HOW WE WORK</p><h2 id="process-title">From “what if?”<br />to “wow, it's real.”</h2><p>Good question! Every great project starts with a conversation. We listen, explore, and work closely with you to create something that looks great, works beautifully, and actually makes sense for your business.</p></div>
-      {/* Trying two layouts on staging: stacking cards by default, expanding panels with ?process=panels. */}
-      {processLayout === 'panels' ? <ProcessPanels /> : <ProcessStack />}
+      <ProcessStack />
     </div></section>
 
     <section className={styles.motto} aria-label="Our design philosophy"><div><img src={asset('0a938.webp')} alt="" loading="lazy" /><p>We create awesome, usable and<br className={styles.desktopBreak} /> aesthetically pleasing interfaces for<br className={styles.desktopBreak} /> SaaS companies and startups</p></div></section>
