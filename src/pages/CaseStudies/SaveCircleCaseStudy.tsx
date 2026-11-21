@@ -85,7 +85,7 @@ const sections: Section[] = [
 ]
 
 export function SaveCircleCaseStudy() {
-  usePageMeta('SaveCircle case study', 'Group savings circles for friends, family and colleagues: create a circle, contribute on a schedule and track every payment together.', 'Femoskeydev')
+  usePageMeta()
   return <>
     <article className={styles.page}>
       <div className={styles.hero} style={{ background: '#8f2ceb' }}>

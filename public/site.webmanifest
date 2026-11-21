@@ -1,10 +1,14 @@
 {
   "name": "Femoskeydev",
   "short_name": "Femoskeydev",
-  "description": "Independent digital design and development studio.",
+  "description": "Product design and development studio.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f7f6f1",
   "theme_color": "#f7f6f1",
-  "icons": [{ "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+  "icons": [
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/images/social/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/social/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
 }

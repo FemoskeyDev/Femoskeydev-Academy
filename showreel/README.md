@@ -9,6 +9,8 @@ npm run studio    # preview and scrub in the browser
 npm run publish   # render, then write ../public/images/portfolio/showreel.mp4
 ```
 
+`npm run social` renders the link-preview images and icons into `../public/images/social` (see `src/data/seo.ts`).
+
 `npm run poster` writes `out/poster.png`; convert it to `../public/images/portfolio/showreel-poster.webp` (and a 960px `-1x` copy).
 
 App screens are in `public/s` (exported from Figma). Fonts, logos and the case-study films are copied from the site's `public` folder,

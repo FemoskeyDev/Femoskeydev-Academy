@@ -11,7 +11,6 @@ import { ContactCta } from './ContactCta'
 import { CursorCard } from './CursorCard'
 import styles from './StudioPages.module.css'
 
-const description = 'Femoskeydev is a founder-led digital design and development studio for products and websites.'
 
 function PageIntro({ label, title, children }: { label?: string; title: string; children: ReactNode }) {
   return <header className={`${styles.wrap} ${styles.intro}`}>
@@ -49,7 +48,7 @@ function ContactBanner() {
 }
 
 export function ServicesPage() {
-  usePageMeta('Services', 'Product design, development, branding, graphic design, and motion for digital products and websites.', 'Femoskeydev')
+  usePageMeta()
   const services = [
     { name: 'Product Design', image: 'product-design', copy: 'User flows, interfaces, and prototypes that turn your product idea into a clear, usable experience.' },
     { name: 'Development', image: 'development', copy: 'Responsive websites and digital products, with design and implementation developed together.' },
@@ -70,7 +69,7 @@ export function ServicesPage() {
 }
 
 export function WorkPage() {
-  usePageMeta('Work', 'Case studies from Femoskeydev: Liziwaride, Paymita and more on the way.', 'Femoskeydev')
+  usePageMeta()
   return <div className={styles.site}>
     <PageIntro title="Selected work.">
       <p>Explore the products we’ve designed, from Liziwaride’s mobility apps to Paymita’s payments wallet, with more on the way.</p>
@@ -81,7 +80,7 @@ export function WorkPage() {
 }
 
 export function StudioPage() {
-  usePageMeta('Studio', description, 'Femoskeydev')
+  usePageMeta()
   return <div className={styles.site}>
     <PageIntro label="About the studio" title="Two brothers. One studio.">
       <p>We bring product design and development together from the first conversation through to the build.</p>
@@ -110,7 +109,7 @@ export function StudioPage() {
 }
 
 export function StudioContactPage() {
-  usePageMeta('Contact', 'Get in touch with Femoskeydev about studio projects or Academy enquiries.', 'Femoskeydev')
+  usePageMeta()
   const [brief, setBrief] = useState('')
   const [status, setStatus] = useState('')
   const copyBrief = async () => {

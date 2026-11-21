@@ -7,6 +7,7 @@
     "studio": "npm run assets && remotion studio src/index.tsx",
     "render": "npm run assets && remotion render src/index.tsx Reel out/reel.mp4 --codec=h264 --crf=22 --x264-preset=slow --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=160k",
     "poster": "remotion still src/index.tsx Reel out/poster.png --frame=120",
+    "social": "npm run assets && node scripts/social.mjs",
     "publish": "npm run render && npm run poster && swift scripts/faststart.swift out/reel.mp4 ../public/images/portfolio/showreel.mp4"
   },
   "dependencies": {
@@ -16,5 +17,8 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "remotion": "4.0.545"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }

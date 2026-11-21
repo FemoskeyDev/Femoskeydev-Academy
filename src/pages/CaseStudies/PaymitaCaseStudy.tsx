@@ -85,7 +85,7 @@ const sections: Section[] = [
 ]
 
 export function PaymitaCaseStudy() {
-  usePageMeta('Paymita case study', 'Pay your bills in seconds: airtime, data, electricity, cable TV, airtime to cash and virtual dollar cards in one wallet.', 'Femoskeydev')
+  usePageMeta()
   return <>
     <article className={styles.page}>
       <div className={styles.hero}>

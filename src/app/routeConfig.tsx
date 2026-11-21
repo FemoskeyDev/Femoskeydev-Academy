@@ -3,17 +3,12 @@ import { WorkPage } from '../pages/StudioPages/StudioPages'
 import { ComingSoonPage } from '../pages/ComingSoonPage/ComingSoonPage'
 import { PortfolioLanding } from '../pages/StudioPages/PortfolioLanding'
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage'
+import { comingSoonPages } from '../data/seo'
 
 /** Loads a page module only when its route is first visited, keeping the studio homepage bundle small. */
 const page = <T,>(load: () => Promise<T>, pick: (module: T) => React.ComponentType) =>
   async () => ({ Component: pick(await load()) })
 
-// Only the portfolio, the work page and the case studies are live; every other page shows Coming soon.
-const comingSoon = [
-  ['services', 'Services'], ['studio', 'About'], ['contact', 'Contact'], ['academy', 'The Academy'],
-  ['learning-paths/*', 'Learning paths'], ['learning-paths', 'Learning paths'], ['mentorship', 'Mentorship'],
-  ['community', 'Community'], ['about', 'About'],
-] as const
 
 export const routeConfig = [{ path: '/', element: <SiteLayout/>, children: [
   { index: true, element: <PortfolioLanding/> },
@@ -22,7 +17,8 @@ export const routeConfig = [{ path: '/', element: <SiteLayout/>, children: [
   { path: 'work/liziwaride', lazy: page(() => import('../pages/CaseStudies/LiziwarideCaseStudy'), m => m.LiziwarideCaseStudy) },
   { path: 'work/paymita', lazy: page(() => import('../pages/CaseStudies/PaymitaCaseStudy'), m => m.PaymitaCaseStudy) },
   { path: 'work/savecircle', lazy: page(() => import('../pages/CaseStudies/SaveCircleCaseStudy'), m => m.SaveCircleCaseStudy) },
-  ...comingSoon.map(([path, title]) => ({ path, element: <ComingSoonPage title={title}/> })),
+  // Only the portfolio, the work page and the case studies are live; every other page shows Coming soon.
+  ...comingSoonPages.map(([path, title]) => ({ path, element: <ComingSoonPage title={title}/> })),
   ...(import.meta.env.DEV ? [{
     path: 'version-control',
     lazy: page(() => import('../pages/VersionControlPage/VersionControlPage'), m => m.VersionControlPage),

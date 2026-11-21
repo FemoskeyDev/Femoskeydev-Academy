@@ -10,7 +10,7 @@ import { AcademyIntro } from "./sections/AcademyIntro";
 import styles from "./HomePage.module.css";
 
 export function HomePage() {
-  usePageMeta("The Pathway to Becoming an Awesome Creative");
+  usePageMeta();
   return (
     <div className={styles.home}>
       <AcademyIntro />

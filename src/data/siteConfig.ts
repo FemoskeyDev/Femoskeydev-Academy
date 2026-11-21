@@ -1,8 +1,7 @@
 export const siteConfig = {
-  name: 'Femoskeydev Academy',
-  tagline: 'The Pathway to Becoming an Awesome Creative.',
+  name: 'Femoskeydev',
   url: 'https://femoskeydev.com',
-  description: 'Learn practical creative skills, build projects, and grow with Femoskeydev Academy.',
+  // Copy for the Academy homepage, which isn't live yet. Page titles and descriptions live in src/data/seo.ts.
   home: {
     eyebrow: 'FEMOSKEYDEV ACADEMY',
     headline: { before: 'The Pathway to Becoming an', emphasis: 'Awesome Creative.' },
