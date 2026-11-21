@@ -8,7 +8,7 @@ import { ContactOptions } from '../ContactPage/sections/ContactOptions'
 import { projects } from '../../data/projects'
 import { ProjectCover } from './ProjectCover'
 import { ContactCta } from './ContactCta'
-import { CursorCard, TapHint } from './CursorCard'
+import { CursorCard } from './CursorCard'
 import styles from './StudioPages.module.css'
 
 const description = 'Femoskeydev is a founder-led digital design and development studio for products and websites.'
@@ -25,14 +25,14 @@ function ProjectGrid({ heading: Heading = 'h2' }: { heading?: 'h2' | 'h3' }) {
   return <div className={styles.projects}>
     {projects.map(project => {
       const content = <>
-        <div className={styles.projectImage}><ProjectCover project={project} />{project.to && <TapHint />}</div>
+        <div className={styles.projectImage}><ProjectCover project={project} /></div>
         <div className={styles.projectCaption}>
           <div><p className={styles.kicker}>{project.type}</p><Heading>{project.name}</Heading></div>
           {project.to && <span className={styles.circle}><ArrowTopRightIcon width={22} height={22} aria-hidden="true" /></span>}
         </div>
       </>
       return <RevealOnScroll className={styles.project} key={project.slug}>
-        {project.to ? <CursorCard className={styles.projectLink} to={project.to} label={`${project.name} case study`} tooltip={project.name} fallback={false} hint={false}>{content}</CursorCard> : <div className={styles.projectLink} aria-label={`${project.name}, case study coming soon`}>{content}</div>}
+        {project.to ? <CursorCard className={styles.projectLink} to={project.to} label={`${project.name} case study`} tooltip={project.name} fallback={false} arrow={false}>{content}</CursorCard> : <div className={styles.projectLink} aria-label={`${project.name}, case study coming soon`}>{content}</div>}
       </RevealOnScroll>
     })}
   </div>

@@ -20,21 +20,15 @@
 }
 @media(max-width:600px) { .cursor { --disc-size:86.4px; } .disc { width:86.4px; font-size:28px; } }
 
-/* Touch screens: no centred disc; a small pill at the bottom slides in once the card is in view. */
-.tapHint { display:none; }
+/* Touch screens: no centred disc. Like Apple's tappable cards, a small static circle with an arrow sits in
+   the bottom-right corner. */
+.touchArrow { display:none; }
 @media (hover:none), (pointer:coarse) {
   .fallback { display:none; }
-  .tapHint { position:absolute; left:50%; bottom:16px; z-index:2; display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:999px; background:rgba(11,13,11,.82); color:#fff; font:500 13px/1.2 'Tomato Grotesk',Arial,sans-serif; white-space:nowrap; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); pointer-events:none; opacity:0; transform:translate(-50%,8px); transition:opacity 300ms ease,transform 420ms cubic-bezier(.22,1,.36,1); }
-  .tapHint>span { font-size:12px; }
-}
-/* Half-width cards on phones: a tighter pill that never runs past the card. */
-@media (hover:none) and (max-width:600px), (pointer:coarse) and (max-width:600px) {
-  .tapHint { bottom:12px; max-width:calc(100% - 16px); gap:4px; padding:7px 10px; font-size:11.5px; overflow:hidden; }
-  .tapHint>span { font-size:11px; }
-  .card[data-in-view] .tapHint { opacity:1; transform:translate(-50%,0); transition-delay:120ms; }
+  .touchArrow { position:absolute; right:12px; bottom:12px; z-index:2; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.88); color:#0b0d0b; box-shadow:0 2px 10px rgba(11,13,11,.12); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); pointer-events:none; }
 }
 @media(prefers-reduced-motion:reduce) {
   .cursor { display:none; }
-  .disc::before,.fallback,.tapHint { transition:none; }
+  .disc::before,.fallback { transition:none; }
   .card[data-cursor-active] { cursor:pointer; }
 }
