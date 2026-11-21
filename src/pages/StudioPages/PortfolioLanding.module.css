@@ -22,6 +22,7 @@
 .workIntro>img { flex-shrink:0; }
 .workIntro h2 { max-width:494px; font-size:64px; line-height:.96; }
 .workIntro p { font-size:32px; line-height:1.2; margin-top:8px; }
+.workMore { align-self:center; }
 .workGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
 .workGrid>* { position:relative; height:620px; background:#fff; border-radius:16px; overflow:hidden; }
 .widePanel { grid-column:span 2; }

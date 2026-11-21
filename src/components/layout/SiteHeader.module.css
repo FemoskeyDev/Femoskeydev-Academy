@@ -19,7 +19,7 @@
   box-shadow: 0 4px 20px rgba(21, 21, 21, .055), inset 0 0 0 1px rgba(21, 21, 21, .06);
   pointer-events: auto;
 }
-.brand { display: flex; flex-shrink: 0; }
+.brand { display: flex; flex-shrink: 0; align-items: center; min-height: 44px; }
 .brand img { display: block; width: 176px; height: auto; }
 .navigation { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 400; }
 .navigation>:is(a:not(:global(.button)),[aria-disabled]),.moreToggle { display: flex; align-items: center; min-height: 44px; padding: 0 12px; white-space: nowrap; transition: opacity 180ms ease; }

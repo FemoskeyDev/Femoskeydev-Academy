@@ -48,7 +48,7 @@
 
 .next { padding-top:var(--section-space); display:grid; gap:20px; }
 .next::before { content:''; border-top:1px solid var(--color-border); margin-bottom:clamp(32px,4vw,56px); }
-.next a { display:inline-flex; align-items:center; gap:16px; width:max-content; max-width:100%; font-size:clamp(40px,6.7vw,96px); font-weight:500; line-height:1; letter-spacing:-.03em; }
+.next a { display:inline-flex; align-items:center; gap:16px; min-height:44px; width:max-content; max-width:100%; font-size:clamp(40px,6.7vw,96px); font-weight:500; line-height:1; letter-spacing:-.03em; }
 .next a svg { flex-shrink:0; width:.6em; height:.6em; transition:transform var(--transition); }
 .next a:is(:hover,:focus-visible) svg { transform:translate(4px,-4px); }
 

@@ -1,2 +1,5 @@
 .notFound{min-height:55vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
 .actions{display:flex;flex-wrap:wrap;gap:12px}
+
+/* The shared eyebrow is 10px, too small to read on phones; these pages use 12px. */
+.notFound :global(.eyebrow) { font-size: 12px; }

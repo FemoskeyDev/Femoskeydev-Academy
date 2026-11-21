@@ -133,6 +133,7 @@ export function PortfolioLanding() {
         <CursorCard to="/work/savecircle" label="SaveCircle case study" tooltip="SaveCircle"><ProjectCover project={savecircle} /></CursorCard>
         <div className={styles.widePanel} role="img" aria-label="EdgeCore case study, coming soon"><ProjectCover project={edgecore} /></div>
       </div>
+      <Button to="/work" className={styles.workMore}>View all cases</Button>
     </section>
 
     <section id="services" className={`${styles.wrap} ${styles.services}`} aria-labelledby="services-title">

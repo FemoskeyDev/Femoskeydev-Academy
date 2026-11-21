@@ -4,7 +4,7 @@
   color: #a3a3a3;
 }
 .top { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
-.brand { display: flex; align-items: center; }
+.brand { display: flex; align-items: center; min-height: 44px; }
 .brand>img { display: block; width: auto; height: 28px; }
 .socials { display: flex; gap: 20px; }
 .socials>span,.socials>a { width: 56px; height: 56px; display: grid; place-items: center; border: 1px solid #222; border-radius: 50%; background: radial-gradient(ellipse at bottom,#333,#000 65%); color: #fff; }
