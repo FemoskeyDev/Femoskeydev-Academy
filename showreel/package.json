@@ -5,8 +5,8 @@
   "scripts": {
     "assets": "node scripts/assets.mjs",
     "studio": "npm run assets && remotion studio src/index.tsx",
-    "render": "npm run assets && remotion render src/index.tsx Reel out/reel.mp4 --codec=h264 --crf=23 --x264-preset=slow --pixel-format=yuv420p",
-    "poster": "remotion still src/index.tsx Reel out/poster.png --frame=40",
+    "render": "npm run assets && remotion render src/index.tsx Reel out/reel.mp4 --codec=h264 --crf=22 --x264-preset=slow --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=160k",
+    "poster": "remotion still src/index.tsx Reel out/poster.png --frame=120",
     "publish": "npm run render && npm run poster && swift scripts/faststart.swift out/reel.mp4 ../public/images/portfolio/showreel.mp4"
   },
   "dependencies": {

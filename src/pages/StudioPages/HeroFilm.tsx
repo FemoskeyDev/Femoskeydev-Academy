@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
+import { SpeakerLoudIcon, SpeakerOffIcon } from '@radix-ui/react-icons'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import styles from './PortfolioLanding.module.css'
 
 const film = '/images/portfolio/showreel.mp4'
 const poster = '/images/portfolio/showreel-poster.webp'
 
-/** The studio showreel (Paymita, Liziwaride and SaveCircle): settles in on load, then plays only while it is on screen. */
+/** The studio showreel (Paymita, Liziwaride and SaveCircle): settles in on load, then plays muted only while it is on
+ *  screen, with a toggle for its music. */
 export function HeroFilm() {
   const frameRef = useRef<HTMLSpanElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)
+  const [muted, setMuted] = useState(true)
   const reduced = useReducedMotion()
 
   useEffect(() => {
@@ -48,9 +51,20 @@ export function HeroFilm() {
     return () => { observer.disconnect(); video.pause() }
   }, [reduced])
 
+  const toggleSound = () => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = !muted
+    setMuted(!muted)
+    if (video.paused) void video.play().catch(() => undefined)
+  }
+
   return <span ref={frameRef} className={styles.heroFilm}>
     <img data-flare src={poster} alt="Femoskeydev, product design and development studio" fetchPriority="high" />
-    {!reduced && <video data-flare ref={videoRef} src={film} muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
+    {!reduced && <video data-flare ref={videoRef} src={film} muted={muted} loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
       data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
+    {!reduced && <button type="button" className={styles.heroSound} onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn showreel sound on' : 'Turn showreel sound off'}>
+      {muted ? <SpeakerOffIcon width={18} height={18} aria-hidden="true" /> : <SpeakerLoudIcon width={18} height={18} aria-hidden="true" />}
+    </button>}
   </span>
 }
