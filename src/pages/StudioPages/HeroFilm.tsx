@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { SpeakerLoudIcon, SpeakerOffIcon } from '@radix-ui/react-icons'
+import { siteConfig } from '../../data/siteConfig'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import { CursorCard } from './CursorCard'
 import styles from './PortfolioLanding.module.css'
 
 const film = '/images/portfolio/showreel.mp4'
 const poster = '/images/portfolio/showreel-poster.webp'
 
-/** The studio showreel (Paymita, Liziwaride and SaveCircle): settles in on load, then plays muted only while it is on
- *  screen, with a toggle for its music. */
+/** The studio showreel (Paymita, Liziwaride and SaveCircle), linking to our Cal.com booking page with the "Contact us"
+ *  cursor. It settles in on load, then plays muted only while it is on screen; the sound toggle sits beside the link,
+ *  not inside it. */
 export function HeroFilm() {
-  const frameRef = useRef<HTMLSpanElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(true)
@@ -59,12 +62,16 @@ export function HeroFilm() {
     if (video.paused) void video.play().catch(() => undefined)
   }
 
-  return <span ref={frameRef} className={styles.heroFilm}>
-    <img data-flare src={poster} alt="Femoskeydev, product design and development studio" fetchPriority="high" />
-    {!reduced && <video data-flare ref={videoRef} src={film} muted={muted} loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
-      data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
+  return <div ref={frameRef} className={styles.heroImage}>
+    <CursorCard to={siteConfig.bookingUrl} label="Contact us: book a call on Cal.com (opens in a new tab)" tooltip="Contact us" className={styles.heroLink}>
+      <span className={styles.heroFilm}>
+        <img data-flare src={poster} alt="" fetchPriority="high" />
+        {!reduced && <video data-flare ref={videoRef} src={film} muted={muted} loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
+          data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
+      </span>
+    </CursorCard>
     {!reduced && <button type="button" className={styles.heroSound} onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn showreel sound on' : 'Turn showreel sound off'}>
       {muted ? <SpeakerOffIcon width={18} height={18} aria-hidden="true" /> : <SpeakerLoudIcon width={18} height={18} aria-hidden="true" />}
     </button>}
-  </span>
+  </div>
 }
