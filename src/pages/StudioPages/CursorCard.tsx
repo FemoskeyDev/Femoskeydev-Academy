@@ -8,7 +8,7 @@ import styles from './CursorCard.module.css'
 /** A real link with a decorative pointer follower; keyboard focus keeps a visible affordance and touch
  *  screens get a small corner arrow instead. `tooltip` adds a name pill that travels with the pointer under
  *  the disc; `fallback={false}` drops the centred focus disc and `arrow={false}` the touch corner arrow, for
- *  cards that already show their own arrow. */
+ *  cards that already show their own arrow. An absolute `to` (http…) opens in a new tab. */
 export function CursorCard({ children, className = '', to, label, tooltip, fallback = true, arrow = true }: { children?: ReactNode; className?: string; to: string; label: string; tooltip?: string; fallback?: boolean; arrow?: boolean }) {
   const linkRef = useRef<HTMLAnchorElement>(null)
   const cursorRef = useRef<HTMLSpanElement>(null)
@@ -80,12 +80,16 @@ export function CursorCard({ children, className = '', to, label, tooltip, fallb
     }
   }, [])
 
+  const content = <>
+    {children}
+    {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><Arrow className={styles.arrow} weight="semibold" /></span>}
+    {arrow && <span className={styles.touchArrow} aria-hidden="true"><ArrowTopRightIcon width={16} height={16} /></span>}
+  </>
+
   return <>
-    <Link ref={linkRef} to={to} aria-label={label} className={`${styles.card} ${className}`}>
-      {children}
-      {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><Arrow className={styles.arrow} weight="semibold" /></span>}
-      {arrow && <span className={styles.touchArrow} aria-hidden="true"><ArrowTopRightIcon width={16} height={16} /></span>}
-    </Link>
+    {/^https?:/.test(to)
+      ? <a ref={linkRef} href={to} target="_blank" rel="noreferrer" aria-label={label} className={`${styles.card} ${className}`}>{content}</a>
+      : <Link ref={linkRef} to={to} aria-label={label} className={`${styles.card} ${className}`}>{content}</Link>}
     {typeof document !== 'undefined' && createPortal(<span ref={cursorRef} className={styles.cursor} aria-hidden="true"><span className={styles.disc}><Arrow className={styles.arrow} weight="semibold" /></span>{tooltip && <span className={styles.tooltip}>{tooltip}</span>}</span>, document.body)}
   </>
 }

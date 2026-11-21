@@ -119,9 +119,7 @@ export function PortfolioLanding() {
         <h1 id="portfolio-title">We build and scale digital<br className={styles.desktopBreak} /> products &amp; <mark>then some.</mark></h1>
         <p>You bring the <strong>vision</strong>. We bring <strong>design and code.</strong></p>
       </div>
-      <CursorCard to="/work/liziwaride" label="View the Liziwaride case study" className={styles.heroImage}>
-        <HeroFilm />
-      </CursorCard>
+      <HeroFilm />
     </section>
 
     <section id="selected-work" className={`${styles.wrap} ${styles.work}`} aria-labelledby="work-title">

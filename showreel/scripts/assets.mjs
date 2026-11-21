@@ -1,5 +1,6 @@
 // Gathers what the reel needs but doesn't keep in git: fonts, logos and films from the site's public folder,
-// and the Pexels people clips (free to use under the Pexels licence, no credit required).
+// the Pexels people clips (free to use under the Pexels licence, no credit required) and the music,
+// "Pop Track 03" by Lily J from Mixkit (Mixkit Stock Music Free License: free for web and social use, no credit required).
 import { copyFile, mkdir, access, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -13,15 +14,12 @@ const fromSite = {
   'f/TomatoGrotesk-Medium.otf': 'fonts/TomatoGrotesk-Medium.otf',
   'f/TomatoGrotesk-SemiBold.otf': 'fonts/TomatoGrotesk-SemiBold.otf',
   'b/logo-white.svg': 'images/portfolio/logo-white.svg',
-  'b/pm-logo.webp': 'images/work/paymita/brand-logo.webp',
-  'b/lz-hero.webp': 'images/work/liziwaride/hero.webp',
-  'b/lz-logo.svg': 'images/work/liziwaride/logo.svg',
-  'b/sc-logo.webp': 'images/work/savecircle/brand-logo.webp',
-  'v/pm-walk.mp4': 'images/work/paymita/walkthrough.mp4',
   'v/lz-film.mp4': 'images/work/liziwaride/admin-film.mp4',
   'v/sc-film.mp4': 'images/work/savecircle/admin-film.mp4',
 }
 const pexels = ['7326361', '7884810', '6612142', '7450036', '8496455', '7230113']
+
+const music = { 'a/pop-track-03.mp3': 'https://assets.mixkit.co/music/729/729.mp3' }
 
 const exists = path => access(path).then(() => true, () => false)
 
@@ -36,5 +34,14 @@ for (const id of pexels) {
   if (!response.ok) throw new Error(`Pexels ${id}: ${response.status}`)
   await writeFile(file, Buffer.from(await response.arrayBuffer()))
   console.log(`downloaded pexels ${id}`)
+}
+for (const [to, url] of Object.entries(music)) {
+  const file = resolve(out, to)
+  if (await exists(file)) continue
+  await mkdir(dirname(file), { recursive: true })
+  const response = await fetch(url)
+  if (!response.ok) throw new Error(`${url}: ${response.status}`)
+  await writeFile(file, Buffer.from(await response.arrayBuffer()))
+  console.log(`downloaded ${to}`)
 }
 console.log('assets ready')

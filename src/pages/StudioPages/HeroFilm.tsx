@@ -1,15 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
+import { SpeakerLoudIcon, SpeakerOffIcon } from '@radix-ui/react-icons'
+import { siteConfig } from '../../data/siteConfig'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import { CursorCard } from './CursorCard'
 import styles from './PortfolioLanding.module.css'
 
-const film = '/images/work/liziwaride/admin-film.mp4'
-const poster = '/images/work/liziwaride/admin-film-poster.webp'
+const film = '/images/portfolio/showreel.mp4'
+const poster = '/images/portfolio/showreel-poster.webp'
 
-/** The Liziwaride admin film: settles in on load, then plays only while it is on screen. */
+/** The studio showreel (Paymita, Liziwaride and SaveCircle), linking to our Cal.com booking page with the "Contact us"
+ *  cursor. It settles in on load, then plays muted only while it is on screen; the sound toggle sits beside the link,
+ *  not inside it. */
 export function HeroFilm() {
-  const frameRef = useRef<HTMLSpanElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)
+  const [muted, setMuted] = useState(true)
   const reduced = useReducedMotion()
 
   useEffect(() => {
@@ -48,9 +54,24 @@ export function HeroFilm() {
     return () => { observer.disconnect(); video.pause() }
   }, [reduced])
 
-  return <span ref={frameRef} className={styles.heroFilm}>
-    <img data-flare src={poster} alt="Liziwaride admin dashboard on a monitor" fetchPriority="high" />
-    {!reduced && <video data-flare ref={videoRef} src={film} muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
-      data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
-  </span>
+  const toggleSound = () => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = !muted
+    setMuted(!muted)
+    if (video.paused) void video.play().catch(() => undefined)
+  }
+
+  return <div ref={frameRef} className={styles.heroImage}>
+    <CursorCard to={siteConfig.bookingUrl} label="Contact us: book a call on Cal.com (opens in a new tab)" tooltip="Contact us" className={styles.heroLink}>
+      <span className={styles.heroFilm}>
+        <img data-flare src={poster} alt="" fetchPriority="high" />
+        {!reduced && <video data-flare ref={videoRef} src={film} muted={muted} loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
+          data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
+      </span>
+    </CursorCard>
+    {!reduced && <button type="button" className={styles.heroSound} onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn showreel sound on' : 'Turn showreel sound off'}>
+      {muted ? <SpeakerOffIcon width={18} height={18} aria-hidden="true" /> : <SpeakerLoudIcon width={18} height={18} aria-hidden="true" />}
+    </button>}
+  </div>
 }
