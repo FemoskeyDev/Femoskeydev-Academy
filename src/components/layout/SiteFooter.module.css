@@ -9,8 +9,19 @@
 .socials { display: flex; gap: 20px; }
 .socials>span,.socials>a { width: 56px; height: 56px; display: grid; place-items: center; border: 1px solid #222; border-radius: 50%; background: radial-gradient(ellipse at bottom,#333,#000 65%); color: #fff; }
 .socials>span { color: rgba(255,255,255,.55); }
-.socials>a { transition: transform 300ms cubic-bezier(.22,1,.36,1), border-color 300ms ease; }
-.socials>a:hover { transform: scale(1.06); border-color: #444; }
+/* Same Apple-style hover and press as the portrait's LinkedIn button. */
+.socials>a { position: relative; overflow: hidden; transition: transform 320ms cubic-bezier(.25,.1,.25,1), border-color 320ms ease; }
+.socials>a::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #fff; opacity: 0; transition: opacity 320ms ease; }
+.socials>a>svg { position: relative; }
+@media (hover: hover) and (pointer: fine) {
+  .socials>a:hover { transform: scale(1.06); border-color: #3a3a3a; }
+  .socials>a:hover::before { opacity: .12; }
+}
+.socials>a:active { transform: scale(.94); transition-duration: 120ms; }
+@media (prefers-reduced-motion: reduce) {
+  .socials>a,.socials>a::before { transition: none; }
+  .socials>a:hover,.socials>a:active { transform: none; }
+}
 .socials>a:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
 .separator { margin-block: 32px; height: 3px; overflow: hidden; }
 .separator img { display: block; width: 100%; height: 3px; }

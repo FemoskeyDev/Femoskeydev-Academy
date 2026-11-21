@@ -2,8 +2,9 @@
 
 /* The portraits sit on top of each other and dissolve into one another. */
 .portrait { position:relative; width:100%; aspect-ratio:407.277 / 538.03; overflow:hidden; border-radius:16px; background:#e9e9e9; isolation:isolate; }
-.slide { position:absolute; inset:0; margin:0; opacity:0; transition:opacity 800ms ease; }
-.slide[data-active] { opacity:1; }
+/* The hidden portrait is still on top while it is invisible, so it must not catch clicks. */
+.slide { position:absolute; inset:0; margin:0; opacity:0; pointer-events:none; transition:opacity 800ms ease; }
+.slide[data-active] { opacity:1; pointer-events:auto; }
 .slide img { display:block; width:100%; height:100%; object-fit:cover; object-position:50% 20%; }
 
 /* Name area, from Figma: a gradient from clear to #161616 with a blur that deepens towards the bottom.
@@ -30,8 +31,15 @@
 .info p { margin:0; font-size:17px; line-height:1.3; color:rgba(255,255,255,.72); }
 .info strong { font-weight:600; color:#fff; }
 .info p>span { display:block; margin-top:2px; font-size:14px; line-height:1.35; color:rgba(255,255,255,.78); }
-.social { flex-shrink:0; display:grid; place-items:center; width:56px; height:56px; border:1px solid #222; border-radius:50%; background:radial-gradient(circle at 50% 30%, #333, #000 65%); color:#fff; transition:transform 300ms cubic-bezier(.22,1,.36,1), border-color 300ms ease; }
-.social:hover { transform:scale(1.06); border-color:#444; }
+/* Apple-style round button: on hover it brightens a little and grows a touch; it presses in on click. */
+.social { position:relative; flex-shrink:0; display:grid; place-items:center; width:56px; height:56px; overflow:hidden; border:1px solid #222; border-radius:50%; background:radial-gradient(circle at 50% 30%, #333, #000 65%); color:#fff; transition:transform 320ms cubic-bezier(.25,.1,.25,1), border-color 320ms ease; }
+.social::before { content:''; position:absolute; inset:0; border-radius:inherit; background:#fff; opacity:0; transition:opacity 320ms ease; }
+.social>svg { position:relative; }
+@media (hover:hover) and (pointer:fine) {
+  .social:hover { transform:scale(1.06); border-color:#3a3a3a; }
+  .social:hover::before { opacity:.12; }
+}
+.social:active { transform:scale(.94); transition-duration:120ms; }
 .social:focus-visible { outline:3px solid var(--color-primary); outline-offset:3px; }
 
 /* Avatars with a countdown ring on their edge: the active one fills over --show, then hands over. */
@@ -54,5 +62,6 @@
   .social { width:44px; height:44px; }
 }
 @media(prefers-reduced-motion:reduce) {
-  .slide,.avatar img,.social { transition:none; }
+  .slide,.avatar img,.social,.social::before { transition:none; }
+  .social:hover,.social:active { transform:none; }
 }
