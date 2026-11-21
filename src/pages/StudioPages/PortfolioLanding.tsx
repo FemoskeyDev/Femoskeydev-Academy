@@ -6,6 +6,7 @@ import styles from './PortfolioLanding.module.css'
 import { CursorCard } from './CursorCard'
 import { HeroFilm } from './HeroFilm'
 import { ProcessStack } from './ProcessStack'
+import { TeamPortraits } from './TeamPortraits'
 import { ContactCta } from './ContactCta'
 import { ProjectCover } from './ProjectCover'
 import { projects } from '../../data/projects'
@@ -147,7 +148,7 @@ export function PortfolioLanding() {
         </dl>
         <Button data-team-motion="cta" to="/work">View all cases</Button>
       </div>
-      <div data-team-motion="portrait" className={styles.teamPortrait}><img src={asset('36c4d.webp')} alt="Femoskeydev founder" loading="lazy" /></div>
+      <div data-team-motion="portrait" className={styles.teamPortrait}><TeamPortraits /></div>
     </section>
 
     <section id="how-we-work" className={styles.process} aria-labelledby="process-title"><div className={styles.wrap}>

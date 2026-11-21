@@ -1,0 +1,35 @@
+.team { display:flex; flex-direction:column; align-items:center; gap:32px; }
+
+/* The portraits sit on top of each other and dissolve into one another. */
+.portrait { position:relative; width:100%; aspect-ratio:407.277 / 538.03; overflow:hidden; border-radius:16px; background:#e9e9e9; isolation:isolate; }
+.slide { position:absolute; inset:0; margin:0; opacity:0; transition:opacity 800ms ease; }
+.slide[data-active] { opacity:1; }
+.slide img { display:block; width:100%; height:100%; object-fit:cover; object-position:50% 20%; }
+
+/* Frosted name card, Apple style. */
+.card { position:absolute; left:12px; right:12px; bottom:12px; display:flex; flex-direction:column; gap:2px; padding:14px 16px; border-radius:14px; background:rgba(22,22,22,.38); color:#fff; -webkit-backdrop-filter:blur(18px) saturate(170%); backdrop-filter:blur(18px) saturate(170%); box-shadow:inset 0 0 0 1px rgba(255,255,255,.14); }
+.card strong { font-size:17px; font-weight:600; line-height:1.3; }
+.card strong span { font-weight:400; color:rgba(255,255,255,.72); }
+.card>span { font-size:14px; line-height:1.35; color:rgba(255,255,255,.78); }
+
+/* Avatars with a countdown ring on their edge: the active one fills over --show, then hands over. */
+.avatars { display:flex; justify-content:center; gap:24px; width:100%; }
+.avatar { position:relative; display:grid; place-items:center; width:min(120px, calc((100% - 24px) / 2)); height:auto; aspect-ratio:1; padding:0; border:0; border-radius:50%; background:none; cursor:pointer; }
+.avatar img { width:100%; height:100%; border-radius:50%; object-fit:cover; transition:transform 300ms cubic-bezier(.22,1,.36,1); }
+.avatar:hover img { transform:scale(1.03); }
+.avatar:focus-visible { outline:3px solid var(--focus-color, #3265c7); outline-offset:2px; }
+.ring { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); pointer-events:none; }
+.ring circle { fill:none; stroke-width:3; }
+.progress { stroke:var(--ring); stroke-linecap:round; stroke-dasharray:100; stroke-dashoffset:100; animation:ring-fill var(--show) linear forwards paused; }
+.progress[data-running] { animation-play-state:running; }
+.progress[data-static] { animation:none; stroke-dashoffset:0; }
+@keyframes ring-fill { to { stroke-dashoffset:0; } }
+
+@media(max-width:600px) {
+  .card { left:10px; right:10px; bottom:10px; padding:12px 14px; }
+  .card strong { font-size:15px; }
+  .card>span { font-size:13px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .slide,.avatar img { transition:none; }
+}
