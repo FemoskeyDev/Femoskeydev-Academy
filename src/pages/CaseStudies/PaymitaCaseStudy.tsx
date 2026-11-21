@@ -88,13 +88,8 @@ export function PaymitaCaseStudy() {
   usePageMeta('Paymita case study', 'Pay your bills in seconds: airtime, data, electricity, cable TV, airtime to cash and virtual dollar cards in one wallet.', 'Femoskeydev')
   return <>
     <article className={styles.page}>
-      <div className={`${styles.hero} ${styles.renderHero}`}>
-        <div className={styles.renderHeroCopy}>
-          <p>Paymita</p>
-          <p className={styles.renderHeroTitle}><span>Pay your bills</span> in seconds.</p>
-          <p>Airtime, data, power, TV and airtime to cash, all from one wallet.</p>
-        </div>
-        <img data-flare {...responsive(image('hero-render'), 2000, '(max-width: 1440px) 100vw, 1376px')} alt="The Paymita home screen on an iPhone, beside a Paymita virtual Mastercard and the back of a second phone" width="2000" height="1000" fetchPriority="high" />
+      <div className={styles.hero}>
+        <img data-flare {...responsive(image('hero'), 2752, '(max-width: 1440px) 100vw, 1376px')} alt="The Paymita home screen on an iPhone, a Paymita virtual Mastercard and the back of a second phone, beside the line: Pay your bills in seconds" width="2752" height="1520" fetchPriority="high" />
       </div>
 
       <header className={`${styles.wrap} ${styles.intro}`}>

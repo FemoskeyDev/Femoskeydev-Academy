@@ -4,16 +4,6 @@
 .wrap { width:calc(100% - 2 * var(--page-margin)); max-width:var(--content-max); margin-inline:auto; }
 
 .hero { width:calc(100% - 64px); max-width:1376px; margin:32px auto 0; border-radius:32px; overflow:hidden; background:#5b3fd6; }
-/* Copy above a 3D render. The card's gradient matches the render's top edge, which is faded into it in the image itself. */
-.renderHero { display:grid; justify-items:center; padding-top:clamp(56px,7vw,104px); background:linear-gradient(90deg,#326cce,#3972d6 25%,#3a77dd 50%,#5188f6 75%,#679cff); color:#fff; text-align:center; }
-.renderHeroCopy { display:grid; justify-items:center; gap:clamp(14px,1.6vw,22px); width:calc(100% - 48px); max-width:760px; }
-.renderHeroCopy p:first-child { font-size:clamp(15px,1.3vw,18px); font-weight:500; opacity:.85; }
-.page .renderHeroTitle { font-size:clamp(44px,6.4vw,92px); font-weight:500; line-height:.98; letter-spacing:-.04em; }
-.renderHeroTitle span { display:block; color:rgba(255,255,255,.62); }
-.renderHeroCopy p:last-child { max-width:34ch; text-wrap:balance; font-size:clamp(17px,1.6vw,22px); line-height:1.4; opacity:.88; }
-/* The edge flare redraws the render above the page with one corner radius, so it never overlaps the copy and
-   takes the card's rounding; its top corners blend into the matching gradient. */
-.renderHero>img { border-radius:inherit; }
 
 .intro { padding-block:clamp(56px,8vw,112px); display:grid; gap:24px; }
 .kicker { color:var(--case-muted); font-size:12px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; }
@@ -81,9 +71,6 @@
 }
 @media(max-width:600px) {
   .hero { border-radius:16px; }
-  /* Trim the render's empty sides so the phones stay large; the gradient is the matching middle two-thirds. */
-  .renderHero { background:linear-gradient(90deg,#376fd3,#3972d6 12.5%,#3a77dd 50%,#5188f6 87.5%,#588ff9); }
-  .renderHero>img { aspect-ratio:4 / 3; object-fit:cover; }
   .meta { grid-template-columns:1fr; }
   .details>p,.sectionHead>p,.splitIntro>p { font-size:17px; }
   .rows>li { grid-template-columns:40px minmax(0,1fr); gap:12px; padding-block:24px; }
