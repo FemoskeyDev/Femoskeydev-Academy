@@ -5,10 +5,10 @@ import {
 } from 'remotion'
 
 export const FPS = 60
-const INK = '#151515'
-const MINT = '#C8FDCE'
+export const INK = '#151515'
+export const MINT = '#C8FDCE'
 const CANVAS = '#FAFAFA'
-const font = 'Tomato Grotesk, Helvetica, Arial, sans-serif'
+export const font = 'Tomato Grotesk, Helvetica, Arial, sans-serif'
 
 // Apple-style motion: long, soft ease-outs with no overshoot.
 const glide = Easing.bezier(0.16, 1, 0.3, 1)
@@ -24,7 +24,7 @@ const at = (beat: number) => (beat === 0 ? 0 : Math.round((FIRST_BEAT + beat * B
 
 /* ---------- building blocks ---------- */
 
-function useFonts() {
+export function useFonts() {
   const [handle] = useState(() => delayRender('fonts'))
   useEffect(() => {
     const faces = [['Regular', 400], ['Medium', 500], ['SemiBold', 600]].map(([name, weight]) =>
@@ -75,7 +75,7 @@ function IPhone({ src, width, rx = 0, ry = 0, rz = 0, glare = 0.5 }: { src: stri
 }
 
 /** A phone placed on the stage, with a soft contact shadow beneath it. */
-function Device({ src, width, x, y, pose, shadow = 0.35 }: { src: string; width: number; x: number; y: number; pose: Pose; shadow?: number }) {
+export function Device({ src, width, x, y, pose, shadow = 0.35 }: { src: string; width: number; x: number; y: number; pose: Pose; shadow?: number }) {
   const height = width * (149.6 / 71.5)
   return <>
     <div style={{
@@ -148,7 +148,7 @@ function Emerge({ src, glow }: { src: string; glow: string }) {
 }
 
 /** One phone beside a headline, gliding into place. */
-function Hero({ bg, src, title, body, tilt = -14 }: { bg: string; src: string; title: string; body: string; tilt?: number }) {
+export function Hero({ bg, src, title, body, tilt = -14 }: { bg: string; src: string; title: string; body: string; tilt?: number }) {
   const frame = useCurrentFrame()
   const { durationInFrames } = useVideoConfig()
   const enter = lerp(frame, 0, 70, 0, 1)
@@ -237,9 +237,9 @@ function Dashboard({ src, bg, dir = 1 }: { src: string; bg: string; dir?: 1 | -1
 type Shot = { from: number; to: number; node: React.ReactNode; dissolve?: boolean }
 const DISSOLVE = 14
 
-const PAYMITA = 'linear-gradient(160deg, #2a5cf0 0%, #1D4ED7 45%, #0d2a8a 100%)'
-const LIZIWARIDE = 'linear-gradient(160deg, #7461ec 0%, #5B44D9 45%, #3a27a8 100%)'
-const SAVECIRCLE = 'linear-gradient(160deg, #a24cf2 0%, #8F2CEB 45%, #5a12a8 100%)'
+export const PAYMITA = 'linear-gradient(160deg, #2a5cf0 0%, #1D4ED7 45%, #0d2a8a 100%)'
+export const LIZIWARIDE = 'linear-gradient(160deg, #7461ec 0%, #5B44D9 45%, #3a27a8 100%)'
+export const SAVECIRCLE = 'linear-gradient(160deg, #a24cf2 0%, #8F2CEB 45%, #5a12a8 100%)'
 
 const shots: Shot[] = [
   { from: 0, to: 4, node: <Logo /> },

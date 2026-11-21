@@ -110,7 +110,7 @@ function CountUp({ value, suffix }: { value: number; suffix: string }) {
 }
 
 export function PortfolioLanding() {
-  usePageMeta('Digital design & development studio', 'You bring the vision. We bring design and code. Femoskeydev builds and scales digital products.', 'Femoskeydev')
+  usePageMeta()
   const teamRef = useTeamMotion()
   return <div className={styles.page}>
     <section className={`${styles.wrap} ${styles.hero}`} aria-labelledby="portfolio-title">

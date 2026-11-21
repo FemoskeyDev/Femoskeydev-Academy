@@ -78,7 +78,7 @@ const features: Feature[] = [
 ]
 
 export function LiziwarideCaseStudy() {
-  usePageMeta('Liziwaride case study', 'Ride hailing, smart buses and scheduled rides in one app, with a driver app and an admin dashboard.', 'Femoskeydev')
+  usePageMeta()
   const reduced = useReducedMotion()
   return <>
   <article className={styles.page}>
