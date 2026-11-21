@@ -134,6 +134,12 @@ export function AppLoader({
     dismiss();
   };
 
+  // The page behind is painted black while the loader is up (html.app-starting). Give it its own
+  // background back as soon as the fade starts, or a black strip shows around the header mid-fade.
+  useEffect(() => {
+    if (leaving) document.documentElement.classList.remove("app-starting");
+  }, [leaving]);
+
   // Keep the existing dismissal fallback.
   useEffect(() => {
     if (!leaving) return;
