@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import styles from "./AnimatedAcademyLogo.module.css";
 
 const backgroundPath =
@@ -14,25 +14,28 @@ type AnimatedAcademyLogoProps = {
   reducedMotion?: boolean;
 };
 
+/**
+ * The star reads as a hole in the mint tile: it is painted in the surface colour behind the logo
+ * (`--logo-cutout`, the ink of the loader by default). It lives in its own HTML layer, so its burst
+ * and spin are plain transforms the browser composites off the main thread, staying smooth while
+ * the page loads underneath. The layer is drawn at 3× and scaled down, so the burst stays sharp.
+ */
 export function AnimatedAcademyLogo({
   size = "clamp(150px, 32vw, 280px)",
   className,
   onIntroComplete,
   reducedMotion = false,
 }: AnimatedAcademyLogoProps) {
-  const maskId = `academy-logo-mask-${useId().replace(/:/g, "")}`;
   const style = { width: size, height: size } as CSSProperties;
 
-  const handleAnimationEnd = (event: React.AnimationEvent<SVGSVGElement>) => {
-    const entry = event.currentTarget.querySelector(`.${styles.starEntry}`);
-
-    if (event.target === entry) {
+  const handleAnimationEnd = (event: React.AnimationEvent<HTMLSpanElement>) => {
+    if ((event.target as HTMLElement).classList.contains(styles.starEntry)) {
       onIntroComplete?.();
     }
   };
 
   return (
-    <svg
+    <span
       className={[
         styles.logo,
         reducedMotion ? styles.reducedMotion : "",
@@ -41,29 +44,23 @@ export function AnimatedAcademyLogo({
         .filter(Boolean)
         .join(" ")}
       style={style}
-      viewBox="0 0 138 138"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="Femoskeydev Academy"
       onAnimationEnd={handleAnimationEnd}
     >
-      <defs>
-        {/* The star is cut out of the tile, so whatever sits behind the logo shows through it. */}
-        <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width="138" height="138">
-          <rect width="138" height="138" fill="#fff" />
-          {/* Runs once: rise, burst past the edges, snap into place */}
-          <g className={styles.starEntry}>
-            {/* Spins only after the entrance has settled */}
-            <g className={styles.starSpin}>
-              <path d={starPath} fill="#000" />
-            </g>
-          </g>
-        </mask>
-      </defs>
-
       {/* The mint silhouette itself never moves. */}
-      <path className={styles.background} d={backgroundPath} mask={`url(#${maskId})`} />
-    </svg>
+      <svg className={styles.tile} viewBox="0 0 138 138" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path className={styles.background} d={backgroundPath} />
+      </svg>
+      {/* Runs once: rise, burst past the edges, snap into place */}
+      <span className={styles.starEntry} aria-hidden="true">
+        {/* Spins only after the entrance has settled */}
+        <span className={styles.starSpin}>
+          <svg viewBox="0 0 138 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path className={styles.cutout} d={starPath} />
+          </svg>
+        </span>
+      </span>
+    </span>
   );
 }

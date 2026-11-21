@@ -6,7 +6,6 @@ import {
   useState,
   type TransitionEvent,
 } from "react";
-import { siteConfig } from "../../data/siteConfig";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { AnimatedAcademyLogo } from "./AnimatedAcademyLogo";
 import styles from "./AppLoader.module.css";
@@ -14,6 +13,8 @@ import styles from "./AppLoader.module.css";
 const MAX_READY_WAIT_MS = 4000;
 const INTRO_FALLBACK_MS = 2700;
 const MIN_SPIN_TIME_MS = 1230;
+// The first image on the homepage: the hero film's poster.
+const HERO_IMAGE = "/images/work/liziwaride/admin-film-poster.webp";
 
 function preloadImage(src: string) {
   return new Promise<void>((resolve) => {
@@ -42,7 +43,7 @@ function waitForAppAssets() {
 
   const assetsReady = Promise.all([
     fontReady,
-    preloadImage(siteConfig.portrait),
+    preloadImage(HERO_IMAGE),
   ]);
 
   return new Promise<void>((resolve) => {
@@ -103,7 +104,7 @@ export function AppLoader({
     onDismiss();
   }, [onDismiss]);
 
-  // Check the font and founder portrait, with a bounded wait.
+  // Check the font and the hero image, with a bounded wait.
   useEffect(() => {
     let active = true;
 
