@@ -3,12 +3,30 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import styles from './CursorCard.module.css'
 
-/** A real link with a decorative pointer follower; touch and keyboard retain a visible affordance.
- *  `tooltip` adds a name pill that travels with the pointer under the disc; `fallback={false}` drops the
- *  centred disc for cards that already show their own arrow. */
-export function CursorCard({ children, className = '', to, label, tooltip, fallback = true }: { children?: ReactNode; className?: string; to: string; label: string; tooltip?: string; fallback?: boolean }) {
+/** On touch screens, a small pill at the bottom of a card that slides in once the card is in view. */
+export function TapHint() {
+  return <span className={styles.tapHint} aria-hidden="true">Tap to view <span>↗</span></span>
+}
+
+/** A real link with a decorative pointer follower; keyboard focus keeps a visible affordance and touch
+ *  screens get a tap hint instead. `tooltip` adds a name pill that travels with the pointer under the disc;
+ *  `fallback={false}` drops the centred focus disc for cards that already show their own arrow;
+ *  `hint={false}` leaves the tap hint to the card, to place it somewhere else (see TapHint). */
+export function CursorCard({ children, className = '', to, label, tooltip, fallback = true, hint = true }: { children?: ReactNode; className?: string; to: string; label: string; tooltip?: string; fallback?: boolean; hint?: boolean }) {
   const linkRef = useRef<HTMLAnchorElement>(null)
   const cursorRef = useRef<HTMLSpanElement>(null)
+
+  // Marks the card while it is on screen, which brings in the tap hint on touch screens.
+  useEffect(() => {
+    const link = linkRef.current
+    if (!link || !('IntersectionObserver' in window)) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) link.dataset.inView = 'true'
+      else delete link.dataset.inView
+    }, { threshold: 0.6 })
+    observer.observe(link)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const link = linkRef.current
@@ -81,6 +99,7 @@ export function CursorCard({ children, className = '', to, label, tooltip, fallb
     <Link ref={linkRef} to={to} aria-label={label} className={`${styles.card} ${className}`}>
       {children}
       {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><span className={styles.arrow}>↗</span></span>}
+      {hint && <TapHint />}
     </Link>
     {typeof document !== 'undefined' && createPortal(<span ref={cursorRef} className={styles.cursor} aria-hidden="true"><span className={styles.disc}><span className={styles.arrow}>↗</span></span>{tooltip && <span className={styles.tooltip}>{tooltip}</span>}</span>, document.body)}
   </>

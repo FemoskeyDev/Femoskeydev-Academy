@@ -8,7 +8,9 @@
   --page-transition-backdrop: #e9e6e1;
   --page-transition-ease: cubic-bezier(.65, 0, .35, 1);
 }
-header:has(#site-navigation) { view-transition-name: site-navigation; }
+/* Named only during a transition: a view-transition name makes the header a backdrop root, which would
+   stop the navigation bar's backdrop blur from seeing the page behind it. */
+html[data-page-transition="active"] header:has(#site-navigation) { view-transition-name: site-navigation; }
 ::view-transition { pointer-events: none; background: var(--page-transition-backdrop); }
 ::view-transition-group(root) { animation-duration: var(--page-transition-duration); }
 ::view-transition-old(root),::view-transition-new(root) {

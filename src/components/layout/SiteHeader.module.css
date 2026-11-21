@@ -68,7 +68,7 @@
   .brand img { width: 164px; }
   .toggle { display: block; }
   .navigation { display: none; }
-  .navigation.open { display: flex; position: absolute; top: calc(100% + 8px); left: 0; right: 0; max-height: calc(100vh - var(--header-height) - 24px); max-height: calc(100svh - var(--header-height) - 24px); overflow-y: auto; overscroll-behavior: contain; flex-direction: column; align-items: stretch; padding: 16px; border: 1px solid var(--color-border); border-radius: 14px; background: rgba(250, 250, 250, .96); box-shadow: 0 15px 30px #0001; }
+  .navigation.open { display: flex; position: absolute; top: calc(100% + 8px); left: 0; right: 0; max-height: calc(100vh - var(--header-height) - 24px); max-height: calc(100svh - var(--header-height) - 24px); overflow-y: auto; overscroll-behavior: contain; flex-direction: column; align-items: stretch; padding: 16px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-canvas); box-shadow: 0 15px 30px #0001; }
   .navigation>:is(a:not(:global(.button)),[aria-disabled]),.moreToggle { padding: 15px 4px; }
   .navigation>:global(.button) { margin: 14px 0 0; }
   .dropdown { position: static; background: transparent; }
@@ -77,8 +77,10 @@
   .expanded { border-radius: 14px; }
   .backdrop { display: none; }
 }
+/* Frosted bar, like Apple's. The mobile menu and dropdown sit inside the bar, which makes the bar their
+   backdrop root, so they can't blur the page themselves and keep their near-opaque backgrounds. */
 @supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
-  .bar,.navigation.open {
+  .bar {
     background: rgba(250, 250, 250, .74);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
