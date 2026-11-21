@@ -41,14 +41,14 @@ function useTeamMotion() {
       root.querySelectorAll<HTMLElement>('[data-team-motion]').forEach(element => {
         if (revealed.current.has(element)) return
         const name = element.dataset.teamMotion ?? ''
-        const isAvatar = name.startsWith('avatar-')
-        const delay = isAvatar ? Number(name.slice(7)) * 55 : name === 'support' ? 80 : 0
-        const distance = isAvatar ? 12 : 22
+        const metric = name.startsWith('metric-')
+        const delay = metric ? Number(name.slice(7)) * 90 : name === 'support' ? 80 : 0
+        const distance = metric ? 14 : 22
         const animation = element.animate([
           { opacity: 0, transform: `translate3d(0, ${distance}px, 0)` },
           { opacity: 1, transform: 'translate3d(0, 0, 0)' },
         ], {
-          duration: isAvatar ? 550 : 800,
+          duration: metric ? 650 : 800,
           delay,
           easing: 'cubic-bezier(.22, 1, .36, 1)',
           fill: 'both',
@@ -72,6 +72,40 @@ function useTeamMotion() {
   }, [reduced])
 
   return ref
+}
+
+const metrics = [
+  { value: 6, suffix: '+', label: 'Years designing digital products' },
+  { value: 35, suffix: '+', label: 'Projects designed and shipped' },
+  { value: 5, suffix: '', label: 'Creative disciplines under one roof' },
+]
+
+// Counts up once when it scrolls into view. Screen readers always get the final figure.
+function CountUp({ value, suffix }: { value: number; suffix: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const reduced = useReducedMotion()
+
+  useEffect(() => {
+    const element = ref.current
+    if (!element || reduced || !('IntersectionObserver' in window)) return
+    let frame = 0
+    element.textContent = `0${suffix}`
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      observer.disconnect()
+      const start = performance.now()
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / 1400, 1)
+        element.textContent = `${Math.round(value * (1 - (1 - progress) ** 3))}${suffix}`
+        if (progress < 1) frame = requestAnimationFrame(tick)
+      }
+      frame = requestAnimationFrame(tick)
+    }, { threshold: 0.6 })
+    observer.observe(element)
+    return () => { observer.disconnect(); cancelAnimationFrame(frame); element.textContent = `${value}${suffix}` }
+  }, [reduced, suffix, value])
+
+  return <><span className={styles.srOnly}>{value}{suffix}</span><span ref={ref} aria-hidden="true">{value}{suffix}</span></>
 }
 
 export function PortfolioLanding() {
@@ -108,9 +142,9 @@ export function PortfolioLanding() {
     <section id="team" ref={teamRef} className={`${styles.wrap} ${styles.team}`} aria-labelledby="team-title">
       <div className={styles.teamCopy}>
         <div className={styles.teamIntro}><div data-team-motion="heading" className={styles.teamHeading}><span aria-hidden="true">“</span><h2 id="team-title">Okay, who's<br /> behind all this?</h2></div><p data-team-motion="support">We are an awesome creative team with a love for thoughtful design, clean code, and bringing ambitious ideas to life.</p></div>
-        <div className={styles.avatars} aria-label="Creative team illustration">
-          {['c1112.webp', '9dc7b.webp', '7f959.webp', '1c494.webp'].map((file, i) => <span data-team-motion={`avatar-${i}`} key={file}><img src={asset(file)} alt="" loading="lazy" /></span>)}<span data-team-motion="avatar-4">+15</span>
-        </div>
+        <dl className={styles.metrics}>
+          {metrics.map((metric, i) => <div key={metric.label} data-team-motion={`metric-${i}`}><dt>{metric.label}</dt><dd><CountUp value={metric.value} suffix={metric.suffix} /></dd></div>)}
+        </dl>
         <Button data-team-motion="cta" to="/work">View all cases</Button>
       </div>
       <div data-team-motion="portrait" className={styles.teamPortrait}><img src={asset('36c4d.webp')} alt="Femoskeydev founder" loading="lazy" /></div>
