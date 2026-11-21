@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import globals from 'globals'
 
 export default tseslint.config(
-  { ignores: ['dist/**', 'node_modules/**'] },
+  { ignores: ['dist/**', 'node_modules/**', 'showreel/node_modules/**', 'showreel/out/**'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -20,5 +20,11 @@ export default tseslint.config(
   {
     files: ['src/features/interactive-portrait/PortraitScene.tsx'],
     rules: { 'react-hooks/immutability': 'off' },
+  },
+  {
+    // The showreel is a Remotion project, rendered by its own CLI rather than served with fast refresh.
+    files: ['showreel/**'],
+    languageOptions: { globals: globals.node },
+    rules: { 'react-refresh/only-export-components': 'off' },
   },
 )
