@@ -77,11 +77,19 @@
   .toggle { display: grid; }
   .navigation { display: none; }
   .navigation.open { display: flex; position: absolute; top: calc(100% + 8px); left: 0; right: 0; max-height: calc(100vh - var(--header-height) - 24px); max-height: calc(100svh - var(--header-height) - 24px); overflow-y: auto; overscroll-behavior: contain; flex-direction: column; align-items: stretch; padding: 16px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-canvas); box-shadow: 0 15px 30px #0001; }
-  .navigation>:is(a:not(:global(.button)),[aria-disabled]),.moreToggle { padding: 15px 4px; }
-  .navigation>:global(.button) { margin: 14px 0 0; }
+  /* Large, Apple-style type in the open menu; the desktop bar's 13px is too small to read or tap on a phone. */
+  .navigation.open { padding: 12px 20px 20px; font-size: 28px; font-weight: 500; line-height: 1.15; letter-spacing: var(--heading-tracking); }
+  .navigation>:is(a:not(:global(.button)),[aria-disabled]),.moreToggle { min-height: 56px; padding: 8px 4px; }
+  .navigation>:global(.button) { justify-content: center; min-height: 52px; margin: 16px 0 0; font-size: 17px; letter-spacing: 0; }
+  .navigation.open>* { animation: menu-item-in 420ms cubic-bezier(.22,1,.36,1) both; }
+  .navigation.open>:nth-child(2) { animation-delay: 30ms; }
+  .navigation.open>:nth-child(3) { animation-delay: 60ms; }
+  .navigation.open>:nth-child(4) { animation-delay: 90ms; }
+  .navigation.open>:nth-child(5) { animation-delay: 120ms; }
   .dropdown { position: static; background: transparent; }
-  .dropdownContent { padding: 12px 12px 20px; }
-  .dropdownInner :is(a,[aria-disabled]) { font-size: 24px; }
+  .dropdownContent { padding: 4px 4px 12px; }
+  .dropdownInner p { font-size: 14px; letter-spacing: 0; }
+  .dropdownInner :is(a,[aria-disabled]) { padding-block: 8px; font-size: 22px; color: var(--color-muted); }
   .expanded { border-radius: 14px; }
   .backdrop { display: none; }
 }
@@ -101,6 +109,7 @@
     backdrop-filter: none;
   }
 }
-@media (prefers-reduced-motion: reduce) { .burger>span,.toggle[aria-expanded="true"] .burger>span { transition: none; } .navigation a,.moreToggle,.dropdown,.dropdownInner p,.backdrop { transition: none; } .dropdownInner :is(a,[aria-disabled]) { transform: none; } }
+@keyframes menu-item-in { from { opacity: 0; transform: translateY(-8px); } }
+@media (prefers-reduced-motion: reduce) { .navigation.open>* { animation: none; } .burger>span,.toggle[aria-expanded="true"] .burger>span { transition: none; } .navigation a,.moreToggle,.dropdown,.dropdownInner p,.backdrop { transition: none; } .dropdownInner :is(a,[aria-disabled]) { transform: none; } }
 
 @media (prefers-reduced-transparency: reduce) { .backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; } }
