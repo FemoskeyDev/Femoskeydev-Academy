@@ -3,6 +3,7 @@ import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 import { usePageMeta } from '../../hooks/usePageMeta'
 import { ContactCta } from '../StudioPages/ContactCta'
 import { Heading, MediaBento, type BentoTile } from './parts'
+import { ShowcaseFilm } from './ShowcaseFilm'
 import { responsive } from '../../lib/images'
 import styles from './CaseStudy.module.css'
 
@@ -105,9 +106,7 @@ export function SaveCircleCaseStudy() {
         </div>
       </header>
 
-      <div className={styles.fullBleed}>
-        <img data-flare {...responsive(image('showcase'), 2289, '100vw')} alt="The SaveCircle admin dashboard on a monitor, on a white desk shelf with a speaker, a small computer, a keyboard and a mouse" width="2289" height="1354" loading="lazy" />
-      </div>
+      <ShowcaseFilm src="/images/work/savecircle/admin-film.mp4" poster={image('admin-film-poster')} sound={false} background="#a6a6a6" label="Film of the SaveCircle admin dashboard on a desk monitor: opening Manage Circles, a circle's details and contribution history, then Analytics" />
 
       {sections.map(section => <section key={section.id} className={`${styles.wrap} ${styles.section}`} aria-labelledby={section.id}>
         <div className={styles.sectionHead}><Heading id={section.id} title={section.title} subtitle={section.subtitle} /><p>{section.copy}</p></div>

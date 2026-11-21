@@ -3,9 +3,9 @@ import { SpeakerLoudIcon, SpeakerOffIcon } from '@radix-ui/react-icons'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import styles from './CaseStudy.module.css'
 
-/** A full-width film that plays muted while on screen, with a toggle for its sound.
+/** A full-width film that plays muted while on screen, with a toggle for its sound when it has one.
  *  Reduced motion keeps it paused on its poster with native controls. */
-export function ShowcaseFilm({ src, poster, label }: { src: string; poster: string; label: string }) {
+export function ShowcaseFilm({ src, poster, label, sound = true, background }: { src: string; poster: string; label: string; sound?: boolean; background?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [muted, setMuted] = useState(true)
   const reduced = useReducedMotion()
@@ -29,9 +29,9 @@ export function ShowcaseFilm({ src, poster, label }: { src: string; poster: stri
     if (video.paused) void video.play().catch(() => undefined)
   }
 
-  return <div className={styles.showcaseFilm}>
+  return <div className={styles.showcaseFilm} style={background ? { background } : undefined}>
     <video data-flare ref={videoRef} src={src} poster={poster} width="1920" height="1080" muted={muted} loop playsInline preload="metadata" controls={reduced} aria-label={label} />
-    {!reduced && <button type="button" className={styles.soundToggle} onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn sound on' : 'Turn sound off'}>
+    {sound && !reduced && <button type="button" className={styles.soundToggle} onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn sound on' : 'Turn sound off'}>
       {muted ? <SpeakerOffIcon width={18} height={18} aria-hidden="true" /> : <SpeakerLoudIcon width={18} height={18} aria-hidden="true" />}
       <span>{muted ? 'Sound off' : 'Sound on'}</span>
     </button>}

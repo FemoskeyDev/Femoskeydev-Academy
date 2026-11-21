@@ -12,7 +12,7 @@
 .separator { margin-block: 32px; height: 3px; overflow: hidden; }
 .separator img { display: block; width: 100%; height: 3px; }
 .footer nav { display: flex; justify-content: flex-end; gap: 20px; font-size: 16px; }
-.footer nav>* { padding-block: 12px; }
+.footer nav>* { padding-block: 12px; font-size: inherit; }
 .footer nav [aria-disabled] { color: rgba(255,255,255,.5); }
 @media (max-width: 600px) {
   .footer { padding-block: 32px; }
