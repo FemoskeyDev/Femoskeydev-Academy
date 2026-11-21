@@ -19,19 +19,6 @@ const meta = [
   ['Platforms', 'iOS & Android apps, web admin dashboard'],
 ]
 
-const process = [
-  ['Understand riders and drivers', 'Passenger and driver personas grounded the work in real routines in Abuja: commutes, safety, earnings and how people pay.'],
-  ['Map every journey', 'End-to-end flows for both apps: onboarding, sign-up and KYC, booking, live trips, payments, ratings and support.'],
-  ['One system, three products', 'A shared style guide (colour, type, buttons, inputs, tables, cards) so the passenger app, driver app and admin dashboard feel like one product.'],
-]
-
-const challenges = [
-  ['Unreliable pickups', 'Late arrivals, cancellations and unclear pickup points cost passengers time and drivers fuel.'],
-  ['Unpredictable money', 'Passengers face surprise prices at peak hours; drivers get unclear earnings breakdowns and slow wallet updates.'],
-  ['Safety and trust', 'Both sides want verified identities, live trip tracking and quick access to help during a ride.'],
-  ['Distraction on the road', 'Drivers work with one hand on the wheel, so screens need large buttons, visual cues and minimal taps.'],
-]
-
 const features: Feature[] = [
   {
     id: 'onboarding', title: 'First impressions', subtitle: 'safety from the start', columns: 4,
@@ -61,7 +48,7 @@ const features: Feature[] = [
       { file: 'bus-1', alt: 'Boarding QR code sheet for the smart bus' },
       { file: 'bus-2', alt: 'How Smart Bus QR codes work, with a scanner photo and steps' },
       { file: 'bus-3', alt: 'Add your NFC card screen waiting for a card to be held to the phone' },
-      { file: 'bus-nfc-card', alt: 'The Liziwaride NFC card in purple', wide: true },
+      { file: 'bus-illustration', alt: 'Illustration of a passenger stepping onto a smart bus', wide: true },
       { file: 'bus-4', alt: 'NFC cards list with active and inactive cards' },
     ],
   },
@@ -69,12 +56,11 @@ const features: Feature[] = [
     id: 'special-services', title: 'Special services', subtitle: 'and one wallet',
     copy: 'Airport transfers, hotel pickups, VIP rides and corporate shuttles can be scheduled ahead for a set date and time. One wallet funds every ride type, with quick top-up amounts.',
     tiles: [
-      { file: 'special-1', alt: 'Special services home with ride types and recent special rides' },
-      { file: 'special-2', alt: 'Schedule a special ride screen' },
-      { file: 'special-3', alt: 'Plan. Book. Relax.' },
-      { file: 'special-4', alt: 'Add money screen asking how much to add to the wallet' },
-      { file: 'special-5', alt: 'Add money screen with ₦10,000 entered and quick amounts' },
-      { file: 'special-6', alt: 'One wallet for every ride' },
+      { file: 'special-1', alt: 'Special services home: plan, book and relax, with ride types and recent special rides' },
+      { file: 'special-2', alt: 'Schedule a special ride sheet over a photo of an airport drop-off' },
+      { file: 'special-3', alt: 'Add money screen asking how much to add to the wallet' },
+      { file: 'special-4', alt: 'Add money screen with quick top-up amounts and the keypad' },
+      { file: 'special-wide', alt: 'Illustration of a hand tapping a phone to pay', wide: true },
     ],
   },
   {
@@ -90,15 +76,6 @@ const features: Feature[] = [
     ],
   },
 ]
-
-function NumberedRows({ rows }: { rows: string[][] }) {
-  return <ol className={styles.rows}>
-    {rows.map(([title, body], i) => <li key={title}>
-      <span className={styles.number}>{String(i + 1).padStart(2, '0')}</span>
-      <div><h3>{title}</h3><p>{body}</p></div>
-    </li>)}
-  </ol>
-}
 
 export function LiziwarideCaseStudy() {
   usePageMeta('Liziwaride case study', 'Ride hailing, smart buses and scheduled rides in one app, with a driver app and an admin dashboard.', 'Femoskeydev')
@@ -126,24 +103,6 @@ export function LiziwarideCaseStudy() {
     <div className={styles.fullBleed}>
       <img data-flare {...responsive(image('showcase'), 2880, '100vw')} alt="The Liziwaride admin dashboard on a desktop monitor" width="2880" height="1404" loading="lazy" />
     </div>
-
-    <section className={`${styles.wrap} ${styles.split}`} aria-labelledby="process">
-      <div className={styles.splitIntro}><Heading id="process" title="How the work" subtitle="came together" /><p>From research to a full product suite, the project moved through three overlapping stages.</p></div>
-      <NumberedRows rows={process} />
-    </section>
-
-    <section className={`${styles.wrap} ${styles.section}`} aria-labelledby="personas">
-      <div className={styles.sectionHead}><Heading id="personas" title="Who we designed for" subtitle="Amara and Ibrahim" /><p>Amara commutes across Abuja for work and wants fast, predictable and safe rides. Ibrahim drives full time and needs steady trips, clear earnings and as few taps as possible while he is on the road.</p></div>
-      <div className={styles.pair}>
-        <img data-flare {...responsive(image('persona-passenger'), 1236, '(max-width: 600px) 100vw, 50vw')} alt="Passenger persona: Amara, a commuter in Abuja" width="1236" height="1120" loading="lazy" />
-        <img data-flare {...responsive(image('persona-driver'), 1236, '(max-width: 600px) 100vw, 50vw')} alt="Driver persona: Ibrahim, a full-time driver" width="1236" height="1120" loading="lazy" />
-      </div>
-    </section>
-
-    <section className={`${styles.wrap} ${styles.split}`} aria-labelledby="challenges">
-      <div className={styles.splitIntro}><Heading id="challenges" title="What got in" subtitle="their way" /><p>Pain points from both personas that shaped the product decisions.</p></div>
-      <NumberedRows rows={challenges} />
-    </section>
 
     {features.map(feature => <section key={feature.id} className={`${styles.wrap} ${styles.section}`} aria-labelledby={feature.id}>
       <div className={styles.sectionHead}><Heading id={feature.id} title={feature.title} subtitle={feature.subtitle} /><p>{feature.copy}</p></div>
