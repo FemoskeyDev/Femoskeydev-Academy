@@ -37,7 +37,8 @@ function Header() {
 
   return <>
     <div className={styles.spacer} aria-hidden="true" />
-    <div data-navigation-backdrop className={`${styles.backdrop} ${moreOpen ? styles.backdropOpen : ''}`} aria-hidden="true" onClick={closeMenus} />
+    {/* Behind the More dropdown and the mobile menu; a click or tap on it closes them. */}
+    <div data-navigation-backdrop className={`${styles.backdrop} ${moreOpen || open ? styles.backdropOpen : ''}`} aria-hidden="true" onClick={closeMenus} />
     <header className={styles.header} onPointerEnter={cancelClose} onPointerLeave={event => {
       if (event.pointerType === 'mouse') scheduleClose()
     }} onBlur={event => {
