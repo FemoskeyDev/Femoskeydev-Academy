@@ -91,7 +91,6 @@
   .dropdownInner p { font-size: 14px; letter-spacing: 0; }
   .dropdownInner :is(a,[aria-disabled]) { padding-block: 8px; font-size: 22px; color: var(--color-muted); }
   .expanded { border-radius: 14px; }
-  .backdrop { display: none; }
 }
 /* Frosted bar, like Apple's. The mobile menu and dropdown sit inside the bar, which makes the bar their
    backdrop root, so they can't blur the page themselves and keep their near-opaque backgrounds. */
