@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import styles from './PortfolioLanding.module.css'
 
-const film = '/images/portfolio/showreel.mp4'
-const poster = '/images/portfolio/showreel-poster.webp'
+const film = '/images/work/liziwaride/admin-film.mp4'
+const poster = '/images/work/liziwaride/admin-film-poster.webp'
 
-/** The studio showreel (Paymita, Liziwaride and SaveCircle): settles in on load, then plays only while it is on screen. */
+/** The Liziwaride admin film: settles in on load, then plays only while it is on screen. */
 export function HeroFilm() {
   const frameRef = useRef<HTMLSpanElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -49,7 +49,7 @@ export function HeroFilm() {
   }, [reduced])
 
   return <span ref={frameRef} className={styles.heroFilm}>
-    <img data-flare src={poster} alt="Femoskeydev, product design and development studio" fetchPriority="high" />
+    <img data-flare src={poster} alt="Liziwaride admin dashboard on a monitor" fetchPriority="high" />
     {!reduced && <video data-flare ref={videoRef} src={film} muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1}
       data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
   </span>
