@@ -55,7 +55,7 @@ function Header() {
         <button ref={toggleRef} type="button" className={styles.toggle} aria-expanded={open} aria-controls="site-navigation" onClick={() => {
           setOpen(value => !value)
           setMoreOpen(false)
-        }}>{open ? 'Close' : 'Menu'}</button>
+        }} aria-label={open ? 'Close menu' : 'Open menu'}><span className={styles.burger} aria-hidden="true"><span /><span /></span></button>
         <nav id="site-navigation" aria-label="Main navigation" className={`${styles.navigation} ${open ? styles.open : ''}`}>
             <ComingSoon>Services</ComingSoon>
             <NavLink to="/work" onPointerEnter={() => setMoreOpen(false)} onClick={closeMenus}>Case Studies</NavLink>
