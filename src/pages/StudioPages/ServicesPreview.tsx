@@ -29,7 +29,7 @@ export function ServicesPreview() {
         if (event.pointerType !== 'touch') setActive(index)
       }} onFocus={() => setActive(index)}>
         <button type="button" aria-pressed={active === index} aria-controls="service-preview" onClick={() => setActive(index)}>{service.name}</button>
-        <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" aria-label={`Book a call about ${service.name}`}><Arrow /></a>
+        <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" aria-label={`Book a call about ${service.name}`}><Arrow weight="semibold" /></a>
       </li>)}
     </ul>
     <div ref={previewRef} id="service-preview" className={styles.preview} role="img" aria-label={`${services[active].name} illustration`}>

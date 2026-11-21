@@ -83,9 +83,9 @@ export function CursorCard({ children, className = '', to, label, tooltip, fallb
   return <>
     <Link ref={linkRef} to={to} aria-label={label} className={`${styles.card} ${className}`}>
       {children}
-      {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><Arrow className={styles.arrow} /></span>}
+      {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><Arrow className={styles.arrow} weight="semibold" /></span>}
       {arrow && <span className={styles.touchArrow} aria-hidden="true"><ArrowTopRightIcon width={16} height={16} /></span>}
     </Link>
-    {typeof document !== 'undefined' && createPortal(<span ref={cursorRef} className={styles.cursor} aria-hidden="true"><span className={styles.disc}><Arrow className={styles.arrow} /></span>{tooltip && <span className={styles.tooltip}>{tooltip}</span>}</span>, document.body)}
+    {typeof document !== 'undefined' && createPortal(<span ref={cursorRef} className={styles.cursor} aria-hidden="true"><span className={styles.disc}><Arrow className={styles.arrow} weight="semibold" /></span>{tooltip && <span className={styles.tooltip}>{tooltip}</span>}</span>, document.body)}
   </>
 }
