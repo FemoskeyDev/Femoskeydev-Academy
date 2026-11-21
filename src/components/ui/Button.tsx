@@ -5,6 +5,7 @@ import type {
 } from "react";
 import { Link } from "react-router-dom";
 import { classNames } from "../../lib/classNames";
+import { Arrow } from "./Arrow";
 type Props = {
   children: ReactNode;
   variant?: "primary" | "lime" | "outline";
@@ -31,14 +32,14 @@ export function Button({
     return (
       <Link className={classes} to={to} {...props}>
         {children}
-        <span aria-hidden="true">↗</span>
+        <Arrow />
       </Link>
     );
   if (href)
     return (
       <a className={classes} href={href} {...props}>
         {children}
-        <span aria-hidden="true">↗</span>
+        <Arrow />
       </a>
     );
   return (
@@ -47,7 +48,7 @@ export function Button({
       {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {children}
-      <span aria-hidden="true">↗</span>
+      <Arrow />
     </button>
   );
 }

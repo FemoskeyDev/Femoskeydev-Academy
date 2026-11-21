@@ -4,7 +4,8 @@
 .cursor { --disc-size:clamp(96px,12vw,172.8px); position:fixed; top:0; left:0; z-index:100; pointer-events:none; user-select:none; }
 .disc { position:relative; display:grid; place-items:center; width:var(--disc-size,clamp(96px,12vw,172.8px)); aspect-ratio:1; border-radius:50%; overflow:hidden; isolation:isolate; background:var(--color-primary); color:#000; font-family:'Tomato Grotesk',Arial,sans-serif; font-size:clamp(32px,3.34vw,48px); font-weight:600; }
 .disc::before { content:''; position:absolute; inset:0; border-radius:50%; background:#ffd5bf; transform:translateY(-102%); transition:transform 650ms cubic-bezier(.22,1,.36,1); }
-.arrow { position:relative; z-index:1; line-height:1; }
+.arrow { position:relative; z-index:1; display:block; line-height:1; }
+.arrow>svg { display:block; }
 .cursor>.disc { translate:-50% -50%; transform:scale(.55); opacity:0; transition:transform 260ms cubic-bezier(.22,1,.36,1),opacity 180ms ease; }
 .cursor[data-active]>.disc { opacity:1; transform:scale(1); }
 .cursor[data-active]>.disc::before { transform:translateY(0); transition-delay:100ms; }

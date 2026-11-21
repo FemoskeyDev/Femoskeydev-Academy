@@ -32,7 +32,7 @@ export function ProcessStack() {
     {processSteps.map((step, index) => <li key={step.id} className={styles.item} style={{ '--i': index } as CSSProperties}>
       <article className={styles.card} aria-labelledby={`stack-${step.id}`}>
         <div className={styles.copy}>
-          <div className={styles.meta}><span><img src={`/images/portfolio/${step.icon}`} alt="" />{step.label}</span><span>{step.number}</span></div>
+          <div className={styles.meta}><span><step.Icon width={24} height={24} aria-hidden="true" />{step.label}</span><span>{step.number}</span></div>
           <div>
             <h3 id={`stack-${step.id}`}>{step.title}</h3>
             <p>{step.line}</p>

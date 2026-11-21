@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import styles from './TeamPortraits.module.css'
 
@@ -6,11 +7,12 @@ const SHOW_MS = 5000
 const asset = (file: string) => `/images/portfolio/${file}`
 
 const people = [
-  { id: 'femi', name: 'Lawal Oluwafemi', handle: 'Femoskeydev', role: 'CEO & Designer', ring: '#c8fdce' },
-  { id: 'ayomide', name: 'Lawal Ayomide', handle: 'AYCODEZ', role: 'Developer', ring: '#6a9dff' },
+  { id: 'femi', name: 'Lawal Oluwafemi', handle: 'Femoskeydev', role: 'CEO & Designer', ring: '#c8fdce', linkedin: 'https://www.linkedin.com/in/oluwafemilawal/' },
+  // Ayomide's LinkedIn button appears once his profile URL is added here.
+  { id: 'ayomide', name: 'Lawal Ayomide', handle: 'AYCODEZ', role: 'Developer', ring: '#6a9dff', linkedin: '' },
 ]
 
-/** One portrait at a time with a frosted name card. Under it, each person's avatar ring fills as a
+/** One portrait at a time, its name over a progressively blurred gradient with a LinkedIn link. Under it, each person's avatar ring fills as a
  *  countdown; when it completes the portrait dissolves to the next person. Tapping an avatar switches
  *  straight away. The countdown pauses off screen or under the pointer; reduced motion only switches on tap. */
 export function TeamPortraits() {
@@ -36,7 +38,11 @@ export function TeamPortraits() {
     <div className={styles.portrait}>
       {people.map((person, index) => <figure key={person.id} className={styles.slide} data-active={index === active || undefined} aria-hidden={index !== active}>
         <img src={asset(`team-${person.id}.webp`)} alt={`${person.name} (${person.handle}), ${person.role}`} width="783" height="1045" loading="lazy" />
-        <figcaption className={styles.card}><strong>{person.name} <span>({person.handle})</span></strong><span>{person.role}</span></figcaption>
+        <figcaption className={styles.info}>
+          <span className={styles.blur} aria-hidden="true">{[1, 2, 3, 4, 5].map(layer => <span key={layer} />)}</span>
+          <p><strong>{person.name}</strong> ({person.handle})<span>{person.role}</span></p>
+          {person.linkedin && <a className={styles.social} href={person.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${person.name} on LinkedIn (opens in a new tab)`} tabIndex={index === active ? undefined : -1}><LinkedInLogoIcon width={24} height={24} aria-hidden="true" /></a>}
+        </figcaption>
       </figure>)}
     </div>
     <div className={styles.avatars} role="group" aria-label="Who's behind Femoskeydev">

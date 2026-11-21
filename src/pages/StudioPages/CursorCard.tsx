@@ -2,6 +2,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { ArrowTopRightIcon } from '@radix-ui/react-icons'
+import { Arrow } from '../../components/ui/Arrow'
 import styles from './CursorCard.module.css'
 
 /** A real link with a decorative pointer follower; keyboard focus keeps a visible affordance and touch
@@ -82,9 +83,9 @@ export function CursorCard({ children, className = '', to, label, tooltip, fallb
   return <>
     <Link ref={linkRef} to={to} aria-label={label} className={`${styles.card} ${className}`}>
       {children}
-      {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><span className={styles.arrow}>↗</span></span>}
+      {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><Arrow className={styles.arrow} /></span>}
       {arrow && <span className={styles.touchArrow} aria-hidden="true"><ArrowTopRightIcon width={16} height={16} /></span>}
     </Link>
-    {typeof document !== 'undefined' && createPortal(<span ref={cursorRef} className={styles.cursor} aria-hidden="true"><span className={styles.disc}><span className={styles.arrow}>↗</span></span>{tooltip && <span className={styles.tooltip}>{tooltip}</span>}</span>, document.body)}
+    {typeof document !== 'undefined' && createPortal(<span ref={cursorRef} className={styles.cursor} aria-hidden="true"><span className={styles.disc}><Arrow className={styles.arrow} /></span>{tooltip && <span className={styles.tooltip}>{tooltip}</span>}</span>, document.body)}
   </>
 }
