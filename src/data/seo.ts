@@ -25,7 +25,7 @@ export type PageSeo = {
   caseStudy?: boolean
 }
 
-const studioImage = { image: '/images/social/studio.jpg', imageAlt: 'Femoskeydev: we build and scale digital products & then some.' }
+const studioImage = { image: '/images/social/femoskeydev.jpg', imageAlt: 'Femoskeydev' }
 
 const studioDescription = 'We design and build digital products: mobile apps, websites and dashboards for fintech, mobility and more. You bring the vision; we bring design and code.'
 

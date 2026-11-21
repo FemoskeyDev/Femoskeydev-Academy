@@ -14,7 +14,7 @@ await mkdir(out, { recursive: true })
 for (const variant of ['studio', 'paymita', 'liziwaride', 'savecircle']) {
   const still = resolve(root, `out/social-${variant}.png`)
   execFileSync(resolve(root, 'node_modules/.bin/remotion'), ['still', 'src/index.tsx', 'Social', still, '--frame=150', `--props=${JSON.stringify({ variant })}`, ...(browser ? [browser] : [])], { cwd: root, stdio: 'inherit' })
-  await sharp(still).resize(1200, 630).jpeg({ quality: 86, mozjpeg: true }).toFile(resolve(out, `${variant}.jpg`))
+  await sharp(still).resize(1200, 630).jpeg({ quality: 86, mozjpeg: true }).toFile(resolve(out, variant === 'studio' ? 'femoskeydev.jpg' : `${variant}.jpg`))
 }
 const logo = resolve(root, '../public/logo.svg')
 for (const [name, size] of [['favicon-48', 48], ['apple-touch-icon', 180], ['icon-192', 192], ['icon-512', 512]]) {

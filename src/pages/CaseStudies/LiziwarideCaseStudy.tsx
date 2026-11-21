@@ -83,7 +83,7 @@ export function LiziwarideCaseStudy() {
   return <>
   <article className={styles.page}>
     <div className={styles.hero}>
-      <img data-flare {...responsive(image('hero'), 2752, '(max-width: 1440px) 100vw, 1376px')} alt="Hand holding a phone showing the Liziwaride home screen, beside the line: Ride smarter across Africa" width="2752" height="1520" fetchPriority="high" />
+      <img data-flare {...responsive(image('hero'), 2752, '(max-width: 1440px) 100vw, 1376px')} alt="A phone showing a boarding QR code held to a smart bus reader, beside the line: Ride smarter across Africa. Ride hailing, smart buses and scheduled rides in one app." width="2752" height="1520" fetchPriority="high" />
     </div>
 
     <header className={`${styles.wrap} ${styles.intro}`}>
