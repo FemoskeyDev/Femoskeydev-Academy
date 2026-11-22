@@ -1,11 +1,5 @@
 .index { position: relative; }
 .list { list-style: none; padding: 0; margin: 0; }
-.list li { border-top: 1px solid rgba(2, 2, 2, .14); transition: border-color 300ms ease; }
-.list li:last-child { border-bottom: 1px solid rgba(2, 2, 2, .14); }
-/* The row under the pointer (or keyboard focus) fills black; the lines either side of it fade so the fill reads as one shape. */
-.list li[data-active],.list li[data-active]+li,.list li:has(:focus-visible),.list li:has(:focus-visible)+li { border-top-color: transparent; }
-.list li:last-child[data-active],.list li:last-child:has(:focus-visible) { border-bottom-color: transparent; }
-
 .list a {
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr) 200px 56px;
@@ -21,12 +15,13 @@
 .number { font-size: 18px; font-weight: 500; color: #8a8a8a; transition: color 300ms ease; }
 .name { font-size: clamp(32px, 5vw, 72px); font-weight: 600; line-height: 1; letter-spacing: -.03em; }
 .includes { display: flex; flex-direction: column; font-size: 15px; line-height: 1.5; color: #8a8a8a; transition: color 300ms ease; }
-.arrow { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid rgba(2, 2, 2, .2); border-radius: 50%; font-size: 22px; transition: background-color 300ms ease, border-color 300ms ease, transform 400ms cubic-bezier(.22,1,.36,1); }
+.arrow { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid rgba(2, 2, 2, .2); border-radius: 50%; font-size: 22px; transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease; }
 
-.list li[data-active] a,.list a:focus-visible { background: #020202; color: var(--color-primary); }
-.list li[data-active] .number,.list a:focus-visible .number { color: var(--color-primary); }
-.list li[data-active] .includes,.list a:focus-visible .includes { color: rgba(255, 255, 255, .86); }
-.list li[data-active] .arrow,.list a:focus-visible .arrow { border-color: var(--color-primary); background: var(--color-primary); color: #020202; transform: rotate(45deg); }
+/* The row under the pointer (or keyboard focus) fills mint, from Figma. */
+.list li[data-active] a,.list a:focus-visible { background: var(--color-primary); color: #151515; }
+.list li[data-active] .number,.list a:focus-visible .number { color: #151515; }
+.list li[data-active] .includes,.list a:focus-visible .includes { color: rgba(21, 21, 21, .72); }
+.list li[data-active] .arrow,.list a:focus-visible .arrow { border-color: #151515; background: #151515; color: #fff; }
 
 /* The card that trails the pointer: centred on it, tilted slightly, fading and scaling in. */
 .card {
@@ -67,6 +62,5 @@
   .arrow { width: 44px; height: 44px; font-size: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .list li,.list a,.number,.includes,.arrow,.card,.cardArt img { transition: none; }
-  .list li[data-active] .arrow,.list a:focus-visible .arrow { transform: none; }
+  .list a,.number,.includes,.arrow,.card,.cardArt img { transition: none; }
 }
