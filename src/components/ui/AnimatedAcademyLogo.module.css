@@ -30,16 +30,17 @@
   pointer-events: none;
   transform-origin: 50% 50%;
   will-change: transform;
-  animation: academy-star-burst 550ms linear both;
+  animation: academy-star-burst 700ms linear both;
 }
 
-/* A steady clockwise spin after a short upright hold: a quarter turn every 315 ms. */
+/* A steady clockwise spin after a short upright hold: a quarter turn every 315 ms. When the page is
+   ready, script takes over from here and eases the star to a stop, upright. */
 .starSpin {
   display: block;
   width: 100%;
   height: 100%;
   will-change: transform;
-  animation: academy-star-spin 1260ms linear 800ms infinite;
+  animation: academy-star-spin 1260ms linear 950ms infinite;
 }
 
 .starSpin svg {
@@ -51,40 +52,82 @@
 @keyframes academy-star-burst {
   /* Large and below the tile, so nothing is cut yet. */
   0% {
-    transform: translateY(36.232%) scale(0.7333);
+    transform: translateY(36.232%) rotate(0deg) scale(0.7333);
     animation-timing-function: cubic-bezier(0.3, 0, 0.7, 1);
   }
 
   /* The top tip enters from the bottom edge as a thin spike. */
   9% {
-    transform: translateY(24.155%) scale(0.8);
+    transform: translateY(24.155%) rotate(0deg) scale(0.8);
     animation-timing-function: cubic-bezier(0.2, 0.6, 0.4, 1);
   }
 
   /* Most of the tile is cut away; only the four corners remain. */
   18% {
-    transform: translateY(4.831%) scale(0.8667);
+    transform: translateY(4.831%) rotate(0deg) scale(0.8667);
     animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
   }
 
-  /* Burst: the hole swallows the top, leaving two curved petals. */
+  /* Burst: the hole swallows the top, leaving two curved petals. Held at full stretch, it quivers
+     like a plucked rubber band, dying away before the snap back. */
   27% {
-    transform: translateY(-10.145%) scale(0.95);
+    transform: translateY(-10.145%) rotate(0deg) scale(0.95, 0.95);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
   }
 
-  82% {
-    transform: translateY(-10.145%) scale(0.95);
-    animation-timing-function: cubic-bezier(0.6, 0, 0.9, 0.6);
+  32.89% {
+    transform: translateY(-11.056%) rotate(-1.33deg) scale(0.9401, 0.9649);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
   }
 
-  91% {
-    transform: translateY(-8.937%) scale(0.9167);
+  38.78% {
+    transform: translateY(-9.409%) rotate(1.07deg) scale(0.958, 0.938);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  44.67% {
+    transform: translateY(-10.72%) rotate(-0.84deg) scale(0.9437, 0.9594);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  50.56% {
+    transform: translateY(-9.716%) rotate(0.62deg) scale(0.9547, 0.943);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  56.44% {
+    transform: translateY(-10.446%) rotate(-0.44deg) scale(0.9467, 0.9549);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  62.33% {
+    transform: translateY(-9.955%) rotate(0.28deg) scale(0.9521, 0.9469);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  68.22% {
+    transform: translateY(-10.244%) rotate(-0.14deg) scale(0.9489, 0.9516);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  74.11% {
+    transform: translateY(-10.112%) rotate(0.05deg) scale(0.9504, 0.9495);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  80% {
+    transform: translateY(-10.145%) rotate(0deg) scale(0.95, 0.95);
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  90% {
+    transform: translateY(-8.937%) rotate(0deg) scale(0.9167);
     animation-timing-function: cubic-bezier(0.5, 0, 1, 1);
   }
 
   /* Snap to the resting star. */
   100% {
-    transform: translateY(0) scale(0.3333);
+    transform: translateY(0) rotate(0deg) scale(0.3333);
   }
 }
 
@@ -96,6 +139,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* The pathway: the gap between the mark's two legs. Once the star has settled it grows out of the
+   star's side points (the logo's middle line) down to the bottom edge, completing the mark. */
+.road {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 50% 0);
+  pointer-events: none;
+}
+
+.road svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* The reduced-motion version remains static, with the star at rest. */

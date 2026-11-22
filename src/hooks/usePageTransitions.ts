@@ -26,10 +26,14 @@ export function usePageTransitions() {
     currentLocation.pathname !== nextLocation.pathname,
   )
 
+  const firstRender = useRef(true)
   useLayoutEffect(() => {
-    if (!pending.current) return
+    if (firstRender.current) { firstRender.current = false; return }
     // New pages open at the top. Jump instantly: the page's smooth scrolling would be cut short mid-transition.
+    // This runs on every new page, not only animated ones: a slow case-study chunk can outlast the transition
+    // (the browser gives up on it), and then the page would otherwise open at the old scroll position.
     if (navigationType !== 'POP' && !location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    if (!pending.current) return
     commit.current?.()
     commit.current = null
     document.querySelector<HTMLElement>('#main-content')?.focus({ preventScroll: true })

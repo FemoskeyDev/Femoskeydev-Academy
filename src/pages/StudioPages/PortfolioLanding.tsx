@@ -13,6 +13,7 @@ import { projects } from '../../data/projects'
 
 const [liziwaride, paymita, savecircle, edgecore] = projects
 import { ServicesPreview } from './ServicesPreview'
+import { siteConfig } from '../../data/siteConfig'
 
 const asset = (file: string) => `/images/portfolio/${file}`
 
@@ -145,7 +146,7 @@ export function PortfolioLanding() {
         <dl className={styles.metrics}>
           {metrics.map((metric, i) => <div key={metric.label} data-team-motion={`metric-${i}`}><dt>{metric.label}</dt><dd><CountUp value={metric.value} suffix={metric.suffix} /></dd></div>)}
         </dl>
-        <Button data-team-motion="cta" to="/work">View all cases</Button>
+        <Button data-team-motion="cta" href={siteConfig.bookingUrl} target="_blank" rel="noreferrer">Contact us</Button>
       </div>
       <div data-team-motion="portrait" className={styles.teamPortrait}><TeamPortraits /></div>
     </section>
