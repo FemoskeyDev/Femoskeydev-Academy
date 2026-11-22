@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { AnimatedAcademyLogo } from './AnimatedAcademyLogo'
 
 const backgroundPath = 'M102.677 19H35.3226C26.3226 19 19 26.3226 19 35.3226V119H41.9677L96.5832 119.032L96.6129 119.032H119V35.3226C119 26.2903 111.677 19 102.677 19Z'
@@ -8,11 +8,21 @@ const starPath = 'M69.0001 35.9668C69.0001 53.8761 54.7539 68.4644 36.978 69.015
 describe('AnimatedAcademyLogo', () => {
   it('embeds the exact supplied paths, with the star in its own animated layer', () => {
     const { container } = render(<><AnimatedAcademyLogo/><AnimatedAcademyLogo/></>)
-    const logos = screen.getAllByRole('img', { name: 'Femoskeydev Academy' })
+    const logos = screen.getAllByRole('img', { name: 'Femoskeydev' })
     expect(logos).toHaveLength(2)
-    expect(container.querySelectorAll('svg[viewBox="0 0 138 138"]')).toHaveLength(4)
+    expect(container.querySelectorAll('svg[viewBox="0 0 138 138"]')).toHaveLength(6)
     expect(container.querySelectorAll('mask')).toHaveLength(0)
     expect(logos[0].querySelector(`path[d="${backgroundPath}"]`)).toBeInTheDocument()
     expect(logos[0].querySelector(`path[d="${starPath}"]`)).toBeInTheDocument()
+  })
+
+  it('ends on the Femoskeydev mark when told to finish', () => {
+    const onFinished = vi.fn()
+    const { rerender } = render(<AnimatedAcademyLogo/>)
+    rerender(<AnimatedAcademyLogo finish onFinished={onFinished}/>)
+    const logo = screen.getByRole('img', { name: 'Femoskeydev' })
+    expect(onFinished).toHaveBeenCalledOnce()
+    expect(logo.querySelector(`path[d="${starPath}"]`)).not.toBeInTheDocument()
+    expect(logo.querySelector('path[d^="M26.7767 0H5.22325"]')).toBeInTheDocument()
   })
 })

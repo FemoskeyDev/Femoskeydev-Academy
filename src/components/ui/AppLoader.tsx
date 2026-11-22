@@ -11,7 +11,9 @@ import { AnimatedAcademyLogo } from "./AnimatedAcademyLogo";
 import styles from "./AppLoader.module.css";
 
 const MAX_READY_WAIT_MS = 4000;
-const INTRO_FALLBACK_MS = 2700;
+const INTRO_FALLBACK_MS = 2900;
+// The settle and the pathway take about 1.3 seconds; never wait on them longer than this.
+const FINISH_FALLBACK_MS = 2200;
 const MIN_SPIN_TIME_MS = 1230;
 // The first image on the homepage: the hero film's poster.
 const HERO_IMAGE = "/images/portfolio/showreel-poster.webp";
@@ -71,7 +73,12 @@ export function AppLoader({
   const [introComplete, setIntroComplete] = useState(reducedMotion);
   const [appReady, setAppReady] = useState(false);
 
-  const leaving = appReady && introComplete;
+  const [finished, setFinished] = useState(false);
+
+  // Once the page is ready and the star has spun for long enough, the logo finishes: the star settles
+  // and the pathway draws up to it. Only then does the loader fade.
+  const finishing = appReady && introComplete;
+  const leaving = finishing && finished;
 
   const notified = useRef(false);
   const introCompletionTimer = useRef<number | null>(null);
@@ -161,6 +168,15 @@ export function AppLoader({
     return () => window.clearTimeout(fallback);
   }, [introComplete]);
 
+  // Safety fallback if the finishing animation never reports back.
+  useEffect(() => {
+    if (!finishing || finished) return;
+
+    const fallback = window.setTimeout(() => setFinished(true), FINISH_FALLBACK_MS);
+
+    return () => window.clearTimeout(fallback);
+  }, [finishing, finished]);
+
   // Prevent pending timers from surviving an unmount.
   useEffect(() => {
     return () => {
@@ -180,6 +196,8 @@ export function AppLoader({
       <AnimatedAcademyLogo
         reducedMotion={reducedMotion}
         onIntroComplete={completeIntro}
+        finish={finishing}
+        onFinished={() => setFinished(true)}
       />
     </div>
   );
