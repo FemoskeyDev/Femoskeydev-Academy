@@ -43,8 +43,8 @@
 .social:focus-visible { outline:3px solid var(--color-primary); outline-offset:3px; }
 
 /* Avatars with a countdown ring on their edge: the active one fills over --show, then hands over. */
-.avatars { display:flex; justify-content:center; gap:24px; width:100%; }
-.avatar { position:relative; display:grid; place-items:center; width:min(120px, calc((100% - 24px) / 2)); height:auto; aspect-ratio:1; padding:0; border:0; border-radius:50%; background:none; cursor:pointer; }
+.avatars { display:flex; justify-content:center; gap:16px; width:100%; }
+.avatar { position:relative; display:grid; place-items:center; width:min(88px, calc((100% - 32px) / 3)); height:auto; aspect-ratio:1; padding:0; border:0; border-radius:50%; background:none; cursor:pointer; }
 .avatar img { width:100%; height:100%; border-radius:50%; object-fit:cover; transition:transform 300ms cubic-bezier(.22,1,.36,1); }
 .avatar:hover img { transform:scale(1.03); }
 .avatar:focus-visible { outline:3px solid var(--focus-color, #3265c7); outline-offset:2px; }

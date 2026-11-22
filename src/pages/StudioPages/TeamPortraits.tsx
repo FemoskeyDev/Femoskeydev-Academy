@@ -6,9 +6,10 @@ import styles from './TeamPortraits.module.css'
 const SHOW_MS = 5000
 const asset = (file: string) => `/images/portfolio/${file}`
 
-const people = [
+const people: { id: string; name: string; handle?: string; role: string; ring: string; fadeFrom: string; linkedin?: string }[] = [
   { id: 'femi', name: 'Lawal Oluwafemi', handle: 'Femoskeydev', role: 'CEO & Designer', ring: '#c8fdce', fadeFrom: 'rgba(124,124,124,0)', linkedin: 'https://www.linkedin.com/in/oluwafemilawal/' },
   { id: 'ayomide', name: 'Lawal Ayomide', handle: 'AYCODEZ', role: 'Developer', ring: '#6a9dff', fadeFrom: 'rgba(255,255,255,0)', linkedin: 'https://www.linkedin.com/in/ayomide-elijah-lawal-a7b84a344/' },
+  { id: 'david', name: 'David Okechukwu', role: 'Designer', ring: '#ffd5bf', fadeFrom: 'rgba(255,255,255,0)', linkedin: 'https://www.linkedin.com/in/daveed-okechukwu/' },
 ]
 
 /** One portrait at a time, its name over a progressively blurred gradient with a LinkedIn link. Under it, each person's avatar ring fills as a
@@ -36,10 +37,10 @@ export function TeamPortraits() {
   return <div ref={rootRef} className={styles.team} onPointerEnter={event => { if (event.pointerType === 'mouse') setHovering(true) }} onPointerLeave={() => setHovering(false)}>
     <div className={styles.portrait}>
       {people.map((person, index) => <figure key={person.id} className={styles.slide} data-active={index === active || undefined} aria-hidden={index !== active}>
-        <img src={asset(`team-${person.id}.webp`)} alt={`${person.name} (${person.handle}), ${person.role}`} width="783" height="1045" loading="lazy" />
+        <img src={asset(`team-${person.id}.webp`)} alt={`${person.name}${person.handle ? ` (${person.handle})` : ''}, ${person.role}`} width="783" height="1045" loading="lazy" />
         <figcaption className={styles.info} style={{ '--fade-from': person.fadeFrom } as CSSProperties}>
           <span className={styles.blur} aria-hidden="true">{[1, 2, 3, 4, 5].map(layer => <span key={layer} />)}</span>
-          <p><strong>{person.name}</strong> ({person.handle})<span>{person.role}</span></p>
+          <p><strong>{person.name}</strong>{person.handle && ` (${person.handle})`}<span>{person.role}</span></p>
           {person.linkedin && <a className={styles.social} href={person.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${person.name} on LinkedIn (opens in a new tab)`} tabIndex={index === active ? undefined : -1}><LinkedInLogoIcon width={24} height={24} aria-hidden="true" /></a>}
         </figcaption>
       </figure>)}
