@@ -1,0 +1,97 @@
+/* The floating card: bottom right, above the edge flare (20) and the header (30), below the loader. It rises
+   and fades in, Apple-sheet style, once the page has settled. */
+.card {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  width: 320px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #e9ece8;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .22), 0 2px 8px rgba(0, 0, 0, .12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(.94);
+  transform-origin: 100% 100%;
+  transition: opacity 420ms ease, transform 640ms cubic-bezier(.32,.72,0,1), visibility 0s linear 640ms;
+}
+.card[data-visible] { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.tall { right: 16px; bottom: 16px; width: 116px; aspect-ratio: 9 / 16; border-radius: 16px; }
+.card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+/* The whole card opens the modal; the two round buttons sit above it. */
+.open { position: absolute; inset: 0; padding: 0; border: 0; background: none; cursor: pointer; }
+.open:focus-visible { outline: 3px solid var(--focus-color); outline-offset: -3px; border-radius: inherit; }
+
+/* Frosted round buttons, shared by the card and the modal. */
+.control {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(20, 20, 20, .45);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  backdrop-filter: blur(14px) saturate(1.6);
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+/* At least a 44px target, even where the button is drawn smaller. */
+.control::before { content: ''; position: absolute; inset: -6px; }
+.control svg { width: 16px; height: 16px; }
+@media (hover: hover) { .control:hover { background: rgba(20, 20, 20, .65); transform: scale(1.06); } }
+.control:active { transform: scale(.94); }
+.control:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 2px; }
+.expand,.close { position: absolute; top: 10px; }
+.expand { left: 10px; }
+.close { right: 10px; }
+.tall .expand,.tall .close { top: 8px; width: 30px; height: 30px; }
+.tall .expand { left: 8px; }
+.tall .close { right: 8px; }
+.tall .control::before { inset: -7px; }
+
+/* The modal: the page dims and blurs, and the film grows out of the card to the middle of the screen. */
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  overflow: hidden;
+}
+.dialog::backdrop { background: transparent; }
+.scrim { position: absolute; inset: 0; background: rgba(8, 10, 9, .62); -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4); }
+.frame {
+  position: relative;
+  width: min(92vw, 1180px, calc(82vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #000;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, .45);
+}
+.tallFrame { width: min(92vw, calc(84svh * 9 / 16)); aspect-ratio: 9 / 16; border-radius: 22px; }
+.frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+.bar { position: absolute; left: 16px; bottom: 16px; display: flex; gap: 10px; }
+.bar .control { width: 44px; height: 44px; }
+.bar .control svg { width: 18px; height: 18px; }
+.dismiss { position: absolute; z-index: 1; top: max(16px, env(safe-area-inset-top)); right: 16px; width: 44px; height: 44px; background: rgba(255, 255, 255, .16); }
+.dismiss svg { width: 18px; height: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transform: none; transition: opacity 200ms ease, visibility 0s linear 200ms; }
+  .control { transition: none; }
+}

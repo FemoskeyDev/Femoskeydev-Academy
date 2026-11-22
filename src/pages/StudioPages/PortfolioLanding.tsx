@@ -13,6 +13,7 @@ import { projects } from '../../data/projects'
 
 const [liziwaride, paymita, savecircle, edgecore] = projects
 import { ServicesPreview } from './ServicesPreview'
+import { HowWeWorkFloat } from './HowWeWorkFloat'
 import { siteConfig } from '../../data/siteConfig'
 
 const asset = (file: string) => `/images/portfolio/${file}`
@@ -158,6 +159,7 @@ export function PortfolioLanding() {
 
     <section className={styles.motto} aria-label="Our design philosophy"><div><img src={asset('0a938.webp')} alt="" loading="lazy" /><p>We create awesome, usable and<br className={styles.desktopBreak} /> aesthetically pleasing interfaces for<br className={styles.desktopBreak} /> SaaS companies and startups</p></div></section>
     <ContactCta />
+    <HowWeWorkFloat />
   </div>
 }
 
