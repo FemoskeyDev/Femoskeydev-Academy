@@ -17,8 +17,8 @@
 .includes { display: flex; flex-direction: column; font-size: 15px; line-height: 1.5; color: #8a8a8a; transition: color 300ms ease; }
 .arrow { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid rgba(2, 2, 2, .2); border-radius: 50%; font-size: 22px; transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease; }
 
-/* The row under the pointer (or keyboard focus) fills mint, from Figma. */
-.list li[data-active] a,.list a:focus-visible { background: var(--color-primary); color: #151515; }
+/* The row under the pointer (or keyboard focus) fills with its illustration's colour, matching the card. */
+.list li[data-active] a,.list a:focus-visible { background: var(--tint, var(--color-primary)); color: #151515; }
 .list li[data-active] .number,.list a:focus-visible .number { color: #151515; }
 .list li[data-active] .includes,.list a:focus-visible .includes { color: rgba(21, 21, 21, .72); }
 .list li[data-active] .arrow,.list a:focus-visible .arrow { border-color: #151515; background: #151515; color: #fff; }

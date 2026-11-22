@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Arrow } from '../../components/ui/Arrow'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { siteConfig } from '../../data/siteConfig'
 import styles from './ServicesPreview.module.css'
 
 const services = [
-  { name: 'Product Design', image: 'product-design', summary: 'Research, UX flows and interfaces for apps and dashboards.', includes: ['Research', 'UX flows', 'UI design', 'Prototyping', 'Design systems'] },
-  { name: 'Development', image: 'development', summary: 'Websites and apps built from the designs, ready to ship.', includes: ['Websites', 'Web apps', 'Mobile apps', 'CMS'] },
-  { name: 'Branding & Identity', image: 'branding', summary: 'Logos, type and colour that hold up everywhere.', includes: ['Logo', 'Visual identity', 'Guidelines'] },
-  { name: 'Graphic Design', image: 'graphic-design', summary: 'Campaigns, social posts and print that stay on brand.', includes: ['Social', 'Campaigns', 'Print'] },
-  { name: 'Motion & Animation', image: 'motion', summary: 'Product films, launch reels and micro-interactions.', includes: ['Product films', 'Launch reels', 'Micro-interactions'] },
+  { name: 'Product Design', image: 'product-design', tint: '#fffacf', summary: 'Research, UX flows and interfaces for apps and dashboards.', includes: ['Research', 'UX flows', 'UI design', 'Prototyping', 'Design systems'] },
+  { name: 'Development', image: 'development', tint: '#c8fdce', summary: 'Websites and apps built from the designs, ready to ship.', includes: ['Websites', 'Web apps', 'Mobile apps', 'CMS'] },
+  { name: 'Branding & Identity', image: 'branding', tint: '#ffd5bf', summary: 'Logos, type and colour that hold up everywhere.', includes: ['Logo', 'Visual identity', 'Guidelines'] },
+  { name: 'Graphic Design', image: 'graphic-design', tint: '#dfe7ff', summary: 'Campaigns, social posts and print that stay on brand.', includes: ['Social', 'Campaigns', 'Print'] },
+  { name: 'Motion & Animation', image: 'motion', tint: '#e5dfef', summary: 'Product films, launch reels and micro-interactions.', includes: ['Product films', 'Launch reels', 'Micro-interactions'] },
 ]
 
 /** A big-type index of services. On a mouse, the hovered row fills and a small card with that service's
@@ -44,7 +44,7 @@ export function ServicesPreview() {
     if (!frame.current) frame.current = requestAnimationFrame(follow)
   }} onPointerLeave={() => setActive(null)}>
     <ul className={styles.list} aria-label="Our services">
-      {services.map((service, index) => <li key={service.image} data-active={index === active || undefined} onPointerEnter={event => {
+      {services.map((service, index) => <li key={service.image} data-active={index === active || undefined} style={{ '--tint': service.tint } as CSSProperties} onPointerEnter={event => {
         if (event.pointerType === 'mouse') setActive(index)
       }}>
         <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" aria-label={`${service.name}: ${service.includes.join(', ')}. Book a call (opens in a new tab)`}>
