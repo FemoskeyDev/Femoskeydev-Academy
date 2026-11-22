@@ -13,6 +13,7 @@ export function SiteHeader() {
 function Header() {
   const [open, setOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 8)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const moreRef = useRef<HTMLButtonElement>(null)
   const focusFirstLink = useRef(false)
@@ -25,6 +26,12 @@ function Header() {
     closeTimer.current = setTimeout(() => setMoreOpen(false), 160)
   }
   useEffect(() => () => clearTimeout(closeTimer.current), [])
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   useEffect(() => {
     if (!moreOpen || !focusFirstLink.current) return
     const frame = requestAnimationFrame(() => {
@@ -39,7 +46,7 @@ function Header() {
     <div className={styles.spacer} aria-hidden="true" />
     {/* Behind the More dropdown and the mobile menu; a click or tap on it closes them. */}
     <div data-navigation-backdrop className={`${styles.backdrop} ${moreOpen || open ? styles.backdropOpen : ''}`} aria-hidden="true" onClick={closeMenus} />
-    <header className={styles.header} onPointerEnter={cancelClose} onPointerLeave={event => {
+    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} onPointerEnter={cancelClose} onPointerLeave={event => {
       if (event.pointerType === 'mouse') scheduleClose()
     }} onBlur={event => {
       if (!event.currentTarget.contains(event.relatedTarget)) setMoreOpen(false)

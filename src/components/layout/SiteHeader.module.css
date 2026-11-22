@@ -3,8 +3,14 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: 30;
-  padding: 12px max(24px, calc((100% - 1120px) / 2)) 0;
+  /* At the top of the page the bar lines up with the sections below it. */
+  padding: 12px max(var(--page-margin), calc((100% - var(--content-max)) / 2)) 0;
   pointer-events: none;
+  transition: padding 480ms cubic-bezier(.22,1,.36,1);
+}
+/* Once the page scrolls, the bar draws in to a narrower width (wide screens only). */
+@media (min-width: 901px) {
+  .scrolled { padding-inline: max(calc(var(--page-margin) + 32px), calc((100% - 1120px) / 2)); }
 }
 .bar {
   position: relative;
@@ -109,6 +115,6 @@
   }
 }
 @keyframes menu-item-in { from { opacity: 0; transform: translateY(-8px); } }
-@media (prefers-reduced-motion: reduce) { .navigation.open>* { animation: none; } .burger>span,.toggle[aria-expanded="true"] .burger>span { transition: none; } .navigation a,.moreToggle,.dropdown,.dropdownInner p,.backdrop { transition: none; } .dropdownInner :is(a,[aria-disabled]) { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .navigation.open>* { animation: none; } .burger>span,.toggle[aria-expanded="true"] .burger>span { transition: none; } .header,.navigation a,.moreToggle,.dropdown,.dropdownInner p,.backdrop { transition: none; } .dropdownInner :is(a,[aria-disabled]) { transform: none; } }
 
 @media (prefers-reduced-transparency: reduce) { .backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; } }
