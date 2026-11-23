@@ -5,6 +5,8 @@ import { HOW_FRAMES, HowWeWork } from './HowWeWork'
 import { MarkVariants } from './MarkVariants'
 import { Cover } from './Cover'
 import { CoverLayer } from './CoverLayer'
+import { AcademyArtStill } from './AcademyArtStill'
+import type { AcademyArt } from './Inflated'
 import type { MarkVariant } from './Mark3D'
 
 const Root = () => <>
@@ -14,6 +16,7 @@ const Root = () => <>
   <Composition id="MarkVariants" component={MarkVariants} durationInFrames={60} fps={FPS} width={1920} height={1080} defaultProps={{ variant: 'glossy' as MarkVariant }} />
   <Composition id="Cover" component={Cover} durationInFrames={60} fps={FPS} width={1080} height={1920} />
   <Composition id="CoverLayer" component={CoverLayer} durationInFrames={60} fps={FPS} width={1080} height={1920} defaultProps={{ layer: 'mark' as 'mark' | 'grid' }} />
+  <Composition id="AcademyArt" component={AcademyArtStill} durationInFrames={30} fps={FPS} width={1200} height={1200} defaultProps={{ art: 'academy-icon' as AcademyArt }} />
   <Composition id="Social" component={Social} durationInFrames={200} fps={FPS} width={1920} height={1008} defaultProps={{ variant: 'studio' as SocialVariant }} />
 </>
 
