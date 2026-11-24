@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
 import { siteConfig } from '../../data/siteConfig'
@@ -12,10 +13,21 @@ const asset = (file: string) => `/images/portfolio/${file}`
 const comingSoon = ['Services', 'About', 'Academy']
 const arrow = <Arrow className={styles.arrow} />
 const socialIcons = { X: TwitterLogoIcon, Instagram: InstagramLogoIcon, LinkedIn: LinkedInLogoIcon }
+// The WebGL fog loads on its own, once the footer is near; the CSS fog shows until then, and if WebGL is missing.
+const FooterWarp = lazy(() => import('./FooterWarp'))
 
-/** Logo and two link columns, then the studio name set huge in see-through white, rising out of a slow
- *  brand-colour fog, with the small print on top of it. */
+/** Logo and two link columns, then the studio name set huge in see-through white, rising out of slow
+ *  brand-colour fog (a WebGL shader, over a CSS stand-in), with the small print on top of it. */
 export function SiteFooter() {
+  const stage = useRef<HTMLDivElement>(null)
+  const [near, setNear] = useState(false)
+  useEffect(() => {
+    const node = stage.current
+    if (!node || typeof IntersectionObserver === 'undefined') return
+    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setNear(true); observer.disconnect() } }, { rootMargin: '600px 0px' })
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
   return <footer className={styles.footer}>
     <div className={styles.top}>
       <Link to="/" className={styles.brand} aria-label="Femoskeydev home"><img src={asset('logo-white.svg')} alt="Femoskeydev" width="220" height="32" /></Link>
@@ -37,8 +49,9 @@ export function SiteFooter() {
         })}
       </div>
     </div>
-    <div className={styles.stage}>
+    <div className={styles.stage} ref={stage}>
       <div className={styles.fog} aria-hidden="true"><i /><i /><i /><i /></div>
+      {near && <Suspense fallback={null}><FooterWarp className={styles.warp} /></Suspense>}
       <p className={styles.wordmark} aria-hidden="true">femoskeydev</p>
       <p className={styles.legal}><span>© {new Date().getFullYear()} Femoskeydev</span><span>Design &amp; development studio</span></p>
     </div>
