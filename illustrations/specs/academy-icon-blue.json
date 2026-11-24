@@ -1,0 +1,4 @@
+{ "form": "puffy", "angle": "tilt", "parts": [
+  { "svg": "tile.svg", "material": "frosted", "tone": "blue" },
+  { "svg": "asterisk.svg", "material": "vinyl", "tone": "white", "depth": 0.8, "lift": 7 }
+] }

@@ -72,7 +72,7 @@ export function WorkPage() {
   usePageMeta()
   return <div className={styles.site}>
     <PageIntro title="Selected work.">
-      <p>Explore the products we’ve designed, from Liziwaride’s mobility apps to Paymita’s payments wallet, with more on the way.</p>
+      <p>Explore the brands and products we’ve designed, from the Nine Lines identity to Liziwaride’s mobility apps and Paymita’s payments wallet, with more on the way.</p>
     </PageIntro>
     <section className={`${styles.wrap} ${styles.workList}`} aria-label="Projects"><ProjectGrid /></section>
     <ContactCta />

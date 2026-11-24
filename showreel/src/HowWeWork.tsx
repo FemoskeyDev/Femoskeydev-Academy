@@ -73,7 +73,7 @@ const blobAt = (blob: (typeof blobs)[number], frame: number) => {
 }
 
 const RAMP = ' .:-=+*#%@'
-function CharacterGrid({ opacity }: { opacity: number }) {
+export function CharacterGrid({ opacity }: { opacity: number }) {
   const frame = useCurrentFrame()
   const { W, H } = useLayout()
   const ref = useRef<HTMLCanvasElement>(null)

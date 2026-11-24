@@ -1,0 +1,4 @@
+{ "form": "puffy", "angle": "tilt", "parts": [
+  { "svg": "bubble.svg", "material": "frosted", "tone": "blue" },
+  { "svg": "bubble-dots.svg", "material": "vinyl", "tone": "white", "depth": 0.7, "lift": 5 }
+] }

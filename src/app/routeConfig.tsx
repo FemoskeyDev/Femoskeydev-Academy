@@ -17,6 +17,7 @@ export const routeConfig = [{ path: '/', element: <SiteLayout/>, children: [
   { path: 'work/liziwaride', lazy: page(() => import('../pages/CaseStudies/LiziwarideCaseStudy'), m => m.LiziwarideCaseStudy) },
   { path: 'work/paymita', lazy: page(() => import('../pages/CaseStudies/PaymitaCaseStudy'), m => m.PaymitaCaseStudy) },
   { path: 'work/savecircle', lazy: page(() => import('../pages/CaseStudies/SaveCircleCaseStudy'), m => m.SaveCircleCaseStudy) },
+  { path: 'work/ninelines', lazy: page(() => import('../pages/CaseStudies/NineLinesCaseStudy'), m => m.NineLinesCaseStudy) },
   // Only the portfolio, the work page and the case studies are live; every other page shows Coming soon.
   ...comingSoonPages.map(([path, title]) => ({ path, element: <ComingSoonPage title={title}/> })),
   ...(import.meta.env.DEV ? [{
