@@ -19,7 +19,7 @@ const FooterWarp = lazy(() => import('./FooterWarp'))
 /** Logo and two link columns, then the studio name set huge in see-through white, rising out of slow
  *  brand-colour fog (a WebGL shader, over a CSS stand-in), with the small print on top of it. */
 export function SiteFooter() {
-  const stage = useRef<HTMLDivElement>(null)
+  const stage = useRef<HTMLElement>(null)
   const [near, setNear] = useState(false)
   useEffect(() => {
     const node = stage.current
@@ -28,7 +28,8 @@ export function SiteFooter() {
     observer.observe(node)
     return () => observer.disconnect()
   }, [])
-  return <footer className={styles.footer}>
+  return <footer className={styles.footer} ref={stage}>
+    {near && <Suspense fallback={null}><FooterWarp className={styles.warp} /></Suspense>}
     <div className={styles.top}>
       <Link to="/" className={styles.brand} aria-label="Femoskeydev home"><img src={asset('logo-white.svg')} alt="Femoskeydev" width="220" height="32" /></Link>
       <nav aria-label="Footer navigation" className={styles.column}>
@@ -49,9 +50,8 @@ export function SiteFooter() {
         })}
       </div>
     </div>
-    <div className={styles.stage} ref={stage}>
+    <div className={styles.stage}>
       <div className={styles.fog} aria-hidden="true"><i /><i /><i /><i /></div>
-      {near && <Suspense fallback={null}><FooterWarp className={styles.warp} /></Suspense>}
       <p className={styles.wordmark} aria-hidden="true">femoskeydev</p>
       <p className={styles.legal}><span>© {new Date().getFullYear()} Femoskeydev</span><span>Design &amp; development studio</span></p>
     </div>
