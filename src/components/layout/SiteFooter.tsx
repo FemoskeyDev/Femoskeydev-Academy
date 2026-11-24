@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 import { siteConfig } from '../../data/siteConfig'
 import { socialLinks } from '../../data/socialLinks'
+import { Arrow } from '../ui/Arrow'
 import { ComingSoon } from '../ui/ComingSoon'
 import styles from './SiteFooter.module.css'
 
@@ -9,7 +9,7 @@ const asset = (file: string) => `/images/portfolio/${file}`
 
 // Pages that aren't live yet show a "Coming soon" tooltip instead of linking.
 const comingSoon = ['Services', 'About', 'Academy']
-const arrow = <ArrowTopRightIcon width={14} height={14} aria-hidden="true" />
+const arrow = <Arrow className={styles.arrow} />
 
 /** Logo and two link columns, then the studio name set huge in see-through white, rising out of a slow
  *  brand-colour fog, with the small print on top of it. */
