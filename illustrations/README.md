@@ -8,6 +8,7 @@ match [DIRECTION.md](DIRECTION.md). You supply a flat shape and choose a materia
 1. **Draw the shape** as a flat SVG on a 32 × 32 viewBox and save it in `shapes/`. Filled shapes only (outline
    strokes first), and avoid hairline points: the script rounds everything off, so needle tips come out ragged.
    Draw each part as one clean outline (no overlapping pieces); a shape inside another (a ring's hole) becomes a hole.
+   Line icons (code brackets, arrows) can stay as lines: give the part a `stroke` width and it is drawn with round caps.
 2. **Write a spec** in `specs/`, named for the illustration:
 
    ```json
@@ -25,6 +26,7 @@ match [DIRECTION.md](DIRECTION.md). You supply a flat shape and choose a materia
    | `tone` | `mint`, `blue`, `violet`, `peach`, `yellow`, `ink`, `white`, `clear` (glass only) |
    | `depth` | Thickness of this part, relative (1 is normal) |
    | `lift` | How far this part stands in front of the one behind, in shape units |
+| `stroke` | Optional: draw this part's lines at this width (shape units) instead of filling its outline |
    | `padding` | Optional: more or less space around the object (default 1.45) |
 
 3. **Render** it:

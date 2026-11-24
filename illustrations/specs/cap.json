@@ -1,0 +1,5 @@
+{ "form": "puffy", "angle": "top", "parts": [
+  { "svg": "cap-band.svg", "material": "vinyl", "tone": "ink" },
+  { "svg": "cap-top.svg", "material": "vinyl", "tone": "ink", "depth": 0.8, "lift": 4 },
+  { "svg": "cap-tassel.svg", "stroke": 1.8, "material": "vinyl", "tone": "mint", "depth": 0.6, "lift": 6 }
+] }

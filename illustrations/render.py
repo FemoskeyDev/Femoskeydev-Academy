@@ -98,6 +98,36 @@ def outline_loops(curves):
     return loops
 
 
+def outline_segments(curves):
+    """Every edge of the curves as a segment ((x0, y0), (x1, y1)): open lines too, for stroked parts."""
+    import numpy as np
+    segments = []
+    for obj in curves:
+        obj.data.dimensions = '2D'
+        obj.data.fill_mode = 'NONE'
+        obj.data.resolution_u = 48
+        depsgraph = bpy.context.evaluated_depsgraph_get()
+        mesh = obj.evaluated_get(depsgraph).to_mesh()
+        co = [obj.matrix_world @ v.co for v in mesh.vertices]
+        segments += [((co[a].x, co[a].y), (co[b].x, co[b].y)) for a, b in (e.vertices for e in mesh.edges)]
+        obj.evaluated_get(depsgraph).to_mesh_clear()
+    return np.array(segments, dtype=np.float64)
+
+
+def stroke_distance(segments, half_width, xs, ys):
+    """Signed 2D distance to a round-capped stroke of the lines: negative within half_width of them."""
+    import numpy as np
+    px, py = np.meshgrid(xs, ys, indexing='ij')
+    dist = np.full(px.shape, np.inf)
+    for (ax, ay), (bx, by) in segments:
+        ex, ey = bx - ax, by - ay
+        length2 = ex * ex + ey * ey or 1e-12
+        t = np.clip(((px - ax) * ex + (py - ay) * ey) / length2, 0, 1)
+        dx, dy = px - (ax + t * ex), py - (ay + t * ey)
+        np.minimum(dist, np.sqrt(dx * dx + dy * dy), out=dist)
+    return dist - half_width
+
+
 def outline_distance(loops, xs, ys):
     """Signed 2D distance to the outline on a grid: negative inside. Holes count by the even-odd rule."""
     import numpy as np
@@ -118,12 +148,17 @@ def outline_distance(loops, xs, ys):
     return np.where(inside, -dist, dist)
 
 
-def solidify(curves, thickness, form, name):
-    """Build the part's solid from its outline: a rounded extrusion, meshed from a distance field."""
+def solidify(curves, thickness, form, name, stroke=0.0):
+    """Build the part's solid from its outline (or, given a stroke width, from its lines drawn with round caps): a
+    rounded extrusion, meshed from a distance field."""
     import numpy as np
     import openvdb
     import tempfile
-    loops = outline_loops(curves)
+    if stroke:
+        segments = outline_segments(curves)
+        loops = [segments.reshape(-1, 2) - stroke / 2, segments.reshape(-1, 2) + stroke / 2]  # bounds only
+    else:
+        loops = outline_loops(curves)
     for obj in curves:
         bpy.data.objects.remove(obj)
     half = thickness / 2
@@ -134,7 +169,7 @@ def solidify(curves, thickness, form, name):
     xs = np.arange(lo[0], hi[0], VOXEL)
     ys = np.arange(lo[1], hi[1], VOXEL)
     zs = np.arange(-half - puff - 0.05, half + puff + 0.05, VOXEL)
-    d2 = outline_distance(loops, xs, ys)[:, :, None]  # (x, y, 1)
+    d2 = (stroke_distance(segments, stroke / 2, xs, ys) if stroke else outline_distance(loops, xs, ys))[:, :, None]
     # Rounded extrusion: shrink the outline by the radius, extrude to the inner height, then round by the radius.
     # The inner height grows towards the middle of the shape (an eased dome), which puffs the faces.
     depth_in = np.clip(-d2 / form['reach'], 0, 1)
@@ -298,8 +333,23 @@ def bounds(objs):
     return lo, hi
 
 
+def svg_unit():
+    """Scene units per SVG unit, as the importer brings shapes in: measured on a 32-unit square."""
+    import tempfile
+    path = os.path.join(tempfile.gettempdir(), 'fmk-unit.svg')
+    with open(path, 'w') as f:
+        f.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M0 0H32V32H0Z"/></svg>')
+    curves = import_svg(path)
+    lo, hi = bounds(curves)
+    for obj in curves:
+        bpy.data.objects.remove(obj)
+    os.remove(path)
+    return (hi.x - lo.x) / 32
+
+
 def build(spec):
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    unit = svg_unit()
     form = FORMS[spec.get('form', 'puffy')]
     parts = []
     for part in spec['parts']:
@@ -308,6 +358,9 @@ def build(spec):
 
     # One scale for every part (they share a viewBox), so the widest part is 2 units across.
     lo, hi = bounds(every)
+    # A stroked part reaches half its width past its lines.
+    reach = max((p.get('stroke', 0) / 2 for _, p in parts), default=0) * unit
+    lo, hi = lo - Vector((reach, reach, 0)), hi + Vector((reach, reach, 0))
     size = max(hi.x - lo.x, hi.y - lo.y)
     centre = (lo + hi) / 2
     factor = 2.0 / size
@@ -324,7 +377,8 @@ def build(spec):
     solids = []
     for curves, part in parts:
         thickness = form['thickness'] * part.get('depth', 1.0)
-        obj = solidify(curves, thickness, form, f"part{len(solids)}")
+        stroke = part.get('stroke', 0) * unit * factor  # stroke width is in shape units, like the SVG's own
+        obj = solidify(curves, thickness, form, f"part{len(solids)}", stroke)
         solids.append(obj)
         # lift is in shape units (the 32-unit grid): how far a part stands off the one behind it
         obj.location.z += part.get('lift', 0) * 2 / 32
