@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowTopRightIcon } from '@radix-ui/react-icons'
+import { Arrow } from '../../components/ui/Arrow'
 import { RevealOnScroll } from '../../components/ui/RevealOnScroll'
 import { usePageMeta } from '../../hooks/usePageMeta'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
@@ -130,7 +130,7 @@ export function LiziwarideCaseStudy() {
 
     <nav className={`${styles.wrap} ${styles.next}`} aria-label="Next project">
       <p className={styles.kicker}>Next project</p>
-      <Link to="/work/paymita">Paymita <ArrowTopRightIcon width={40} height={40} aria-hidden="true" /></Link>
+      <Link to="/work/paymita">Paymita <Arrow /></Link>
     </nav>
   </article>
   <ContactCta />

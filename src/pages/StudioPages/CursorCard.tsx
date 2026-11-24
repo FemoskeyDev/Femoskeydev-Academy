@@ -1,7 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
-import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 import { Arrow } from '../../components/ui/Arrow'
 import styles from './CursorCard.module.css'
 
@@ -83,7 +82,7 @@ export function CursorCard({ children, className = '', to, label, tooltip, fallb
   const content = <>
     {children}
     {fallback && <span className={`${styles.disc} ${styles.fallback}`} aria-hidden="true"><Arrow className={styles.arrow} weight="semibold" /></span>}
-    {arrow && <span className={styles.touchArrow} aria-hidden="true"><ArrowTopRightIcon width={16} height={16} /></span>}
+    {arrow && <span className={styles.touchArrow} aria-hidden="true"><Arrow size={17} /></span>}
   </>
 
   return <>
