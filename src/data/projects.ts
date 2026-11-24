@@ -21,6 +21,14 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: 'ninelines',
+    name: 'Nine Lines',
+    type: 'Case study · Brand identity',
+    summary: 'A quiet identity for an interior and furniture studio: a 9 and an l drawn as one continuous line.',
+    to: '/work/ninelines',
+    cover: { background: '#315357', src: '/images/work/ninelines/logo.svg', kind: 'logo' },
+  },
+  {
     slug: 'liziwaride',
     name: 'Liziwaride',
     type: 'Case study · Mobility',

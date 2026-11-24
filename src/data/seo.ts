@@ -38,7 +38,7 @@ export const livePages: Record<string, PageSeo> = {
   },
   '/work': {
     title: 'Work: Product Design Case Studies | Femoskeydev',
-    description: 'Case studies from Femoskeydev: Paymita bill payments, Liziwaride ride hailing and SaveCircle group savings, from research and UX to UI, brand and build.',
+    description: 'Case studies from Femoskeydev: the Nine Lines brand identity, Paymita bill payments, Liziwaride ride hailing and SaveCircle group savings, from research and UX to UI, brand and build.',
     ...studioImage,
   },
   '/work/paymita': {
@@ -60,6 +60,13 @@ export const livePages: Record<string, PageSeo> = {
     description: 'How we designed SaveCircle: savings circles for friends, family and colleagues. Create a circle, contribute on a schedule and track every payment together.',
     image: '/images/social/savecircle.jpg',
     imageAlt: 'SaveCircle on iPhone: save together, grow together.',
+    caseStudy: true,
+  },
+  '/work/ninelines': {
+    title: 'Nine Lines: Interior Studio Brand Identity Case Study | Femoskeydev',
+    description: 'How we built the Nine Lines identity: a 9 and an l drawn as one line, a mixed six-colour palette, a 36-page guide and every application from stationery to signage.',
+    image: '/images/social/ninelines.jpg',
+    imageAlt: 'The Nine Lines wordmark above a sofa in low, raking light.',
     caseStudy: true,
   },
 }
