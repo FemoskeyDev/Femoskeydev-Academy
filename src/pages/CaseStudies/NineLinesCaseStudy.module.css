@@ -29,9 +29,12 @@ article.page { padding-bottom:0; }
 .operator { position:absolute; top:34%; right:calc(-1 * clamp(8px,1.5vw,24px)); translate:50% -50%; font-family:'Unbounded',Arial,sans-serif; font-weight:300; font-size:clamp(28px,3vw,48px); opacity:.85; }
 
 /* Construction sheets */
-.pair { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.sheet { border-radius:16px; overflow:hidden; background:#F2F2DC; aspect-ratio:618 / 464; }
-.sheet img { height:100%; object-fit:cover; }
+/* The square monogram sheet and the 2:1 wordmark sheet share one height, so neither is cropped. */
+.pair { display:grid; grid-template-columns:1fr 2fr; gap:12px; }
+.sheet { border-radius:16px; overflow:hidden; background:#F2F2DC; }
+.sheetSquare { aspect-ratio:1; }
+.sheetWide { aspect-ratio:2; }
+.sheet img { height:100%; object-fit:contain; }
 
 /* Colour: proportional bands that open up on hover or focus. */
 .palette { display:flex; height:clamp(320px,38vw,520px); margin:0; padding:0; list-style:none; border-radius:20px; overflow:hidden; }

@@ -129,8 +129,8 @@ export function NineLinesCaseStudy() {
           <p>The ligature replaces the l in Unbounded Light, so the wordmark keeps the typeface’s rhythm. One circle, one diagonal and one rounded corner, all at the weight of the letters around them.</p>
         </div>
         <RevealOnScroll className={styles.pair}>
-          <figure className={styles.sheet}><img data-flare {...responsive(image('construction-monogram'), 1236, '(max-width: 600px) 100vw, 618px')} alt="Monogram construction: the 9 and l on a grid with anchor points, the loop's centre line and the corner radius" loading="lazy" /></figure>
-          <figure className={styles.sheet}><img data-flare {...responsive(image('construction-wordmark'), 1236, '(max-width: 600px) 100vw, 618px')} alt="Wordmark construction: nine and ines in Unbounded Light with the ligature, ascender, x-height and baseline guides" loading="lazy" /></figure>
+          <figure className={`${styles.sheet} ${styles.sheetSquare}`}><img data-flare {...responsive(image('construction-monogram'), 824, '(max-width: 600px) 100vw, 412px')} alt="Monogram construction: the 9 and l on a grid with anchor points, the loop's centre line and the corner radius" loading="lazy" /></figure>
+          <figure className={`${styles.sheet} ${styles.sheetWide}`}><img data-flare {...responsive(image('construction-wordmark'), 1648, '(max-width: 600px) 100vw, 824px')} alt="Wordmark construction: nine and ines in Unbounded Light with the ligature, ascender, x-height and baseline guides" loading="lazy" /></figure>
         </RevealOnScroll>
       </section>
 
