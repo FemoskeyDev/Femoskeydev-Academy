@@ -7,7 +7,7 @@ match [DIRECTION.md](DIRECTION.md). You supply a flat shape and choose a materia
 
 1. **Draw the shape** as a flat SVG on a 32 × 32 viewBox and save it in `shapes/`. Filled shapes only (outline
    strokes first), and avoid hairline points: the script rounds everything off, so needle tips come out ragged.
-   Overlapping pieces are fine as separate `<path>`s; they merge. A shape inside another (a ring's hole) becomes a hole.
+   Draw each part as one clean outline (no overlapping pieces); a shape inside another (a ring's hole) becomes a hole.
 2. **Write a spec** in `specs/`, named for the illustration:
 
    ```json

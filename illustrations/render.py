@@ -31,17 +31,29 @@ def linear(rgb):
     return (*[channel(c) for c in rgb], 1.0)
 
 
-# ——— Shape: SVG → thick, softly rounded solid ———
+# ——— Shape: SVG outline → a solid with the exact silhouette, flat faces and evenly rounded rims ———
+#
+# The solid is described as a signed distance field, a "rounded extrusion" of the outline: at every point in space,
+# how far it is from the surface. Blender builds the mesh from that. The silhouette is exact, every rim gets the same
+# round, and where the shape is thinner than the round (a sliver, a point) it simply tapers. Nothing is smoothed by
+# trial and error, so there are no lumps or melted points.
 FORMS = {
-    # thickness as a share of the width, and how much the edges round off (smoothing passes)
-    'slab': {'thickness': 0.16, 'smooth': 18},
-    'puffy': {'thickness': 0.32, 'smooth': 140},
+    # In scene units (shapes are 2 across): thickness at the edge, the rim's round, and how much the faces dome up
+    # towards the middle (puff) over what distance from the edge (reach). A tight rim keeps silhouettes and points
+    # crisp; the dome gives the inflated feel.
+    'slab': {'thickness': 0.30, 'radius': 0.07, 'puff': 0.0, 'reach': 0.3},
+    'puffy': {'thickness': 0.24, 'radius': 0.09, 'puff': 0.16, 'reach': 0.45},
 }
+VOXEL = 0.0045  # surface detail, in scene units; shapes are 2 units across
+MAX_FACES = 3_000_000
+
+
+def form_thickness(form):
+    return form['thickness']  # a guard: past this, something is mis-scaled; stop rather than exhaust memory
 
 
 def import_svg(path):
-    """Every path or shape in the SVG comes in as its own curve. They stay separate until they are solid, then merge,
-    so overlapping pieces (an asterisk's bars) join up instead of cutting holes in each other."""
+    """Every path or shape in the SVG comes in as its own curve; together they are one part's outline."""
     before = set(bpy.data.objects)
     bpy.ops.import_curve.svg(filepath=path)
     curves = [o for o in bpy.data.objects if o not in before and o.type == 'CURVE']
@@ -52,50 +64,121 @@ def import_svg(path):
     return curves
 
 
-MAX_FACES = 1_500_000  # a guard: past this, something is mis-scaled; stop rather than exhaust memory
-
-
-def solidify(curves, thickness, smooth, voxel):
-    """Fill each flat outline and give it thickness, merge the pieces, then remesh and smooth the result so any outline
-    (sharp points included) rounds off evenly. Thickness goes on as a mesh modifier: the SVG importer keeps a hidden
-    scale on curve data that would otherwise multiply a curve extrude."""
+def outline_loops(curves):
+    """The outline as closed polygons (x, y), sampled finely from the curves."""
+    import numpy as np
+    loops = []
     for obj in curves:
-        curve = obj.data
-        curve.dimensions = '2D'
-        curve.fill_mode = 'BOTH'
-        curve.extrude = 0
-        curve.resolution_u = 24
-        bpy.ops.object.select_all(action='DESELECT')
-        bpy.context.view_layer.objects.active = obj
-        obj.select_set(True)
-        bpy.ops.object.convert(target='MESH')
-        solid = obj.modifiers.new('thickness', 'SOLIDIFY')
-        solid.thickness = thickness
-        solid.offset = 0
-        bpy.ops.object.modifier_apply(modifier='thickness')
+        obj.data.dimensions = '2D'
+        obj.data.fill_mode = 'NONE'
+        obj.data.resolution_u = 48
+        depsgraph = bpy.context.evaluated_depsgraph_get()
+        mesh = obj.evaluated_get(depsgraph).to_mesh()
+        nxt = {}
+        for e in mesh.edges:
+            a, b = e.vertices
+            nxt.setdefault(a, []).append(b)
+            nxt.setdefault(b, []).append(a)
+        seen = set()
+        for start in nxt:
+            if start in seen:
+                continue
+            loop, prev, cur = [], None, start
+            while cur not in seen:
+                seen.add(cur)
+                co = obj.matrix_world @ mesh.vertices[cur].co
+                loop.append((co.x, co.y))
+                options = [n for n in nxt[cur] if n != prev]
+                if not options:
+                    break
+                prev, cur = cur, options[0]
+            if len(loop) > 2:
+                loops.append(np.array(loop, dtype=np.float64))
+        obj.evaluated_get(depsgraph).to_mesh_clear()
+    return loops
+
+
+def outline_distance(loops, xs, ys):
+    """Signed 2D distance to the outline on a grid: negative inside. Holes count by the even-odd rule."""
+    import numpy as np
+    px, py = np.meshgrid(xs, ys, indexing='ij')
+    dist = np.full(px.shape, np.inf)
+    inside = np.zeros(px.shape, dtype=bool)
+    for loop in loops:
+        a = loop
+        b = np.roll(loop, -1, axis=0)
+        for (ax, ay), (bx, by) in zip(a, b):
+            ex, ey = bx - ax, by - ay
+            length2 = ex * ex + ey * ey or 1e-12
+            t = np.clip(((px - ax) * ex + (py - ay) * ey) / length2, 0, 1)
+            dx, dy = px - (ax + t * ex), py - (ay + t * ey)
+            np.minimum(dist, np.sqrt(dx * dx + dy * dy), out=dist)
+            crosses = ((ay > py) != (by > py)) & (px < (bx - ax) * (py - ay) / ((by - ay) or 1e-12) + ax)
+            inside ^= crosses
+    return np.where(inside, -dist, dist)
+
+
+def solidify(curves, thickness, form, name):
+    """Build the part's solid from its outline: a rounded extrusion, meshed from a distance field."""
+    import numpy as np
+    import openvdb
+    import tempfile
+    loops = outline_loops(curves)
+    for obj in curves:
+        bpy.data.objects.remove(obj)
+    half = thickness / 2
+    radius = min(form['radius'], half)
+    puff = form['puff'] * thickness / form_thickness(form)
+    lo = np.min([l.min(axis=0) for l in loops], axis=0) - 0.05
+    hi = np.max([l.max(axis=0) for l in loops], axis=0) + 0.05
+    xs = np.arange(lo[0], hi[0], VOXEL)
+    ys = np.arange(lo[1], hi[1], VOXEL)
+    zs = np.arange(-half - puff - 0.05, half + puff + 0.05, VOXEL)
+    d2 = outline_distance(loops, xs, ys)[:, :, None]  # (x, y, 1)
+    # Rounded extrusion: shrink the outline by the radius, extrude to the inner height, then round by the radius.
+    # The inner height grows towards the middle of the shape (an eased dome), which puffs the faces.
+    depth_in = np.clip(-d2 / form['reach'], 0, 1)
+    dome = puff * (1 - (1 - depth_in) ** 2)
+    wx = d2 + radius
+    wy = np.abs(zs)[None, None, :] - (half - radius + dome)
+    outside = np.sqrt(np.maximum(wx, 0) ** 2 + np.maximum(wy, 0) ** 2)
+    sdf = (np.minimum(np.maximum(wx, wy), 0) + outside - radius).astype(np.float32)
+    # Blender meshes a density grid: store 1 inside, 0 outside and a thin linear ramp across the surface (so it is
+    # placed between voxels precisely), and leave empty space as inactive background.
+    band = 2.5 * VOXEL
+    density = np.clip(0.5 - sdf / (2 * band), 0.0, 1.0).astype(np.float32)
+    grid = openvdb.FloatGrid()
+    grid.copyFromArray(density, tolerance=1e-6)
+    grid.name = 'density'
+    grid.transform = openvdb.createLinearTransform(voxelSize=VOXEL)
+    path = os.path.join(tempfile.gettempdir(), f'fmk-{name}.vdb')
+    openvdb.write(path, grids=[grid])
+    bpy.ops.object.volume_import(filepath=path, align='WORLD', location=(0, 0, 0))
+    volume = bpy.context.active_object
+    volume.location = (lo[0], lo[1], zs[0])
+    mesh = bpy.data.meshes.new(name)
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    to_mesh = obj.modifiers.new('surface', 'VOLUME_TO_MESH')
+    to_mesh.object = volume
+    to_mesh.grid_name = 'density'
+    to_mesh.resolution_mode = 'GRID'
+    to_mesh.threshold = 0.5
+    to_mesh.adaptivity = 0.0
+    to_mesh.use_smooth_shade = True
     bpy.ops.object.select_all(action='DESELECT')
-    for obj in curves:
-        obj.select_set(True)
-    obj = curves[0]
     bpy.context.view_layer.objects.active = obj
-    if len(curves) > 1:
-        bpy.ops.object.join()
-    depth = obj.dimensions.z
-    if not 0.5 * thickness < depth < 2 * thickness:
-        raise SystemExit(f'Shape came out {depth:.3f} thick instead of {thickness:.3f}; check the SVG')
-    remesh = obj.modifiers.new('remesh', 'REMESH')  # also welds overlapping pieces into one surface
-    remesh.mode = 'VOXEL'
-    remesh.voxel_size = voxel
-    bpy.ops.object.modifier_apply(modifier='remesh')
+    obj.select_set(True)
+    bpy.ops.object.modifier_apply(modifier='surface')
+    bpy.data.objects.remove(volume)
+    os.remove(path)
+    if not len(obj.data.polygons):
+        raise SystemExit(f'{name} came out empty; check the SVG outline')
     if len(obj.data.polygons) > MAX_FACES:
-        raise SystemExit(f'Remesh made {len(obj.data.polygons):,} faces; stopping before it runs out of memory')
-    soften = obj.modifiers.new('soften', 'LAPLACIANSMOOTH')
-    soften.iterations = smooth
-    soften.lambda_factor = 1.0
-    soften.lambda_border = 0.0
-    soften.use_volume_preserve = True
-    soften.use_normalized = True
-    bpy.ops.object.modifier_apply(modifier='soften')
+        raise SystemExit(f'{name} made {len(obj.data.polygons):,} faces; stopping before it runs out of memory')
+    depth = obj.dimensions.z
+    if not 0.8 * thickness < depth < 1.2 * (thickness + 2 * puff):
+        raise SystemExit(f'{name} came out {depth:.3f} thick instead of {thickness:.3f}; check the SVG')
     bpy.ops.object.shade_smooth()
     return obj
 
@@ -240,8 +323,8 @@ def build(spec):
     bpy.context.collection.objects.link(root)
     solids = []
     for curves, part in parts:
-        thickness = form['thickness'] * part.get('depth', 1.0) * 2
-        obj = solidify(curves, thickness, int(form['smooth'] * part.get('depth', 1.0)), voxel=0.012)
+        thickness = form['thickness'] * part.get('depth', 1.0)
+        obj = solidify(curves, thickness, form, f"part{len(solids)}")
         solids.append(obj)
         # lift is in shape units (the 32-unit grid): how far a part stands off the one behind it
         obj.location.z += part.get('lift', 0) * 2 / 32
