@@ -37,14 +37,14 @@ describe('Studio routes', () => {
     expect(screen.getByRole('link', { name: /Paymita/ })).toHaveAttribute('href', '/work/paymita')
     expect(screen.getByLabelText('EdgeCore, case study coming soon')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /SaveCircle/ })).toHaveAttribute('href', '/work/savecircle')
-    expect(screen.getByRole('link', { name: 'Get in touch' })).toHaveAttribute('href', booking)
+    expect(screen.getByRole('link', { name: 'Book a call on Cal.com (opens in a new tab)' })).toHaveAttribute('href', booking)
   })
   it('opens the Paymita case study from its homepage cover', async () => {
     renderAt('/')
     fireEvent.click(screen.getByRole('link', { name: 'Paymita case study' }))
     expect(await screen.findByRole('heading', { level: 1, name: 'Paymita' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 2, name: /Airtime to cash/ })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Get in touch' })).toHaveAttribute('href', booking)
+    expect(screen.getByRole('link', { name: 'Book a call on Cal.com (opens in a new tab)' })).toHaveAttribute('href', booking)
   })
   it('opens the SaveCircle case study from its homepage cover', async () => {
     renderAt('/')
@@ -76,7 +76,7 @@ describe('Studio routes', () => {
   it('links the footer only to live pages and Cal.com, and shows the white logo', () => {
     renderAt('/')
     const footer = screen.getByRole('navigation', { name: 'Footer navigation' })
-    expect([...footer.querySelectorAll('a')].map(a => a.getAttribute('href'))).toEqual(['/work', booking])
+    expect([...footer.querySelectorAll('a')].map(a => a.getAttribute('href'))).toEqual(['/', '/work', booking])
     expect(footer.querySelectorAll('[aria-disabled]')).toHaveLength(3)
     expect(within(footer.closest('footer')!).getByRole('link', { name: 'Femoskeydev home' }).querySelector('img')).toHaveAttribute('src', '/images/portfolio/logo-white.svg')
   })

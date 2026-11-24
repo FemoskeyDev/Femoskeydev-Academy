@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowTopRightIcon } from '@radix-ui/react-icons'
+import { Arrow } from '../../components/ui/Arrow'
 import { usePageMeta } from '../../hooks/usePageMeta'
 import { ContactCta } from '../StudioPages/ContactCta'
 import { Heading, MediaBento, type BentoTile } from './parts'
@@ -115,7 +115,7 @@ export function SaveCircleCaseStudy() {
 
       <nav className={`${styles.wrap} ${styles.next}`} aria-label="Next project">
         <p className={styles.kicker}>Next project</p>
-        <Link to="/work/liziwaride">Liziwaride <ArrowTopRightIcon width={40} height={40} aria-hidden="true" /></Link>
+        <Link to="/work/liziwaride">Liziwaride <Arrow /></Link>
       </nav>
     </article>
     <ContactCta />

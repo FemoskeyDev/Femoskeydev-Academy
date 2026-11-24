@@ -12,9 +12,10 @@ const glyphs = {
   },
 }
 
-export function Arrow({ className, weight = 'regular' }: { className?: string; weight?: keyof typeof glyphs }) {
+/** `size` sets the glyph's em in pixels; without it the arrow follows the surrounding text. */
+export function Arrow({ className, weight = 'regular', size }: { className?: string; weight?: keyof typeof glyphs; size?: number }) {
   const glyph = glyphs[weight]
-  return <span className={className} aria-hidden="true">
+  return <span className={className} aria-hidden="true" style={size ? { display: 'inline-flex', fontSize: size } : undefined}>
     <svg viewBox={`0 0 ${glyph.width} 1000`} width={`${glyph.width / 1000}em`} height="1em" fill="currentColor" focusable="false"><path d={glyph.d} /></svg>
   </span>
 }

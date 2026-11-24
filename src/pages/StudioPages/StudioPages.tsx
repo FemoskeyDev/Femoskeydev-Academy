@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { ArrowTopRightIcon } from '@radix-ui/react-icons'
+import { Arrow } from '../../components/ui/Arrow'
 import { Button } from '../../components/ui/Button'
 import { RevealOnScroll } from '../../components/ui/RevealOnScroll'
 import { siteConfig } from '../../data/siteConfig'
@@ -27,7 +27,7 @@ function ProjectGrid({ heading: Heading = 'h2' }: { heading?: 'h2' | 'h3' }) {
         <div className={styles.projectImage}><ProjectCover project={project} /></div>
         <div className={styles.projectCaption}>
           <div><p className={styles.kicker}>{project.type}</p><Heading>{project.name}</Heading></div>
-          {project.to && <span className={styles.circle}><ArrowTopRightIcon width={22} height={22} aria-hidden="true" /></span>}
+          {project.to && <span className={styles.circle}><Arrow size={22} /></span>}
         </div>
       </>
       return <RevealOnScroll className={styles.project} key={project.slug}>
@@ -127,7 +127,7 @@ export function StudioContactPage() {
     </PageIntro>
     <section className={`${styles.wrap} ${styles.contactForm}`} aria-labelledby="project-enquiry">
       <h2 id="project-enquiry">Studio enquiries</h2>
-      {siteConfig.studioContactUrl ? <a className="button button-dark" href={siteConfig.studioContactUrl}>Contact the studio <ArrowTopRightIcon width={18} height={18} aria-hidden="true" /></a> : <>
+      {siteConfig.studioContactUrl ? <a className="button button-dark" href={siteConfig.studioContactUrl}>Contact the studio <Arrow /></a> : <>
         <p>The studio’s contact details are being prepared. You can draft and copy a brief here for later.</p>
         <label htmlFor="project-brief">Project brief</label>
         <textarea id="project-brief" rows={5} value={brief} onChange={event => { setBrief(event.target.value); setStatus('') }} />
