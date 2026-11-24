@@ -11,7 +11,7 @@ const asset = (file: string) => `/images/portfolio/${file}`
 const comingSoon = ['Services', 'About', 'Academy']
 const arrow = <ArrowTopRightIcon width={14} height={14} aria-hidden="true" />
 
-/** Logo and two link columns, then the studio name set huge, rising out of a slow brand-colour fog, with the
+/** Logo and two link columns, then the logo set huge in frosted glass over slowly drifting brand-colour clouds, with the
  *  small print on top of it. */
 export function SiteFooter() {
   return <footer className={styles.footer}>
@@ -32,8 +32,8 @@ export function SiteFooter() {
       </div>
     </div>
     <div className={styles.stage}>
-      <div className={styles.fog} aria-hidden="true"><i /><i /><i /><i /></div>
-      <p className={styles.wordmark} aria-hidden="true">femoskeydev</p>
+      <div className={styles.fog} aria-hidden="true"><i /><i /><i /><i /><i /><i /></div>
+      <div className={styles.wordmark} aria-hidden="true" />
       <p className={styles.legal}><span>© {new Date().getFullYear()} Femoskeydev</span><span>Design &amp; development studio</span><a href="#top">Back to top</a></p>
     </div>
   </footer>

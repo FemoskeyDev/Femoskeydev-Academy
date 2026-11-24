@@ -18,29 +18,34 @@
 }
 .column>a:focus-visible,.legal>a:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; border-radius: 4px; }
 
-/* The studio name, huge, rising out of soft brand-colour fog that drifts slowly. */
-.stage { position: relative; margin-top: clamp(56px, 8vw, 120px); padding-top: clamp(40px, 6vw, 80px); }
-.fog { position: absolute; inset: 0 -10% -20%; filter: blur(70px); pointer-events: none; }
-.fog>i { position: absolute; border-radius: 50%; animation: drift 18s ease-in-out infinite alternate; }
-.fog>i:nth-child(1) { left: 0; bottom: -10%; width: 55%; height: 75%; background: #B8F7C4; opacity: .85; }
-.fog>i:nth-child(2) { left: 30%; bottom: -25%; width: 50%; height: 80%; background: #ffd5bf; opacity: .7; animation-duration: 22s; animation-delay: -6s; }
-.fog>i:nth-child(3) { right: 0; bottom: -15%; width: 45%; height: 70%; background: #dfe7ff; opacity: .8; animation-duration: 20s; animation-delay: -12s; }
-.fog>i:nth-child(4) { left: 18%; bottom: 10%; width: 22%; height: 40%; background: #020202; opacity: .9; animation-duration: 16s; animation-delay: -3s; }
-@keyframes drift {
-  from { transform: translate3d(-4%, 6%, 0) scale(1); }
-  to { transform: translate3d(5%, -4%, 0) scale(1.12); }
+/* The logo, huge and frosted, over brand-colour clouds that drift slowly across. Each cloud is a soft radial
+   gradient rather than a blurred shape, so moving them costs nothing. */
+.stage { position: relative; margin-top: clamp(56px, 8vw, 120px); padding-top: clamp(64px, 9vw, 140px); }
+.fog { position: absolute; inset: 0; overflow: hidden; pointer-events: none; -webkit-mask: linear-gradient(to bottom, transparent, #000 50%); mask: linear-gradient(to bottom, transparent, #000 50%); }
+.fog>i { position: absolute; bottom: -30%; width: 70%; aspect-ratio: 1.6; border-radius: 50%; animation: cloud 60s ease-in-out infinite alternate; }
+.fog>i:nth-child(1) { left: -20%; background: radial-gradient(closest-side, rgba(184,247,196,.9), rgba(184,247,196,0)); }
+.fog>i:nth-child(2) { left: 20%; bottom: -45%; background: radial-gradient(closest-side, rgba(255,213,191,.75), rgba(255,213,191,0)); animation-duration: 75s; animation-delay: -20s; animation-direction: alternate-reverse; }
+.fog>i:nth-child(3) { left: 55%; background: radial-gradient(closest-side, rgba(223,231,255,.85), rgba(223,231,255,0)); animation-duration: 68s; animation-delay: -35s; }
+.fog>i:nth-child(4) { left: 5%; bottom: -10%; width: 45%; background: radial-gradient(closest-side, rgba(229,223,239,.7), rgba(229,223,239,0)); animation-duration: 82s; animation-delay: -10s; animation-direction: alternate-reverse; }
+.fog>i:nth-child(5) { left: 40%; bottom: 5%; width: 40%; background: radial-gradient(closest-side, rgba(184,247,196,.55), rgba(184,247,196,0)); animation-duration: 90s; animation-delay: -50s; }
+.fog>i:nth-child(6) { left: 25%; bottom: 25%; width: 35%; background: radial-gradient(closest-side, rgba(2,2,2,.9), rgba(2,2,2,0)); animation-duration: 70s; animation-delay: -25s; }
+@keyframes cloud {
+  0% { transform: translate3d(-18%, 4%, 0) scale(1); }
+  50% { transform: translate3d(6%, -6%, 0) scale(1.1); }
+  100% { transform: translate3d(22%, 2%, 0) scale(.95); }
 }
+/* Frosted glass in the logo's shape: the logo masks a white, see-through layer that blurs whatever drifts behind. */
 .wordmark {
   position: relative;
-  margin: 0;
-  text-align: center;
-  font-size: 17.2vw;
-  line-height: .78;
-  font-weight: 500;
-  letter-spacing: -.065em;
-  color: #151515;
-  mix-blend-mode: multiply;
-  user-select: none;
+  width: calc(100% - 2 * var(--page-margin));
+  max-width: 1600px;
+  aspect-ratio: 220.411 / 32.0102;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.22));
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-mask: url('/images/portfolio/logo-white.svg') center / contain no-repeat;
+  mask: url('/images/portfolio/logo-white.svg') center / contain no-repeat;
 }
 .legal {
   position: relative;
@@ -53,10 +58,10 @@
   font-size: 13px;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: rgba(21,21,21,.75);
+  color: rgba(255,255,255,.7);
 }
 .legal>span+span::before,.legal>a::before { content: ''; display: inline-block; width: 4px; height: 4px; margin-right: 32px; vertical-align: middle; background: currentColor; }
-.legal>a { color: #151515; text-decoration: none; }
+.legal>a { color: #fff; text-decoration: none; }
 @media (hover: hover) and (pointer: fine) { .legal>a:hover { text-decoration: underline; text-underline-offset: 3px; } }
 
 @media (max-width: 700px) {
