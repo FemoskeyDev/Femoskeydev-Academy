@@ -43,6 +43,8 @@ FORMS = {
     # crisp; the dome gives the inflated feel.
     'slab': {'thickness': 0.30, 'radius': 0.07, 'puff': 0.0, 'reach': 0.3},
     'puffy': {'thickness': 0.24, 'radius': 0.09, 'puff': 0.16, 'reach': 0.45},
+    # A thin round on the rim and only a slight swell: corners and points stay sharp, like a cut-out glyph.
+    'crisp': {'thickness': 0.26, 'radius': 0.025, 'puff': 0.04, 'reach': 0.25},
 }
 VOXEL = 0.0045  # surface detail, in scene units; shapes are 2 units across
 MAX_FACES = 3_000_000
