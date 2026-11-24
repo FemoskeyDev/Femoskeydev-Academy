@@ -80,6 +80,7 @@ function Shot({ shot }: { shot: Shot }) {
   </figure>
 }
 
+/** Every section keeps its own surface: the brand's colour bands read as solid blocks, without the site's scroll cross-fade. */
 export function NineLinesCaseStudy() {
   usePageMeta()
   return <>
@@ -102,7 +103,7 @@ export function NineLinesCaseStudy() {
         </div>
       </header>
 
-      <section className={styles.idea} aria-labelledby="nl-idea">
+      <section className={styles.idea} aria-labelledby="nl-idea" data-surface-fixed>
         <div className={cs.wrap}>
           <div className={styles.bandHead}>
             <p className={styles.index}>01 — The idea</p>
@@ -123,7 +124,7 @@ export function NineLinesCaseStudy() {
         </div>
       </section>
 
-      <section className={`${cs.wrap} ${styles.section}`} aria-labelledby="nl-grid">
+      <section className={`${cs.wrap} ${styles.section}`} aria-labelledby="nl-grid" data-surface-fixed>
         <div className={cs.sectionHead}>
           <h2 id="nl-grid" className={cs.heading}>Drawn on a grid <span>the 9 sits inside Unbounded</span></h2>
           <p>The ligature replaces the l in Unbounded Light, so the wordmark keeps the typeface’s rhythm. One circle, one diagonal and one rounded corner, all at the weight of the letters around them.</p>
@@ -134,7 +135,7 @@ export function NineLinesCaseStudy() {
         </RevealOnScroll>
       </section>
 
-      <section className={`${cs.wrap} ${styles.section}`} aria-labelledby="nl-colour">
+      <section className={`${cs.wrap} ${styles.section}`} aria-labelledby="nl-colour" data-surface-fixed>
         <div className={cs.sectionHead}>
           <h2 id="nl-colour" className={cs.heading}>Colour <span>mixed, never matched</span></h2>
           <p>Deep Teal and Cream carry the identity. Butter, Sky and Slate Teal are mixed across a set, so stacked covers or a pair of bags never share one colour. Crimson is a signal, used sparingly.</p>
@@ -147,7 +148,7 @@ export function NineLinesCaseStudy() {
         </ul>
       </section>
 
-      <section className={styles.type} aria-labelledby="nl-type">
+      <section className={styles.type} aria-labelledby="nl-type" data-surface-fixed>
         <div className={`${cs.wrap} ${styles.typeGrid}`}>
           <p className={styles.glyphs} aria-hidden="true">Aa<br />09</p>
           <div>
@@ -159,7 +160,7 @@ export function NineLinesCaseStudy() {
         </div>
       </section>
 
-      <section className={styles.gallery} aria-labelledby="nl-world">
+      <section className={styles.gallery} aria-labelledby="nl-world" data-surface-fixed>
         <div className={cs.wrap}>
           <div className={styles.galleryHead}>
             <h2 id="nl-world" className={styles.display}>In the world</h2>
@@ -169,7 +170,7 @@ export function NineLinesCaseStudy() {
         </div>
       </section>
 
-      <section className={`${cs.wrap} ${styles.section}`} aria-labelledby="nl-life">
+      <section className={`${cs.wrap} ${styles.section}`} aria-labelledby="nl-life" data-surface-fixed>
         <div className={cs.sectionHead}>
           <h2 id="nl-life" className={cs.heading}>Brand in use <span>close, warm and candid</span></h2>
           <p>Photography follows the light: low sun, real materials and shallow focus, so the identity feels like part of the room rather than a sign on it.</p>
@@ -181,7 +182,7 @@ export function NineLinesCaseStudy() {
         </RevealOnScroll>
       </section>
 
-      <section className={styles.guide} aria-labelledby="nl-guide">
+      <section className={styles.guide} aria-labelledby="nl-guide" data-surface-fixed>
         <div className={cs.wrap}>
           <div className={styles.bandHead}>
             <p className={styles.index}>03 — Handover</p>
