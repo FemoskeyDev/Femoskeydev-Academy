@@ -16,7 +16,7 @@ export default function FooterWarp({ className }: { className?: string }) {
     shape="edge"
     shapeScale={0.12}
     scale={0.52}
-    rotation={114}
+    rotation={0}
     speed={reduced ? 0 : 3.5}
     maxPixelCount={1920 * 1080}
   />
