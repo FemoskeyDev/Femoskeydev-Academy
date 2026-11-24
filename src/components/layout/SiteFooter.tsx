@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
+import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 import { siteConfig } from '../../data/siteConfig'
 import { socialLinks } from '../../data/socialLinks'
 import { ComingSoon } from '../ui/ComingSoon'
@@ -9,26 +9,32 @@ const asset = (file: string) => `/images/portfolio/${file}`
 
 // Pages that aren't live yet show a "Coming soon" tooltip instead of linking.
 const comingSoon = ['Services', 'About', 'Academy']
-const socialIcons = { X: TwitterLogoIcon, Instagram: InstagramLogoIcon, LinkedIn: LinkedInLogoIcon }
+const arrow = <ArrowTopRightIcon width={14} height={14} aria-hidden="true" />
 
+/** Logo and two link columns, then the studio name set huge, rising out of a slow brand-colour fog, with the
+ *  small print on top of it. */
 export function SiteFooter() {
   return <footer className={styles.footer}>
     <div className={styles.top}>
       <Link to="/" className={styles.brand} aria-label="Femoskeydev home"><img src={asset('logo-white.svg')} alt="Femoskeydev" width="220" height="32" /></Link>
-      <div className={styles.socials} role="group" aria-label="Social profiles">
-        {socialLinks.map(({ label, href }) => {
-          const Icon = socialIcons[label]
-          return href
-            ? <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in a new tab)`}><Icon width={20} height={20} aria-hidden="true" /></a>
-            : <span key={label} role="img" aria-label={`${label}, coming soon`} title={`${label}: coming soon`}><Icon width={20} height={20} aria-hidden="true" /></span>
-        })}
+      <nav aria-label="Footer navigation" className={styles.column}>
+        <h2>Navigation</h2>
+        <Link to="/">Home {arrow}</Link>
+        <Link to="/work">Case Studies {arrow}</Link>
+        {comingSoon.map(label => <ComingSoon key={label} placement="above">{label}</ComingSoon>)}
+        <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer">Contact {arrow}</a>
+      </nav>
+      <div className={styles.column} role="group" aria-labelledby="footer-social">
+        <h2 id="footer-social">Social</h2>
+        {socialLinks.map(({ label, href }) => href
+          ? <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in a new tab)`}>{label} {arrow}</a>
+          : <ComingSoon key={label} placement="above">{label}</ComingSoon>)}
       </div>
     </div>
-    <div className={styles.separator}><img src={asset('878e4.svg')} alt="" /></div>
-    <nav aria-label="Footer navigation">
-      <Link to="/work" className="text-link">Case Studies</Link>
-      {comingSoon.map(label => <ComingSoon key={label} placement="above">{label}</ComingSoon>)}
-      <a href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" className="text-link">Contact</a>
-    </nav>
+    <div className={styles.stage}>
+      <div className={styles.fog} aria-hidden="true"><i /><i /><i /><i /></div>
+      <p className={styles.wordmark} aria-hidden="true">femoskeydev</p>
+      <p className={styles.legal}><span>© {new Date().getFullYear()} Femoskeydev</span><span>Design &amp; development studio</span><a href="#top">Back to top</a></p>
+    </div>
   </footer>
 }
