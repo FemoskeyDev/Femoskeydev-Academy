@@ -14,7 +14,7 @@ export function ContactCta() {
       </div>
       <a className={styles.book} href={siteConfig.bookingUrl} target="_blank" rel="noreferrer" aria-label="Book a call on Cal.com (opens in a new tab)">
         <span className={styles.label}>Start a project</span>
-        <span className={styles.arrow} aria-hidden="true"><Arrow className={styles.glyph} weight="semibold" /></span>
+        <span className={styles.arrow} aria-hidden="true"><Arrow className={styles.glyph} /></span>
         <span className={styles.action}>Book a call</span>
         <span className={styles.where}>cal.com/femoskeydev</span>
       </a>

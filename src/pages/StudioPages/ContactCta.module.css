@@ -17,12 +17,13 @@
 .book::after { content:''; position:absolute; right:-18%; bottom:-40%; width:70%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.65),rgba(255,255,255,0) 68%); transition:transform 640ms cubic-bezier(.32,.72,0,1); pointer-events:none; }
 .label { font-size:14px; letter-spacing:.08em; text-transform:uppercase; font-weight:500; }
 .arrow { position:absolute; top:24px; right:24px; display:grid; place-items:center; width:64px; height:64px; border-radius:50%; background:#151515; color:#B8F7C4; transition:transform 480ms cubic-bezier(.32,.72,0,1); }
-.glyph { display:flex; font-size:30px; }
+.glyph { display:flex; font-size:30px; transition:transform 480ms cubic-bezier(.32,.72,0,1); }
 .action { position:relative; z-index:1; align-self:end; font-size:clamp(48px,5.6vw,84px); line-height:1; font-weight:500; letter-spacing:-.05em; }
 .where { position:relative; z-index:1; margin-top:16px; font-size:17px; color:rgba(21,21,21,.62); }
 @media (hover:hover) and (pointer:fine) {
   .book:hover { transform:scale(1.015); background-color:#c6fbd0; }
-  .book:hover .arrow { transform:rotate(45deg) scale(1.06); }
+  .book:hover .arrow { transform:scale(1.06); }
+  .book:hover .glyph { transform:translate(2px,-2px); }
   .book:hover::after { transform:translate(-12%,-12%) scale(1.15); }
 }
 .book:active { transform:scale(.985); transition-duration:140ms; }
@@ -38,6 +39,6 @@
   .glyph { font-size:24px; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .book,.book::after,.arrow { transition:none; }
-  .book:hover,.book:active,.book:hover .arrow,.book:hover::after { transform:none; }
+  .book,.book::after,.arrow,.glyph { transition:none; }
+  .book:hover,.book:active,.book:hover .arrow,.book:hover .glyph,.book:hover::after { transform:none; }
 }
