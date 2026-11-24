@@ -53,6 +53,19 @@ describe('Studio routes', () => {
     expect(document.querySelector('video[src="/images/work/savecircle/admin-film.mp4"]')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Liziwaride/ })).toHaveAttribute('href', '/work/liziwaride')
   })
+  it('shows each homepage project with its own cover', () => {
+    renderAt('/')
+    for (const slug of ['ninelines', 'liziwaride', 'paymita', 'savecircle']) {
+      const card = document.querySelector(`a[href="/work/${slug}"]`)!
+      expect(card.querySelector('img')!.getAttribute('src')).toContain(`/images/work/${slug}/`)
+    }
+  })
+  it('opens the Nine Lines case study from its homepage cover', async () => {
+    renderAt('/')
+    fireEvent.click(screen.getByRole('link', { name: 'Nine Lines case study' }))
+    expect(await screen.findByRole('heading', { level: 1, name: 'Nine Lines' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: /A nine, a line and a floor/ })).toBeInTheDocument()
+  })
   it('opens the Liziwaride case study from its homepage cover', async () => {
     renderAt('/')
     fireEvent.click(screen.getByRole('link', { name: 'Liziwaride case study' }))

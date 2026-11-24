@@ -11,7 +11,13 @@ import { ContactCta } from './ContactCta'
 import { ProjectCover } from './ProjectCover'
 import { projects } from '../../data/projects'
 
-const [liziwaride, paymita, savecircle, edgecore] = projects
+/** Homepage projects by slug, so reordering src/data/projects.ts never mixes up a card's cover and link. */
+const project = (slug: string) => {
+  const found = projects.find(p => p.slug === slug)
+  if (!found) throw new Error(`Unknown project: ${slug}`)
+  return found
+}
+const [ninelines, liziwaride, paymita, savecircle] = ['ninelines', 'liziwaride', 'paymita', 'savecircle'].map(project)
 import { ServicesPreview } from './ServicesPreview'
 import { HowWeWorkFloat } from './HowWeWorkFloat'
 import { siteConfig } from '../../data/siteConfig'
@@ -127,11 +133,11 @@ export function PortfolioLanding() {
     <section id="selected-work" className={`${styles.wrap} ${styles.work}`} aria-labelledby="work-title">
       <div className={styles.workIntro}><img src={asset('5b7fa.svg')} alt="" /><div><h2 id="work-title">Don't just take our word for it.</h2><p>We've built some pretty cool products. Here are a few of our favourites.</p></div></div>
       <div className={styles.workGrid} aria-label="Project showcase">
-        {/* Figma order: Liziwaride (wide), Paymita, SaveCircle, EdgeCore (wide, coming soon). */}
-        <CursorCard to="/work/liziwaride" label="Liziwaride case study" tooltip="Liziwaride" className={styles.widePanel}><ProjectCover project={liziwaride} /></CursorCard>
+        {/* Newest first, alternating wide and narrow: Nine Lines (wide), Liziwaride, Paymita, SaveCircle (wide). */}
+        <CursorCard to="/work/ninelines" label="Nine Lines case study" tooltip="Nine Lines" className={styles.widePanel}><ProjectCover project={ninelines} /></CursorCard>
+        <CursorCard to="/work/liziwaride" label="Liziwaride case study" tooltip="Liziwaride"><ProjectCover project={liziwaride} /></CursorCard>
         <CursorCard to="/work/paymita" label="Paymita case study" tooltip="Paymita"><ProjectCover project={paymita} /></CursorCard>
-        <CursorCard to="/work/savecircle" label="SaveCircle case study" tooltip="SaveCircle"><ProjectCover project={savecircle} /></CursorCard>
-        <div className={styles.widePanel} role="img" aria-label="EdgeCore case study, coming soon"><ProjectCover project={edgecore} /></div>
+        <CursorCard to="/work/savecircle" label="SaveCircle case study" tooltip="SaveCircle" className={styles.widePanel}><ProjectCover project={savecircle} /></CursorCard>
       </div>
       <Button to="/work" className={styles.workMore}>View all cases</Button>
     </section>
