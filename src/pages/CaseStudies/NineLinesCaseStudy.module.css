@@ -54,7 +54,8 @@ article.page { padding-bottom:0; }
 .alphabet { margin-top:12px !important; font-family:'Unbounded',Arial,sans-serif; font-weight:300; font-size:clamp(15px,1.5vw,22px); line-height:1.55; letter-spacing:-.01em; overflow-wrap:anywhere; }
 
 /* In the world: a dark presentation canvas, one wide shot then a pair. */
-.gallery { margin-top:var(--section-space); padding-block:clamp(72px,9vw,136px); background:var(--nl-night); color:var(--nl-cream); }
+/* Follows the type band directly, so the two colour fields meet without a gap. */
+.gallery { padding-block:clamp(72px,9vw,136px); background:var(--nl-night); color:var(--nl-cream); }
 .galleryHead { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:16px; padding-bottom:28px; margin-bottom:clamp(32px,4vw,56px); border-bottom:1px solid rgba(244,244,220,.2); }
 .galleryHead p { font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:14px; letter-spacing:.08em; text-transform:uppercase; opacity:.6; }
 .shots { display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,3vw,40px) 12px; }
