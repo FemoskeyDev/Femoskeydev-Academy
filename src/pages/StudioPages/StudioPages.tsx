@@ -83,7 +83,7 @@ export function WorkPage() {
   const [filter, setFilter] = useState<Service>()
   return <div className={styles.site}>
     <PageIntro title="Selected work.">
-      <p>Explore the brands and products we’ve designed, from the Nine Lines identity to Liziwaride’s mobility apps and Paymita’s payments wallet, with more on the way.</p>
+      <p>Brands and products we’ve designed and built.</p>
     </PageIntro>
     <section className={`${styles.wrap} ${styles.workList}`} aria-label="Projects">
       <ProjectFilters active={filter} onChange={setFilter} />
