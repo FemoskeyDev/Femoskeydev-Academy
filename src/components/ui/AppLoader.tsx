@@ -16,7 +16,7 @@ const INTRO_FALLBACK_MS = 2900;
 const FINISH_FALLBACK_MS = 2200;
 const MIN_SPIN_TIME_MS = 1230;
 // The first image on the homepage: the hero film's poster.
-const HERO_IMAGE = "/images/portfolio/showreel-poster.webp";
+const HERO_IMAGE = "/images/portfolio/hero-ninelines-poster.webp";
 
 function preloadImage(src: string) {
   return new Promise<void>((resolve) => {

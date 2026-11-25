@@ -5,10 +5,10 @@ import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { CursorCard } from './CursorCard'
 import styles from './PortfolioLanding.module.css'
 
-const film = '/images/portfolio/showreel.mp4'
-const poster = '/images/portfolio/showreel-poster.webp'
+const film = '/images/portfolio/hero-ninelines.mp4'
+const poster = '/images/portfolio/hero-ninelines-poster.webp'
 
-/** The studio showreel (Paymita, Liziwaride and SaveCircle), linking to our Cal.com booking page with the "Contact us"
+/** The Nine Lines brand identity film (how the mark was made, then the identity in use), linking to our Cal.com booking page with the "Contact us"
  *  cursor. It settles in on load, then plays muted only while it is on screen; the sound toggle sits beside the link,
  *  not inside it. */
 export function HeroFilm() {
@@ -70,7 +70,7 @@ export function HeroFilm() {
           data-playing={playing || undefined} onPlaying={() => setPlaying(true)} />}
       </span>
     </CursorCard>
-    {!reduced && <button type="button" className={styles.heroSound} onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn showreel sound on' : 'Turn showreel sound off'}>
+    {!reduced && <button type="button" className={styles.heroSound} onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn film sound on' : 'Turn film sound off'}>
       {muted ? <SpeakerOffIcon width={18} height={18} aria-hidden="true" /> : <SpeakerLoudIcon width={18} height={18} aria-hidden="true" />}
     </button>}
   </div>
