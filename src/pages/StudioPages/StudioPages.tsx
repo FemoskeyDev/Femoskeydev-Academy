@@ -5,7 +5,7 @@ import { RevealOnScroll } from '../../components/ui/RevealOnScroll'
 import { siteConfig } from '../../data/siteConfig'
 import { usePageMeta } from '../../hooks/usePageMeta'
 import { ContactOptions } from '../ContactPage/sections/ContactOptions'
-import { projects } from '../../data/projects'
+import { projects, serviceFilters, type Service } from '../../data/projects'
 import { ProjectCover } from './ProjectCover'
 import { ContactCta } from './ContactCta'
 import { CursorCard } from './CursorCard'
@@ -20,9 +20,19 @@ function PageIntro({ label, title, children }: { label?: string; title: string; 
   </header>
 }
 
-function ProjectGrid({ heading: Heading = 'h2' }: { heading?: 'h2' | 'h3' }) {
-  return <div className={styles.projects}>
-    {projects.map(project => {
+/** Pill filters for the /work page: the active pill is filled, and hover fills a pill from its centre. */
+function ProjectFilters({ active, onChange }: { active?: Service; onChange: (service?: Service) => void }) {
+  return <div className={styles.filters} role="group" aria-label="Filter projects">
+    {serviceFilters.map(f => <button key={f.label} type="button" className={styles.filter} aria-pressed={active === f.service} onClick={() => onChange(f.service)}>
+      <span className={styles.filterFill} aria-hidden="true" /><span className={styles.filterLabel}>{f.label}</span>
+    </button>)}
+  </div>
+}
+
+function ProjectGrid({ heading: Heading = 'h2', filter }: { heading?: 'h2' | 'h3'; filter?: Service }) {
+  const shown = filter ? projects.filter(p => p.services.includes(filter)) : projects
+  return <div className={styles.projects} key={filter ?? 'all'}>
+    {shown.map(project => {
       const content = <>
         <div className={styles.projectImage}><ProjectCover project={project} /></div>
         <div className={styles.projectCaption}>
@@ -70,11 +80,15 @@ export function ServicesPage() {
 
 export function WorkPage() {
   usePageMeta()
+  const [filter, setFilter] = useState<Service>()
   return <div className={styles.site}>
     <PageIntro title="Selected work.">
       <p>Explore the brands and products we’ve designed, from the Nine Lines identity to Liziwaride’s mobility apps and Paymita’s payments wallet, with more on the way.</p>
     </PageIntro>
-    <section className={`${styles.wrap} ${styles.workList}`} aria-label="Projects"><ProjectGrid /></section>
+    <section className={`${styles.wrap} ${styles.workList}`} aria-label="Projects">
+      <ProjectFilters active={filter} onChange={setFilter} />
+      <ProjectGrid filter={filter} />
+    </section>
     <ContactCta />
   </div>
 }
