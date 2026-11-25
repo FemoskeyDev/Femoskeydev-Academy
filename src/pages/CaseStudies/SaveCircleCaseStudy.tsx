@@ -77,7 +77,7 @@ function ProductRow({ row }: { row: Row }) {
     </div>
     <RevealOnScroll className={styles.stage}>
       <div className={styles.stageInner} style={{ aspectRatio: `1440 / ${stageH}` }}>
-        {row.phones.map((p, i) => <img key={p.file} {...responsive(image(p.file), p.file === 'v2-phone-home-big' ? 1468 : 1400, '(max-width: 1440px) 50vw, 720px')} alt={p.alt} loading="lazy"
+        {row.phones.map((p, i) => <img data-flare key={p.file} {...responsive(image(p.file), p.file === 'v2-phone-home-big' ? 1468 : 1400, '(max-width: 1440px) 50vw, 720px')} alt={p.alt} loading="lazy"
           className={styles.phone} style={{ left: `${p.x / 14.4}%`, top: `${(p.y - 358) / stageH * 100}%`, width: `${p.w / 14.4}%`, height: `${p.h / stageH * 100}%`, '--i': i } as CSSProperties} />)}
       </div>
     </RevealOnScroll>
@@ -85,7 +85,7 @@ function ProductRow({ row }: { row: Row }) {
 }
 
 const Pic = ({ file, alt, w, className }: { file: string; alt: string; w: number; className?: string }) =>
-  <img {...responsive(image(file), w * 2, w > 700 ? '(max-width: 1440px) 100vw, 1248px' : '(max-width: 600px) 100vw, 618px')} alt={alt} loading="lazy" className={className} />
+  <img data-flare {...responsive(image(file), w * 2, w > 700 ? '(max-width: 1440px) 100vw, 1248px' : '(max-width: 600px) 100vw, 618px')} alt={alt} loading="lazy" className={className} />
 
 /** Every band keeps its own colour, so the site's light/dark scroll cross-fade is switched off with data-surface-fixed. */
 export function SaveCircleCaseStudy() {
@@ -138,8 +138,8 @@ export function SaveCircleCaseStudy() {
 
       <section className={styles.grid} aria-label="How the mark and wordmark are drawn" data-surface-fixed>
         <RevealOnScroll className={styles.sheets}>
-          <img {...responsive(image('v2-grid-monogram'), 2880, '100vw')} alt="Monogram construction: the ring, the member, the pot and the end cap on a grid of circles" loading="lazy" />
-          <img {...responsive(image('v2-grid-wordmark'), 2880, '100vw')} alt="Wordmark construction: SaveCircle in Urbanist Medium with mark top, ascender, x-height and baseline guides" loading="lazy" />
+          <img data-flare {...responsive(image('v2-grid-monogram'), 2880, '100vw')} alt="Monogram construction: the ring, the member, the pot and the end cap on a grid of circles" loading="lazy" />
+          <img data-flare {...responsive(image('v2-grid-wordmark'), 2880, '100vw')} alt="Wordmark construction: SaveCircle in Urbanist Medium with mark top, ascender, x-height and baseline guides" loading="lazy" />
         </RevealOnScroll>
       </section>
 
@@ -169,7 +169,7 @@ export function SaveCircleCaseStudy() {
 
       {rows.map(row => <ProductRow key={row.id} row={row} />)}
       <section className={styles.bleed} aria-label="SaveCircle in the street" data-surface-fixed>
-        <img {...responsive(image('v2-busstop-wide'), 2880, '100vw')} alt="A bus stop poster in a park: Save together, with the SaveCircle mark and a Family Save card" loading="lazy" />
+        <img data-flare {...responsive(image('v2-busstop-wide'), 2880, '100vw')} alt="A bus stop poster in a park: Save together, with the SaveCircle mark and a Family Save card" loading="lazy" />
       </section>
       {rowsAfter.map(row => <ProductRow key={row.id} row={row} />)}
 
