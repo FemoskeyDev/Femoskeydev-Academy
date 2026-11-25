@@ -14,7 +14,7 @@
 .heroCopy strong { font-weight:600; }
 .heroImage { position:relative; aspect-ratio:16 / 9; }
 .heroLink { position:absolute; inset:0; border-radius:24px; }
-.heroFilm { position:absolute; inset:0; display:block; border-radius:24px; overflow:hidden; background:#dfe6d8; }
+.heroFilm { position:absolute; inset:0; display:block; border-radius:24px; overflow:hidden; background:#ACD4DB; }
 .heroFilm>img,.heroFilm>video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .heroFilm>video { opacity:0; transition:opacity .6s ease; }
 .heroFilm>video[data-playing] { opacity:1; }
