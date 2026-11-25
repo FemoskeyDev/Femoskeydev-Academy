@@ -20,12 +20,10 @@ function PageIntro({ label, title, children }: { label?: string; title: string; 
   </header>
 }
 
-/** Pill filters for the /work page: the active pill is filled, and hover fills a pill from its centre. */
+/** Filters for the /work page, styled like the site's buttons: the chosen one is dark, the rest outlined. */
 function ProjectFilters({ active, onChange }: { active?: Service; onChange: (service?: Service) => void }) {
   return <div className={styles.filters} role="group" aria-label="Filter projects">
-    {serviceFilters.map(f => <button key={f.label} type="button" className={styles.filter} aria-pressed={active === f.service} onClick={() => onChange(f.service)}>
-      <span className={styles.filterFill} aria-hidden="true" /><span className={styles.filterLabel}>{f.label}</span>
-    </button>)}
+    {serviceFilters.map(f => <button key={f.label} type="button" className={styles.filter} aria-pressed={active === f.service} onClick={() => onChange(f.service)}>{f.label}</button>)}
   </div>
 }
 
