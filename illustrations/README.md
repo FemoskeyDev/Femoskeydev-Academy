@@ -23,7 +23,7 @@ match [DIRECTION.md](DIRECTION.md). You supply a flat shape and choose a materia
    | `form` | `puffy` (pillowy, toy-like), `slab` (thick acrylic with rounded edges) or `crisp` (sharp corners and points) |
    | `angle` | `hero` (¾ left), `tilt` (¾ right), `top` (from above), `front` (nearly straight on) |
    | `material` | `vinyl`, `jelly`, `glass`, `frosted` (see DIRECTION.md) |
-   | `tone` | `mint`, `blue`, `violet`, `peach`, `yellow`, `ink`, `white`, `clear` (glass only) |
+   | `tone` | `mint`, `blue`, `violet`, `peach`, `yellow`, `ink`, `white`, `clear` (glass only); client tones: `teal` (Nine Lines) |
    | `depth` | Thickness of this part, relative (1 is normal) |
    | `lift` | How far this part stands in front of the one behind, in shape units |
 | `stroke` | Optional: draw this part's lines at this width (shape units) instead of filling its outline |

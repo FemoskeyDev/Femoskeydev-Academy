@@ -1,0 +1,4 @@
+{ "form": "puffy", "angle": "hero", "parts": [
+  { "svg": "ninelines-loop.svg", "material": "vinyl", "tone": "teal" },
+  { "svg": "ninelines-line.svg", "material": "vinyl", "tone": "teal", "lift": 0 }
+] }
