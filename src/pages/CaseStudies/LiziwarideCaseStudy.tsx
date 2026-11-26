@@ -159,6 +159,14 @@ export function LiziwarideCaseStudy() {
       </div>
     </section>
 
+    <section className={`${styles.wrap} ${styles.section}`} aria-labelledby="lz-grid" data-surface-fixed>
+      <div className={styles.sectionHead}><Heading id="lz-grid" title="Drawn on a grid" subtitle="one shape, turned round" /><p>The second half is the first turned 180° around one centre, so both strokes run at the same angle and both dots sit on one circle.</p></div>
+      <RevealOnScroll className={lz.pair}>
+        <figure className={`${lz.sheet} ${lz.sheetSquare}`}><img data-flare {...responsive(image('construction-monogram'), 1200, '(max-width: 600px) 100vw, 412px')} alt="Monogram construction: the two halves on a grid with anchor points, their parallel strokes and the circle through both dots around the centre of rotation" loading="lazy" /></figure>
+        <figure className={`${lz.sheet} ${lz.sheetWide}`}><img data-flare {...responsive(image('construction-wordmark'), 2400, '(max-width: 600px) 100vw, 824px')} alt="Wordmark construction: the mark beside Liziwaride with mark top, ascender, x-height, baseline and mark base guides" loading="lazy" /></figure>
+      </RevealOnScroll>
+    </section>
+
     <nav className={`${styles.wrap} ${styles.next}`} aria-label="Next project">
       <p className={styles.kicker}>Next project</p>
       <Link to="/work/paymita">Paymita <Arrow /></Link>
