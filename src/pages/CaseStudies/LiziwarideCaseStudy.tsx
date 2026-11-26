@@ -118,23 +118,6 @@ export function LiziwarideCaseStudy() {
       <img data-flare {...responsive(image('showcase'), 2880, '100vw')} alt="The Liziwaride admin dashboard on a desktop monitor" width="2880" height="1404" loading="lazy" />
     </div>
 
-    {features.map(feature => <section key={feature.id} className={`${styles.wrap} ${styles.section}`} aria-labelledby={feature.id}>
-      <div className={styles.sectionHead}><Heading id={feature.id} title={feature.title} subtitle={feature.subtitle} /><p>{feature.copy}</p></div>
-      <RevealOnScroll className={`${styles.bento} ${feature.columns === 4 ? styles.four : ''}`}>
-        {feature.tiles.map(tile => <figure key={tile.file} className={tile.wide ? styles.wideTile : styles.tile}>
-          <img data-flare {...responsive(image(tile.file), tile.wide ? 1656 : feature.columns === 4 ? 606 : 816, tile.wide ? '(max-width: 600px) 100vw, 66vw' : '(max-width: 600px) 50vw, 33vw')} alt={tile.alt} loading="lazy" />
-        </figure>)}
-      </RevealOnScroll>
-    </section>)}
-
-    <section className={styles.section} aria-labelledby="admin">
-      <div className={`${styles.wrap} ${styles.sectionHead}`}><Heading id="admin" title="Admin dashboard" subtitle="running the network" /><p>Operators get a web dashboard for the whole network: live trips on a map, passengers and drivers, operations, finance, pricing, geography, partners, vehicles and settings.</p></div>
-      <div className={styles.wrap}>
-        {/* Reduced motion keeps the film paused on its poster with controls. */}
-        <video data-flare className={styles.film} src="/images/work/liziwaride/admin-film.mp4" poster="/images/work/liziwaride/admin-film-poster.webp" width="1600" height="900" muted loop playsInline preload="none" autoPlay={!reduced} controls={reduced} aria-label="Film of an operator freezing a passenger account and opening Wallet & NFC Cards in the admin dashboard" />
-      </div>
-    </section>
-
     <section className={lz.logo} aria-labelledby="lz-logo" data-surface-fixed>
       <div className={styles.wrap}>
         <div className={lz.bandHead}>
@@ -165,6 +148,23 @@ export function LiziwarideCaseStudy() {
         <figure className={`${lz.sheet} ${lz.sheetSquare}`}><img data-flare {...responsive(image('construction-monogram'), 1200, '(max-width: 600px) 100vw, 412px')} alt="Monogram construction: the two halves on a grid with anchor points, their parallel strokes and the circle through both dots around the centre of rotation" loading="lazy" /></figure>
         <figure className={`${lz.sheet} ${lz.sheetWide}`}><img data-flare {...responsive(image('construction-wordmark'), 2400, '(max-width: 600px) 100vw, 824px')} alt="Wordmark construction: the mark beside Liziwaride with mark top, ascender, x-height, baseline and mark base guides" loading="lazy" /></figure>
       </RevealOnScroll>
+    </section>
+
+    {features.map(feature => <section key={feature.id} className={`${styles.wrap} ${styles.section}`} aria-labelledby={feature.id}>
+      <div className={styles.sectionHead}><Heading id={feature.id} title={feature.title} subtitle={feature.subtitle} /><p>{feature.copy}</p></div>
+      <RevealOnScroll className={`${styles.bento} ${feature.columns === 4 ? styles.four : ''}`}>
+        {feature.tiles.map(tile => <figure key={tile.file} className={tile.wide ? styles.wideTile : styles.tile}>
+          <img data-flare {...responsive(image(tile.file), tile.wide ? 1656 : feature.columns === 4 ? 606 : 816, tile.wide ? '(max-width: 600px) 100vw, 66vw' : '(max-width: 600px) 50vw, 33vw')} alt={tile.alt} loading="lazy" />
+        </figure>)}
+      </RevealOnScroll>
+    </section>)}
+
+    <section className={styles.section} aria-labelledby="admin">
+      <div className={`${styles.wrap} ${styles.sectionHead}`}><Heading id="admin" title="Admin dashboard" subtitle="running the network" /><p>Operators get a web dashboard for the whole network: live trips on a map, passengers and drivers, operations, finance, pricing, geography, partners, vehicles and settings.</p></div>
+      <div className={styles.wrap}>
+        {/* Reduced motion keeps the film paused on its poster with controls. */}
+        <video data-flare className={styles.film} src="/images/work/liziwaride/admin-film.mp4" poster="/images/work/liziwaride/admin-film-poster.webp" width="1600" height="900" muted loop playsInline preload="none" autoPlay={!reduced} controls={reduced} aria-label="Film of an operator freezing a passenger account and opening Wallet & NFC Cards in the admin dashboard" />
+      </div>
     </section>
 
     <nav className={`${styles.wrap} ${styles.next}`} aria-label="Next project">
