@@ -7,6 +7,7 @@ import { usePageMeta } from '../../hooks/usePageMeta'
 import { ContactOptions } from '../ContactPage/sections/ContactOptions'
 import { projects, serviceFilters, type Service } from '../../data/projects'
 import { ProjectCover } from './ProjectCover'
+import { CardMeta } from './CardMeta'
 import { ContactCta } from './ContactCta'
 import { CursorCard } from './CursorCard'
 import styles from './StudioPages.module.css'
@@ -33,13 +34,10 @@ function ProjectGrid({ heading: Heading = 'h2', filter }: { heading?: 'h2' | 'h3
     {shown.map(project => {
       const content = <>
         <div className={styles.projectImage}><ProjectCover project={project} /></div>
-        <div className={styles.projectCaption}>
-          <div><p className={styles.kicker}>{project.type}</p><Heading>{project.name}</Heading></div>
-          {project.to && <span className={styles.circle}><Arrow size={22} /></span>}
-        </div>
+        <CardMeta project={project} heading={Heading} />
       </>
       return <RevealOnScroll className={styles.project} key={project.slug}>
-        {project.to ? <CursorCard className={styles.projectLink} to={project.to} label={`${project.name} case study`} tooltip={project.name} fallback={false} arrow={false}>{content}</CursorCard> : <div className={styles.projectLink} aria-label={`${project.name}, case study coming soon`}>{content}</div>}
+        {project.to ? <CursorCard className={styles.projectLink} to={project.to} label={`${project.name} case study`} tooltip={project.name} arrow={false}>{content}</CursorCard> : <div className={styles.projectLink} aria-label={`${project.name}, case study coming soon`}>{content}</div>}
       </RevealOnScroll>
     })}
   </div>
