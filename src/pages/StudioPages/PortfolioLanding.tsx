@@ -9,6 +9,7 @@ import { ProcessStack } from './ProcessStack'
 import { TeamPortraits } from './TeamPortraits'
 import { ContactCta } from './ContactCta'
 import { ProjectCover } from './ProjectCover'
+import { CardMeta } from './CardMeta'
 import { projects } from '../../data/projects'
 
 /** Homepage projects by slug, so reordering src/data/projects.ts never mixes up a card's cover and link. */
@@ -134,10 +135,10 @@ export function PortfolioLanding() {
       <div className={styles.workIntro}><img src={asset('5b7fa.svg')} alt="" /><div><h2 id="work-title">Don't just take our word for it.</h2><p>We've built some pretty cool products. Here are a few of our favourites.</p></div></div>
       <div className={styles.workGrid} aria-label="Project showcase">
         {/* Newest first, alternating wide and narrow: Nine Lines (wide), Liziwaride, Paymita, SaveCircle (wide). */}
-        <CursorCard to="/work/ninelines" label="Nine Lines case study" tooltip="Nine Lines" className={styles.widePanel}><ProjectCover project={ninelines} /></CursorCard>
-        <CursorCard to="/work/liziwaride" label="Liziwaride case study" tooltip="Liziwaride"><ProjectCover project={liziwaride} /></CursorCard>
-        <CursorCard to="/work/paymita" label="Paymita case study" tooltip="Paymita"><ProjectCover project={paymita} /></CursorCard>
-        <CursorCard to="/work/savecircle" label="SaveCircle case study" tooltip="SaveCircle" className={styles.widePanel}><ProjectCover project={savecircle} /></CursorCard>
+        <CursorCard to="/work/ninelines" label="Nine Lines case study" tooltip="Nine Lines" arrow={false} className={styles.widePanel}><span className={styles.coverBox}><ProjectCover project={ninelines} /></span><CardMeta project={ninelines} /></CursorCard>
+        <CursorCard to="/work/liziwaride" label="Liziwaride case study" tooltip="Liziwaride" arrow={false}><span className={styles.coverBox}><ProjectCover project={liziwaride} /></span><CardMeta project={liziwaride} /></CursorCard>
+        <CursorCard to="/work/paymita" label="Paymita case study" tooltip="Paymita" arrow={false}><span className={styles.coverBox}><ProjectCover project={paymita} /></span><CardMeta project={paymita} /></CursorCard>
+        <CursorCard to="/work/savecircle" label="SaveCircle case study" tooltip="SaveCircle" arrow={false} className={styles.widePanel}><span className={styles.coverBox}><ProjectCover project={savecircle} /></span><CardMeta project={savecircle} /></CursorCard>
       </div>
       <Button to="/work" className={styles.workMore}>View all cases</Button>
     </section>

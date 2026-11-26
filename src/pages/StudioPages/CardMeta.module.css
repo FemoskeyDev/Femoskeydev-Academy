@@ -1,0 +1,11 @@
+/* Figma Card_Meta: 32px padding, 10px gap, 16px corners on white; name Tomato Grotesk SemiBold 17, year Medium 16. */
+.meta { display:flex; align-items:center; gap:10px; padding:32px; border-radius:16px; background:#fff; color:#151515; font-family:'Tomato Grotesk',Arial,sans-serif; }
+.mark { flex:none; display:block; width:20px; height:20px; }
+.meta .name { flex:1; min-width:0; margin:0; font-size:17px; font-weight:600; line-height:21.6px; letter-spacing:-.36px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.year { flex:none; font-size:16px; font-weight:500; line-height:22.4px; letter-spacing:-.32px; }
+@media(max-width:600px) {
+  .meta { gap:8px; padding:16px; border-radius:12px; }
+  .mark { width:16px; height:16px; }
+  .meta .name { font-size:15px; line-height:20px; }
+  .year { font-size:14px; line-height:20px; }
+}

@@ -5,16 +5,12 @@
 .section { padding-block: var(--section-space); }
 .site h2 { font-weight: 500; font-size: clamp(41px, 6vw, 91px); line-height: .98; letter-spacing: -.06em; margin: 0; }
 
-.circle { flex-shrink: 0; transition: transform .3s var(--ease-standard), background .3s; }
 
 .projects { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(15px, 2.4vw, 36px); }
 .project { min-width: 0; }
-.projectLink { display: block; }
-.projectImage { position: relative; aspect-ratio: 5 / 4; overflow: hidden; border-radius: 16px; }
-.projectCaption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0 0; }
-.site .projectCaption :is(h2, h3) { font-size: clamp(25px, 3.3vw, 47px); font-weight: 500; margin: 5px 0 0; line-height: 1; }
-.circle { display: grid; place-items: center; width: 46px; aspect-ratio: 1; border: 1px solid var(--color-border); border-radius: 50%; }
-.projectLink:is(:hover, :focus-visible) .circle { background: var(--color-lime); transform: rotate(8deg); }
+/* A cover with the white Card_Meta label under it, 8px apart, clipped to one 16px rounded shape. */
+.projectLink { display: flex; flex-direction: column; gap: 8px; border-radius: 16px; overflow: hidden; }
+.projectImage { position: relative; aspect-ratio: 5 / 4; overflow: hidden; }
 .studioBand { background: #eae9e2; padding-block: var(--section-space); }
 .split { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(24px, 6vw, 96px); align-items: center; }
 .split h2, .contactBand h2 { margin-top: .24em; }
