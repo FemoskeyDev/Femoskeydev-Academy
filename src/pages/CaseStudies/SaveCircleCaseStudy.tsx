@@ -84,9 +84,6 @@ function ProductRow({ row }: { row: Row }) {
   </section>
 }
 
-const Pic = ({ file, alt, w, className }: { file: string; alt: string; w: number; className?: string }) =>
-  <img data-flare {...responsive(image(file), w * 2, w > 700 ? '(max-width: 1440px) 100vw, 1248px' : '(max-width: 600px) 100vw, 618px')} alt={alt} loading="lazy" className={className} />
-
 /** Every band keeps its own colour, so the site's light/dark scroll cross-fade is switched off with data-surface-fixed. */
 export function SaveCircleCaseStudy() {
   usePageMeta()
@@ -175,27 +172,16 @@ export function SaveCircleCaseStudy() {
 
       <ShowcaseFilm src="/images/work/savecircle/admin-film.mp4" poster={image('admin-film-poster')} sound={false} background="#a6a6a6" label="Film of the SaveCircle admin dashboard on a desk monitor: opening Manage Circles, a circle's details and contribution history, then Analytics" />
 
-      <section className={styles.world} aria-labelledby="sc-world" data-surface-fixed>
-        <div className={cs.wrap}>
-          <div className={styles.worldHead}>
-            <h2 id="sc-world" className={styles.display}>In the world</h2>
-            <p>Street · Transit · Card · Print · Merch</p>
+      {/* The brand in the world, edge to edge: posters, card and cap, hoodie, then the subway screen. */}
+      <section className={styles.world} aria-label="SaveCircle in the world" data-surface-fixed>
+        <RevealOnScroll className={styles.worldStack}>
+          <img data-flare {...responsive(image('v2-posters-wide'), 2880, '100vw')} alt="Three posters on lilac: Save together, Grow together and Your turn is coming" loading="lazy" className={styles.rounded} style={{ aspectRatio: '1440 / 760' }} />
+          <div className={styles.halves}>
+            <img data-flare {...responsive(image('v2-card-tile'), 1440, '50vw')} alt="The purple SaveCircle Circle card, tilted, on mint" loading="lazy" />
+            <img data-flare {...responsive(image('v2-cap-tile'), 1440, '50vw')} alt="A purple SaveCircle cap with the mark on the front, on lilac" loading="lazy" />
           </div>
-          <RevealOnScroll className={styles.shots}>
-            <Pic file="v2-busstop" w={1248} className={styles.wide} alt="The Save together poster in a bus stop citylight" />
-            <Pic file="v2-card-front" w={618} alt="The purple SaveCircle Circle card, front on" />
-            <Pic file="v2-card-tilted" w={618} alt="The Circle card tilted, showing its chip and the ring" />
-            <Pic file="v2-subway" w={1248} className={`${styles.wide} ${styles.tall}`} alt="A subway LED screen: Your turn is coming, beside the payout ring" />
-            <Pic file="v2-posters" w={1248} className={styles.wide} alt="Three posters: Save together, Grow together and Your turn is coming" />
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      <section className={styles.merch} aria-label="Merch" data-surface-fixed>
-        <RevealOnScroll className={`${cs.wrap} ${styles.shots}`}>
-          <Pic file="v2-hoodie" w={1248} className={styles.wide} alt="A purple SaveCircle hoodie with the cream mark on the chest" />
-          <Pic file="v2-cap-front" w={618} alt="A purple SaveCircle cap with the mark embroidered on the front" />
-          <Pic file="v2-cap-side" w={618} alt="The SaveCircle cap from the side" />
+          <img data-flare {...responsive(image('v2-hoodie-white'), 2880, '100vw')} alt="A purple SaveCircle hoodie with the cream mark on the chest" loading="lazy" className={styles.rounded} style={{ aspectRatio: '1440 / 832' }} />
+          <img data-flare {...responsive(image('v2-subway-wide'), 2880, '100vw')} alt="A subway LED screen: Your turn is coming, beside the payout ring" loading="lazy" style={{ aspectRatio: '1440 / 936' }} />
         </RevealOnScroll>
       </section>
 
