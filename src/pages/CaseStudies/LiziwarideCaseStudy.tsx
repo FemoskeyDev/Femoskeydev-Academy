@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { Arrow } from '../../components/ui/Arrow'
 import { RevealOnScroll } from '../../components/ui/RevealOnScroll'
@@ -7,11 +8,24 @@ import { Heading } from './parts'
 import { ContactCta } from '../StudioPages/ContactCta'
 import { responsive } from '../../lib/images'
 import styles from './CaseStudy.module.css'
+import lz from './LiziwarideCaseStudy.module.css'
 
 const image = (file: string) => `/images/work/liziwaride/${file}.webp`
 
 type Tile = { file: string; alt: string; wide?: boolean }
 type Feature = { id: string; title: string; subtitle: string; copy: string; columns?: 3 | 4; tiles: Tile[] }
+
+/** The mark's two halves, from the brand's logo SVG (viewBox 0 0 113.5 96.5): each is a stroke of the z and a dot. */
+const halves = [
+  { id: 'back', box: '-6 15.9 73.3 86.6', label: 'The first turn', note: 'A stroke and a dot.', d: [
+    'M31.1143 40.8751C32.493 40.8751 33.313 42.4143 32.5438 43.5585L0.591857 91.0915C-0.946456 93.38 0.69346 96.4583 3.45089 96.4583H18.0626C19.1887 96.4583 20.2438 95.9079 20.8881 94.9843L60.6901 37.9262C61.0934 37.3481 61.3096 36.6602 61.3096 35.9553L61.3096 25.343C61.3096 23.4404 59.7673 21.8981 57.8647 21.8981L5.64556 21.8981C3.74297 21.8981 2.20062 23.4404 2.20062 25.343L2.20061 40.8751L31.1143 40.8751Z',
+    'M49.9102 96.4583C44.7599 96.4583 40.5847 92.2831 40.5847 87.1328V86.8067C40.5847 81.6564 44.7599 77.4812 49.9102 77.4812C55.0605 77.4812 59.2357 81.6564 59.2357 86.8067V87.1328C59.2357 92.2831 55.0605 96.4583 49.9102 96.4583Z',
+  ] },
+  { id: 'front', box: '46.1 -6 73.3 86.6', label: 'The second turn', note: 'The same, turned round.', d: [
+    'M82.317 55.5832C80.9382 55.5832 80.1183 54.044 80.8874 52.8998L112.839 5.3668C114.378 3.07835 112.738 0 109.98 0H95.3686C94.2425 0 93.1875 0.550405 92.5432 1.47401L52.7412 58.5321C52.3379 59.1102 52.1217 59.7982 52.1217 60.503V71.1153C52.1217 73.0179 53.664 74.5602 55.5666 74.5602H107.786C109.688 74.5602 111.231 73.0179 111.231 71.1153V59.0281C111.231 57.1255 109.688 55.5832 107.786 55.5832H82.317Z',
+    'M63.5211 0C68.6714 0 72.8466 4.17515 72.8466 9.32547V9.65159C72.8466 14.8019 68.6714 18.9771 63.5211 18.9771C58.3708 18.9771 54.1956 14.8019 54.1956 9.65159V9.32547C54.1956 4.17516 58.3708 0 63.5211 0Z',
+  ] },
+]
 
 const meta = [
   ['Role', 'Product designer'],
@@ -104,6 +118,38 @@ export function LiziwarideCaseStudy() {
       <img data-flare {...responsive(image('showcase'), 2880, '100vw')} alt="The Liziwaride admin dashboard on a desktop monitor" width="2880" height="1404" loading="lazy" />
     </div>
 
+    <section className={lz.logo} aria-labelledby="lz-logo" data-surface-fixed>
+      <div className={styles.wrap}>
+        <div className={lz.bandHead}>
+          <p className={lz.index}>The logo</p>
+          <h2 id="lz-logo" className={lz.display}>Two turns of one z.</h2>
+          <p className={lz.body}>Each half is a stroke of the z with the dot of an i. Turned around one centre, they make the zi at the heart of Liziwaride.</p>
+        </div>
+        <RevealOnScroll className={lz.equation}>
+          {halves.map((half, i) => <div key={half.id} className={lz.term} style={{ '--i': i } as CSSProperties}>
+            <svg className={lz.part} viewBox={half.box} aria-hidden="true">{half.d.map(d => <path key={d} d={d} />)}</svg>
+            <p><strong>{half.label}</strong><span>{half.note}</span></p>
+            <span className={lz.operator} aria-hidden="true">{i < halves.length - 1 ? '+' : '='}</span>
+          </div>)}
+          <div className={`${lz.term} ${lz.result}`} style={{ '--i': halves.length } as CSSProperties}>
+            <svg viewBox="-8 -8 129.5 112.5" role="img" aria-label="The Liziwaride mark">
+              <g className={`${lz.half} ${lz.back}`} opacity=".5">{halves[0].d.map(d => <path key={d} d={d} />)}</g>
+              <g className={`${lz.half} ${lz.front}`}>{halves[1].d.map(d => <path key={d} d={d} />)}</g>
+            </svg>
+            <p><strong>Liziwaride</strong><span>One mark, two ways round.</span></p>
+          </div>
+        </RevealOnScroll>
+      </div>
+    </section>
+
+    <section className={`${styles.wrap} ${styles.section}`} aria-labelledby="lz-grid" data-surface-fixed>
+      <div className={styles.sectionHead}><Heading id="lz-grid" title="Drawn on a grid" subtitle="one shape, turned round" /><p>The second half is the first turned 180° around one centre, so both strokes run at the same angle and both dots sit on one circle.</p></div>
+      <RevealOnScroll className={lz.pair}>
+        <figure className={`${lz.sheet} ${lz.sheetSquare}`}><img data-flare {...responsive(image('construction-monogram'), 1200, '(max-width: 600px) 100vw, 412px')} alt="Monogram construction: the two halves on a grid with anchor points, their parallel strokes and the circle through both dots around the centre of rotation" loading="lazy" /></figure>
+        <figure className={`${lz.sheet} ${lz.sheetWide}`}><img data-flare {...responsive(image('construction-wordmark'), 2400, '(max-width: 600px) 100vw, 824px')} alt="Wordmark construction: the mark beside Liziwaride with mark top, ascender, x-height, baseline and mark base guides" loading="lazy" /></figure>
+      </RevealOnScroll>
+    </section>
+
     {features.map(feature => <section key={feature.id} className={`${styles.wrap} ${styles.section}`} aria-labelledby={feature.id}>
       <div className={styles.sectionHead}><Heading id={feature.id} title={feature.title} subtitle={feature.subtitle} /><p>{feature.copy}</p></div>
       <RevealOnScroll className={`${styles.bento} ${feature.columns === 4 ? styles.four : ''}`}>
@@ -118,13 +164,6 @@ export function LiziwarideCaseStudy() {
       <div className={styles.wrap}>
         {/* Reduced motion keeps the film paused on its poster with controls. */}
         <video data-flare className={styles.film} src="/images/work/liziwaride/admin-film.mp4" poster="/images/work/liziwaride/admin-film-poster.webp" width="1600" height="900" muted loop playsInline preload="none" autoPlay={!reduced} controls={reduced} aria-label="Film of an operator freezing a passenger account and opening Wallet & NFC Cards in the admin dashboard" />
-      </div>
-    </section>
-
-    <section className={styles.section} aria-labelledby="final">
-      <div className={`${styles.wrap} ${styles.sectionHead}`}><Heading id="final" title="Liziwaride" subtitle="on your home screen" /><p>The app icon and launch experience on iOS and Android.</p></div>
-      <div className={styles.fullBleed}>
-        <img data-flare {...responsive(image('app-icon'), 2880, '100vw')} alt="The Liziwaride app icon on iOS and Android home screens" width="2880" height="1360" loading="lazy" />
       </div>
     </section>
 
